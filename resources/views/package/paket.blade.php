@@ -5,37 +5,52 @@
 @section('content')
 <div class="page-container">
     <div class="main-content">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mt-2 font-bold text-xl">Daftar Paket</h4>
+        <div class="page-header">
+            <h2 class="header-title">Daftar Paket</h2>
+            <div class="header-sub-title">
+                <nav class="breadcrumb breadcrumb-dash">
+                    <a href="{{ route('dashboard') }}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                    <span class="breadcrumb-item active">Daftar Paket</span>
+                </nav>
             </div>
+        </div>
+        <div class="card">
             <div class="card-body">
-                <p class="mb-3">Tabel ini berisi daftar paket yang tersedia</p>
-                <div class="flex justify-end mb-4">
-                    <a href="{{ route('paket.create') }}" class="btn btn-primary">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h4>Daftar Paket</h4>
+                        <p>Tabel ini berisi data paket yang tersedia</p>
+                    </div>
+                    <a href="{{ route('packages.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                         Add Paket
-                    </a>
-                </div>                
-                <div class="table-responsive">       
-                    @if (session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
-
-                    <table class="table table-bordered">
+                    </a>                    
+                </div>
+                
+                <div class="m-t-25">
+                    <table id="data-table" class="table">
+                        @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Nama Paket</th>
                                 <th>Harga</th>
+                                @if(auth()->user()->role_id == 1)
                                 <th>Aksi</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($packages as $package)
-                                <tr>
-                                    <td>{{ $package->name }}</td>
-                                    <td>Rp {{ number_format($package->price, 0, ',', '.') }}</td>
-                                    <td>
-                                        @if(auth()->user()->role_id == 1)
+                            @foreach ($packages as $package)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $package->name }}</td>
+                                <td>
+                                    Rp {{ number_format($package->price, 0, ',', '.') }}
+                                </td>
+                                <td>
+                                    @if(auth()->user()->role_id == 1)
                                         <a href="{{ route('packages.edit', $package->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                         <form action="{{ route('packages.destroy', $package->id) }}" method="POST" class="d-inline">
                                             @csrf
@@ -44,8 +59,8 @@
                                         </form>
                                         @endif
                                         <a href="" class="btn btn-success btn-sm">Daftar</a>
-                                    </td>
-                                </tr>
+                                </td>
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>

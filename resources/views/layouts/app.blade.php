@@ -16,7 +16,8 @@
     <link href="{{ asset('css/app.min.css') }}" rel="stylesheet">
 
     {{-- TABLE --}}
-    <link href="assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('vendors/datatables/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+
 
     {{-- CDN --}}
     <script src="https://cdn.tailwindcss.com"></script>
@@ -425,8 +426,13 @@
     <script src="{{ asset('js/app.min.js') }}"></script>
 
     {{-- TABLE --}}
-    <script src="assets/vendors/datatables/jquery.dataTables.min.js"></script>
-    <script src="assets/vendors/datatables/dataTables.bootstrap.min.js"></script>
+<script src="{{ asset('vendors/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendors/datatables/dataTables.bootstrap.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('#data-table').DataTable();
+    });
+</script>
 
 </body>
 

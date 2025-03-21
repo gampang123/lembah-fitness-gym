@@ -5,19 +5,27 @@
 @section('content')
 <div class="page-container">
     <div class="main-content">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mt-2 font-bold text-xl">Daftar User</h4>
+        <div class="page-header">
+            <h2 class="header-title">Data User</h2>
+            <div class="header-sub-title">
+                <nav class="breadcrumb breadcrumb-dash">
+                    <a href="{{ route('dashboard') }}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                    <span class="breadcrumb-item active">Data User</span>
+                </nav>
             </div>
+        </div>
+        <div class="card">
             <div class="card-body">
-                <p class="mb-3">Tabel ini berisi daftar user</p>
-                <div class="flex justify-between mb-4">
-                    <input type="text" id="search" class="border p-2 rounded w-1/3" placeholder="Cari Nama User...">
-                    <a href="{{ route('user.create') }}" class="btn btn-primary">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h4>Data User</h4>
+                        <p>Tabel ini berisi data user yang terdaftar</p>
+                    </div>
+                    <a href="{{ route('user.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                         Add User
                     </a>
-                </div>                
-                <div class="table-responsive">       
+                </div>
+                <div class="m-t-25">
                     <table id="data-table" class="table table-bordered w-full">
                         <thead>
                             <tr>
@@ -58,25 +66,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const searchInput = document.getElementById("search");
-            const table = document.getElementById("data-table").getElementsByTagName("tbody")[0];
-    
-            searchInput.addEventListener("keyup", function () {
-                const filter = searchInput.value.toLowerCase();
-                const rows = table.getElementsByTagName("tr");
-    
-                for (let row of rows) {
-                    let nameCell = row.getElementsByClassName("user-name")[0];
-                    if (nameCell) {
-                        let name = nameCell.textContent || nameCell.innerText;
-                        row.style.display = name.toLowerCase().includes(filter) ? "" : "none";
-                    }
-                }
-            });
-        });
-    </script>
 
 @endsection

@@ -5,13 +5,20 @@
 @section('content')
 <div class="page-container">
     <div class="main-content">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mt-2 font-bold text-xl">Edit Paket</h4>
+        <div class="page-header">
+            <h2 class="header-title">Edit Paket</h2>
+            <div class="header-sub-title">
+                <nav class="breadcrumb breadcrumb-dash">
+                    <a href="{{ route('dashboard') }}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                    <span class="breadcrumb-item active">Edit paket</span>
+                </nav>
             </div>
+        </div>
+        <div class="card">
             <div class="card-body">
-                <p class="mb-3">Tabel ini berisi data anggota dengan informasi barcode dan status keanggotaan.</p>
-                <div class="table-responsive">
+                <h4>Edit paket</h4>
+                <p>Form edit paket</p>
+                <div class="m-t-25">
                     <form action="{{ route('packages.update', $package->id) }}" method="POST">
                         @csrf
                         @method('PUT')

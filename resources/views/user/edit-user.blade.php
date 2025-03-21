@@ -5,12 +5,20 @@
 @section('content')
 <div class="page-container">
     <div class="main-content">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mt-2 font-bold text-xl">Edit User</h4>
+        <div class="page-header">
+            <h2 class="header-title">Edit User</h2>
+            <div class="header-sub-title">
+                <nav class="breadcrumb breadcrumb-dash">
+                    <a href="{{ route('dashboard') }}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                    <span class="breadcrumb-item active">Edit User</span>
+                </nav>
             </div>
-            <div class="card-body">               
-                <div class="table-responsive">       
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4>Edit User</h4>
+                <p>Form edit data User</p>
+                <div class="m-t-25">
                     <form action="{{ route('user.update', $user->id) }}" method="POST">
                         @csrf
                         @method('PUT')
@@ -44,6 +52,7 @@
                         </div>
     
                         <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a href="{{ route('user.index') }}" class="btn btn-secondary">Batal</a>
                     </form>
                 </div>
             </div>

@@ -5,24 +5,28 @@
 @section('content')
 <div class="page-container">
     <div class="main-content">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mt-2 font-bold text-xl">Data Member</h4>
+        <div class="page-header">
+            <h2 class="header-title">Data Member</h2>
+            <div class="header-sub-title">
+                <nav class="breadcrumb breadcrumb-dash">
+                    <a href="{{ route('dashboard') }}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                    <span class="breadcrumb-item active">Data Member</span>
+                </nav>
             </div>
+        </div>
+        <div class="card">
             <div class="card-body">
-                <p class="mb-3">Tabel ini berisi data anggota dengan informasi barcode dan status keanggotaan.</p>
-
-                {{-- Input Search --}}
-                <div class="flex justify-between mb-4">
-                    <input type="text" id="search" class="border p-2 rounded w-1/3" placeholder="Cari Nama Member...">
-                    <a href="{{ route('member.create') }}" class="btn btn-primary">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h4>Data Member</h4>
+                        <p>Tabel ini berisi data member yang terdaftar</p>
+                    </div>
+                    <a href="{{ route('member.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                         Add Member
                     </a>
-                </div>  
-
-                {{-- Table --}}
-                <div class="table-responsive">
-                    <table id="data-table" class="table table-bordered">
+                </div>
+                <div class="m-t-25">
+                    <table id="data-table" class="table">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -40,12 +44,12 @@
                             @foreach ($members as $member)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td class="member-name">{{ $member->user->name }}</td>
+                                <td>{{ $member->user->name }}</td>
                                 <td>
                                     @if($member->barcode_path)
-                                        <img src="{{ asset('storage/' . $member->barcode_path) }}" alt="Barcode" width="50" onerror="this.onerror=null; this.src='/fallback-image.png'">
+                                    <img src="{{ asset('storage/' . $member->barcode_path) }}" alt="Barcode" width="50" onerror="this.onerror=null; this.src='/fallback-image.png'">
                                     @else
-                                        <span class="text-danger">Barcode tidak tersedia</span>
+                                    <span class="text-danger">Barcode tidak tersedia</span>
                                     @endif
                                 </td>
                                 <td>{{ $member->start_date }}</td>
@@ -56,47 +60,41 @@
                                     </span>
                                 </td>
                                 @if(auth()->user()->role_id == 1)
-                                    <td>
-                                        <a href="{{ route('member.edit', $member->id) }}" class="btn btn-warning btn-sm">
-                                            <i class="anticon anticon-edit"></i>
-                                        </a>
-                                        <form action="{{ route('member.destroy', $member->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">
-                                                <i class="anticon anticon-delete"></i>
-                                            </button>
-                                        </form>
-                                    </td>
+                                <td>
+                                    <a href="{{ route('member.edit', $member->id) }}" class="btn btn-warning btn-sm">
+                                        <i class="anticon anticon-edit"></i>
+                                    </a>
+                                    <form action="{{ route('member.destroy', $member->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">
+                                            <i class="anticon anticon-delete"></i>
+                                        </button>
+                                    </form>
+                                </td>
                                 @endif
                             </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Barcode</th>
+                                <th>Mulai</th>
+                                <th>Akhir</th>
+                                <th>Status</th>
+                                @if(auth()->user()->role_id == 1)
+                                <th>Aksi</th>
+                                @endif
+                            </tr>
+                        </tfoot>
                     </table>
-                </div> 
+                </div>
             </div>
         </div>
     </div>
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const searchInput = document.getElementById("search");
-        const table = document.getElementById("data-table").getElementsByTagName("tbody")[0];
-
-        searchInput.addEventListener("keyup", function () {
-            const filter = searchInput.value.toLowerCase();
-            const rows = table.getElementsByTagName("tr");
-
-            for (let row of rows) {
-                let nameCell = row.getElementsByClassName("member-name")[0];
-                if (nameCell) {
-                    let name = nameCell.textContent || nameCell.innerText;
-                    row.style.display = name.toLowerCase().includes(filter) ? "" : "none";
-                }
-            }
-        });
-    });
-</script>
 
 
 @endsection

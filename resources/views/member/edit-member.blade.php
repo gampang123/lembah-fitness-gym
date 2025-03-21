@@ -5,13 +5,20 @@
 @section('content')
 <div class="page-container">
     <div class="main-content">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mt-2 font-bold text-xl">Edit Data Member</h4>
+        <div class="page-header">
+            <h2 class="header-title">Edit Member</h2>
+            <div class="header-sub-title">
+                <nav class="breadcrumb breadcrumb-dash">
+                    <a href="{{ route('dashboard') }}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                    <span class="breadcrumb-item active">Edit Member</span>
+                </nav>
             </div>
+        </div>
+        <div class="card">
             <div class="card-body">
-                <p class="mb-3">Tabel ini Untuk edit data anggota dengan informasi barcode dan status keanggotaan.</p>
-                <div class="table-responsive">
+                <h4>Edit Member</h4>
+                <p>Form edit data member</p>
+                <div class="m-t-25">
                     <form action="{{ route('member.update', $member->id) }}" method="POST">
                         @csrf
                         @method('PUT')
@@ -61,13 +68,12 @@
                     
                         <!-- Tombol Submit -->
                         <div class="flex justify-between items-center">
-                            <a href="{{ route('member.index') }}" class="text-blue-500 hover:underline">Kembali</a>
+                            <a href="{{ route('member.index') }}" class="btn btn-secondary">Batal</a>
                             <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
                                 Update Member
                             </button>
                         </div>
                     </form>
-                    
                 </div>
             </div>
         </div>
