@@ -4,16 +4,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Enlink - Admin Dashboard Template</title>
+    <title>Lembah Fitness Gym</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('images/logo/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
 
     <!-- page css -->
     <link href="{{ asset('vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet">
 
     <!-- Core css -->
     <link href="{{ asset('css/app.min.css') }}" rel="stylesheet">
+
+    {{-- TABLE --}}
+    <link href="assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
+
+    {{-- CDN --}}
+    <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
 
@@ -23,15 +29,13 @@
             <!-- Header START -->
             <div class="header">
                 <div class="logo logo-dark">
-                    <a href="index.html">
-                        <img src="{{ asset('images/logo/logo.png') }}" alt="Logo">
-                        <img class="logo-fold" src="{{ asset('images/logo/logo-fold-white.png') }}" alt="Logo">
+                    <a href={{ route('dashboard') }}>
+                        <img class="w-90" src="{{ asset('asset/logo2.png') }}" alt="Logo">
                     </a>
                 </div>
                 <div class="logo logo-white">
-                    <a href="index.html">
-                        <img src="{{ asset('/logo/logo-white.png') }}" alt="Logo">
-                        <img class="logo-fold" src="{{ asset('images/logo/logo-fold-white.png') }}" alt="Logo">
+                    <a href={{ route('dashboard') }}>
+                        <img class="w-20" src="{{ asset('asset/logo.png') }}" alt="Logo">
                     </a>
                 </div>
                 <div class="nav-wrap">
@@ -130,47 +134,32 @@
                                             <img src="{{ asset('images/avatars/thumb-3.jpg') }}" alt="">
                                         </div>
                                         <div class="m-l-10">
-                                            <p class="m-b-0 text-dark font-weight-semibold">Marshall Nichols</p>
-                                            <p class="m-b-0 opacity-07">UI/UX Desinger</p>
+                                            <p class="m-b-0 text-dark font-weight-semibold">{{ auth()->user()->name }}</p>
+                                            <p class="m-b-0 opacity-07">{{ Auth::user()->role->name }}</p>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
+                                <a href="{{ route('profile.edit') }}" class="dropdown-item d-block p-h-15 p-v-10">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
                                             <i class="anticon opacity-04 font-size-16 anticon-user"></i>
-                                            <span class="m-l-10">Edit Profile</span>
+                                            <span class="m-l-10">Profile</span>
                                         </div>
                                         <i class="anticon font-size-10 anticon-right"></i>
                                     </div>
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i class="anticon opacity-04 font-size-16 anticon-lock"></i>
-                                            <span class="m-l-10">Account Setting</span>
+                                </a>                                
+                                <form method="POST" action="{{ route('logout') }}" class="d-block">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item d-block p-h-15 p-v-10" style="border: none; background: none; width: 100%; text-align: left;">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <i class="anticon opacity-04 font-size-16 anticon-logout"></i>
+                                                <span class="m-l-10">Logout</span>
+                                            </div>
+                                            <i class="anticon font-size-10 anticon-right"></i>
                                         </div>
-                                        <i class="anticon font-size-10 anticon-right"></i>
-                                    </div>
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i class="anticon opacity-04 font-size-16 anticon-project"></i>
-                                            <span class="m-l-10">Projects</span>
-                                        </div>
-                                        <i class="anticon font-size-10 anticon-right"></i>
-                                    </div>
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i class="anticon opacity-04 font-size-16 anticon-logout"></i>
-                                            <span class="m-l-10">Logout</span>
-                                        </div>
-                                        <i class="anticon font-size-10 anticon-right"></i>
-                                    </div>
-                                </a>
+                                    </button>
+                                </form>                                
                             </div>
                         </li>
                         <li>
@@ -188,310 +177,53 @@
                 <div class="side-nav-inner">
                     <ul class="side-nav-menu scrollable">
                         <li class="nav-item dropdown open">
-                            <a class="dropdown-toggle" href="javascript:void(0);">
+                            <a class="dropdown-toggle" href="{{ route('dashboard') }}">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-dashboard"></i>
                                 </span>
                                 <span class="title">Dashboard</span>
+                            </a>
+                        </li>
+                        @if(Auth::check() && Auth::user()->role_id == 1)
+                            <li class="nav-item dropdown open">
+                                <a class="dropdown-toggle" href="{{ route('user.index') }}">
+                                    <span class="icon-holder">
+                                        <i class="anticon anticon-user"></i>
+                                    </span>
+                                    <span class="title">User</span>
+                                </a>
+                            </li>
+                        @endif
+
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-team"></i>
+                                </span>
+                                <span class="title">Members</span>
                                 <span class="arrow">
                                     <i class="arrow-icon"></i>
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="index.html">Default</a>
+                                    <a href="{{ route('member.create') }}">Add Members</a>
                                 </li>
                                 <li>
-                                    <a href="index-crm.html">CRM</a>
+                                    <a href="{{ route('member.index') }}">Data Members</a>
                                 </li>
                                 <li>
-                                    <a href="index-e-commerce.html">E-commerce</a>
-                                </li>
-                                <li class="active">
-                                    <a href="index-projects.html">Projects</a>
+                                    <a href="{{ route('member.kartu') }}">Kartu Member</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="javascript:void(0);">
+                            <a href="{{ route ('paket.index') }}">
                                 <span class="icon-holder">
-                                    <i class="anticon anticon-appstore"></i>
+                                    <i class="anticon anticon-inbox"></i>
                                 </span>
-                                <span class="title">Apps</span>
-                                <span class="arrow">
-                                    <i class="arrow-icon"></i>
-                                </span>
+                                <span class="title">Paket</span>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="app-chat.html">Chat</a>
-                                </li>
-                                <li>
-                                    <a href="app-file-manager.html">File Manager</a>
-                                </li>
-                                <li>
-                                    <a href="app-mail.html">Mail</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a href="javascript:void(0);">
-                                        <span>Projects</span>
-                                        <span class="arrow">
-                                            <i class="arrow-icon"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="app-project-list.html">Project List</a>
-                                        </li>
-                                        <li>
-                                            <a href="app-project-details.html">Project Details</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a href="javascript:void(0);">
-                                        <span>E-commerce</span>
-                                        <span class="arrow">
-                                            <i class="arrow-icon"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="app-e-commerce-order-list.html">Orders List</a>
-                                        </li>
-                                        <li>
-                                            <a href="app-e-commerce-products.html">Products</a>
-                                        </li>
-                                        <li>
-                                            <a href="app-e-commerce-products-list.html">Products List</a>
-                                        </li>
-                                        <li>
-                                            <a href="app-e-commerce-products-edit.html">Products Edit</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="javascript:void(0);">
-                                <span class="icon-holder">
-									<i class="anticon anticon-build"></i>
-								</span>
-                                <span class="title">UI Elements</span>
-                                <span class="arrow">
-									<i class="arrow-icon"></i>
-								</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="avatar.html">Avatar</a>
-                                </li>
-                                <li>
-                                    <a href="alert.html">Alert</a>
-                                </li>
-                                <li>
-                                    <a href="badge.html">Badge</a>
-                                </li>
-                                <li>
-                                    <a href="buttons.html">Buttons</a>
-                                </li>
-                                <li>
-                                    <a href="cards.html">Cards</a>
-                                </li>
-                                <li>
-                                    <a href="icons.html">Icons</a>
-                                </li>
-                                <li>
-                                    <a href="lists.html">Lists</a>
-                                </li>
-                                <li>
-                                    <a href="typography.html">Typography</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="javascript:void(0);">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-hdd"></i>
-                                </span>
-                                <span class="title">Components</span>
-                                <span class="arrow">
-                                    <i class="arrow-icon"></i>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="accordion.html">Accordion</a>
-                                </li>
-                                <li>
-                                    <a href="carousel.html">Carousel</a>
-                                </li>
-                                <li>
-                                    <a href="dropdown.html">Dropdown</a>
-                                </li>
-                                <li>
-                                    <a href="modals.html">Modals</a>
-                                </li>
-                                <li>
-                                    <a href="toasts.html">Toasts</a>
-                                </li>
-                                <li>
-                                    <a href="popover.html">Popover</a>
-                                </li>
-                                <li>
-                                    <a href="slider-progress.html">Slider & Progress</a>
-                                </li>
-                                <li>
-                                    <a href="tabs.html">Tabs</a>
-                                </li>
-                                <li>
-                                    <a href="tooltips.html">Tooltips</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="javascript:void(0);">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-form"></i>
-                                </span>
-                                <span class="title">Forms</span>
-                                <span class="arrow">
-                                    <i class="arrow-icon"></i>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="form-elements.html">Form Elements</a>
-                                </li>
-                                <li>
-                                    <a href="form-layouts.html">Form Layouts</a>
-                                </li>
-                                <li>
-                                    <a href="form-validation.html">Form Validation</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="javascript:void(0);">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-table"></i>
-                                </span>
-                                <span class="title">Tables</span>
-                                <span class="arrow">
-                                    <i class="arrow-icon"></i>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="basic-table.html">Basic Table</a>
-                                </li>
-                                <li>
-                                    <a href="data-table.html">Data Table</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="javascript:void(0);">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-pie-chart"></i>
-                                </span>
-                                <span class="title">Charts</span>
-                                <span class="arrow">
-                                    <i class="arrow-icon"></i>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="chartist.html">Chartist</a>
-                                </li>
-                                <li>
-                                    <a href="chartjs.html">ChartJs</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="javascript:void(0);">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-file"></i>
-                                </span>
-                                <span class="title">Pages</span>
-                                <span class="arrow">
-                                    <i class="arrow-icon"></i>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="profile.html">Profile</a>
-                                </li>
-                                <li>
-                                    <a href="invoice.html">Invoice</a>
-                                </li>
-                                <li>
-                                    <a href="members.html">Members</a>
-                                </li>
-                                <li>
-                                    <a href="pricing.html">Pricing</a>
-                                </li>
-                                <li>
-                                    <a href="setting.html">Setting</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a href="javascript:void(0);">
-                                        <span>Blog</span>
-                                        <span class="arrow">
-                                            <i class="arrow-icon"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="blog-grid.html">Blog Grid</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-list.html">Blog List</a>
-                                        </li>
-                                        <li>
-                                            <a href="blog-post.html">Blog Post</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="javascript:void(0);">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-lock"></i>
-                                </span>
-                                <span class="title">Authentication</span>
-                                <span class="arrow">
-                                    <i class="arrow-icon"></i>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="login-1.html">Login 1</a>
-                                </li>
-                                <li>
-                                    <a href="login-2.html">Login 2</a>
-                                </li>
-                                <li>
-                                    <a href="login-3.html">Login 3</a>
-                                </li>
-                                <li>
-                                    <a href="sign-up-1.html">Sign Up 1</a>
-                                </li>
-                                <li>
-                                    <a href="sign-up-2.html">Sign Up 2</a>
-                                </li>
-                                <li>
-                                    <a href="sign-up-3.html">Sign Up 3</a>
-                                </li>
-                                <li>
-                                    <a href="error-1.html">Error 1</a>
-                                </li>
-                                <li>
-                                    <a href="error-2.html">Error 2</a>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -501,9 +233,9 @@
             @yield('content')
 
             <!-- Footer START -->
-            <footer class="footer">
+                <footer class="footer">
                     <div class="footer-content justify-content-between">
-                        <p class="m-b-0">Copyright © 2019 Theme_Nate. All rights reserved.</p>
+                        <p class="m-b-0">Copyright © {{ date('Y') }}  {{ env('APP_NAME') }}</p>
                         <span>
                             <a href="" class="text-gray m-r-15">Term &amp; Conditions</a>
                             <a href="" class="text-gray">Privacy &amp; Policy</a>
@@ -594,7 +326,7 @@
                                         <img src="{{ asset('images/avatars/thumb-3.jpg') }}" alt="">
                                     </div>
                                     <div class="m-l-15">
-                                        <a href="javascript:void(0);" class="text-dark m-b-0 font-weight-semibold">Marshall Nichols</a>
+                                        <a href="javascript:void(0);" class="text-dark m-b-0 font-weight-semibold">{{ Auth::user()->name }}</a>
                                         <p class="m-b-0 text-muted font-size-13">Data Analyst</p>
                                     </div>
                                 </div>
@@ -691,6 +423,10 @@
 
     <!-- Core JS -->
     <script src="{{ asset('js/app.min.js') }}"></script>
+
+    {{-- TABLE --}}
+    <script src="assets/vendors/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/vendors/datatables/dataTables.bootstrap.min.js"></script>
 
 </body>
 

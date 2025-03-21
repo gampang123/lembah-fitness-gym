@@ -17,13 +17,9 @@
 
     </head>
     <body class="pl-8 pr-8 flex flex-col min-h-screen">
-        @include('layouts.header')
-
-        @section('title', 'Dashboard Page')
 
         <h1>Lembah Fitness gym</h1>
         <p>Ini adalah halaman utama.</p>
 
-        @include('layouts.footer')
     </body>
 </html>

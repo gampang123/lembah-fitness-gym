@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\PackageController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Storage;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,8 +19,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('welcome');
 });
+
+Route::get('/storage/{path}', function ($path) {
+    return response()->file(storage_path('app/public/' . $path));
+})->where('path', '.*');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -27,5 +35,37 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// ADMIN
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/user', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/user', [UserController::class, 'store'])->name('user.store');
+    Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+});
+
+// ROLE
+Route::get('/user/{id}/role', [RoleController::class, 'showUserRole']);
+
+// MEMBER
+Route::get('/member', [MemberController::class, 'index'])->name('member.index');
+Route::get('/member/create', [MemberController::class, 'create'])->name('member.create');
+Route::post('/member/store', [MemberController::class, 'store'])->name('member.store');
+Route::get('/member/edit', [MemberController::class, 'edit'])->name('member.edit');
+Route::delete('/member/{id}', [MemberController::class, 'destroy'])->name('member.destroy');
+Route::get('/member/{member}/edit', [MemberController::class, 'edit'])->name('member.edit');
+Route::put('/member/{member}', [MemberController::class, 'update'])->name('member.update');
+
+Route::get('/member/kartu', [MemberController::class, 'kartu'])->name('member.kartu')->middleware('auth');
+
+
+
+// PAKET
+Route::get('/paket', [PackageController::class, 'index'])->name('paket.index');
+Route::get('/paket/create', [PackageController::class, 'create'])->name('paket.create');
+Route::get('/paket/edit', [PackageController::class, 'edit'])->name('paket.edit');
+Route::resource('packages', PackageController::class);
 
 require __DIR__.'/auth.php';
