@@ -66,7 +66,7 @@
         document.getElementById('user_id').addEventListener('change', function() {
             let userId = this.value;
             if (userId) {
-                document.getElementById('barcode').value = "MBR" + userId.padStart(5, '0');
+                document.getElementById('barcode').value = "LF" + userId.padStart(5, '0');
             } else {
                 document.getElementById('barcode').value = "";
             }
