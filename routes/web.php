@@ -58,7 +58,7 @@ Route::delete('/member/{id}', [MemberController::class, 'destroy'])->name('membe
 Route::get('/member/{member}/edit', [MemberController::class, 'edit'])->name('member.edit');
 Route::put('/member/{member}', [MemberController::class, 'update'])->name('member.update');
 
-Route::get('/member/kartu', [MemberController::class, 'kartu'])->name('member.kartu')->middleware('auth');
+Route::get('/member/kartu', [MemberController::class, 'card'])->name('member.card')->middleware('auth');
 
 
 

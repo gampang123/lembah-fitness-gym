@@ -76,19 +76,6 @@
                             </tr>
                             @endforeach
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Barcode</th>
-                                <th>Mulai</th>
-                                <th>Akhir</th>
-                                <th>Status</th>
-                                @if(auth()->user()->role_id == 1)
-                                <th>Aksi</th>
-                                @endif
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>

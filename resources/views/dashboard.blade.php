@@ -11,10 +11,10 @@
             <div class="d-md-flex align-items-md-center justify-content-between">
                 <div class="media m-v-10 align-items-center">
                     <div class="avatar avatar-image avatar-lg">
-                        <img src="{{ asset('images/avatars/thumb-3.jpg') }}" alt="">
+                        <img src="{{ asset('images/avatars/avatar.png') }}" alt="">
                     </div>
                     <div class="media-body m-l-15">
-                        <h4 class="m-b-0">Welcome, {{ Auth::user()->name }}</h4>
+                        <h4 class="m-b-0">Selamat datang, {{ Auth::user()->name }}</h4>
                         <span class="text-gray">{{ Auth::user()->role->name }}</span>
                     </div>
                 </div>

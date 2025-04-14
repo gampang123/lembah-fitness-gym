@@ -183,7 +183,7 @@ class MemberController extends Controller
     /**
      * Menampilkan kartu member untuk user yang login.
      */
-    public function kartu()
+    public function card()
     {
         $user = Auth::user();
 
@@ -194,7 +194,7 @@ class MemberController extends Controller
             $members = Member::with('user')->where('user_id', $user->id)->get();
         }
 
-        return view('member.kartu-member', compact('members'));
+        return view('member.card-member', compact('members'));
     }
 
     public function __construct()
