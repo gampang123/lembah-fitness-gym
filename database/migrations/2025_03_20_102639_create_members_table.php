@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('barcode')->nullable(); // ✅ Barcode teks (jika perlu)
-            $table->string('barcode_path')->nullable(); // ✅ Menyimpan path barcode
-            $table->date('start_date'); 
-            $table->date('end_date');
+            $table->string('barcode')->nullable(); 
+            $table->string('barcode_path')->nullable();
+            $table->date('start_date')->nullable(); 
+            $table->date('end_date')->nullable();
             $table->enum('status', ['active', 'expired']);
             $table->timestamps();
-        });
+        }); 
     }
 
     /**

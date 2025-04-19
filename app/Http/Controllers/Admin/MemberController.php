@@ -37,7 +37,6 @@ class MemberController extends Controller
     {
         $user = Auth::user();
 
-        // Jika admin, tampilkan semua user. Jika bukan admin, hanya tampilkan user yang sedang login.
         if ($user->role_id == 1) {
             $users = User::all();
         } else {
@@ -54,7 +53,6 @@ class MemberController extends Controller
     {
         $user = Auth::user();
 
-        // Validasi input
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'start_date' => 'required|date',
