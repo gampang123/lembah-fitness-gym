@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all(); // Ambil semua user dari database
+        $users = User::all(); 
         return view('user.user', compact('users'));
     }
 
@@ -36,7 +36,7 @@ class UserController extends Controller
             'username' => $request->username,
             'phone' => $request->phone,
             'email' => $request->email,
-            'password' => Hash::make($request->password), // Hash password
+            'password' => Hash::make($request->password), 
             'role_id' => $request->role_id,
         ]);
 

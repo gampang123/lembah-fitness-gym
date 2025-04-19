@@ -23,4 +23,15 @@ class Member extends Model
         $barcode = new DNS1D();
         return base64_encode($barcode->getBarcodePNG($this->id, 'C39+', 2, 50));
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('end_date', '>', now());
+    }
+
+    public function scopeInactive($query)
+    {
+        return $query->where('end_date', '<=', now());
+    }
+
 }

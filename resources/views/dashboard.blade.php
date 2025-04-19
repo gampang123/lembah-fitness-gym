@@ -21,20 +21,20 @@
                 <div class="d-md-flex align-items-center d-none">
                     <div class="media align-items-center m-r-40 m-v-5">
                         <div class="font-size-27">
-                            <i class="text-primary anticon anticon-profile"></i>
+                            <i class="text-primary anticon anticon-check-circle"></i>
                         </div>
                         <div class="d-flex align-items-center m-l-10">
-                            <h2 class="m-b-0 m-r-5">78</h2>
-                            <span class="text-gray">Tasks</span>
+                            <h2 class="m-b-0 m-r-5">{{ $activeMember }}</h2>
+                            <span class="text-gray">Member Aktif</span>
                         </div>
                     </div>
                     <div class="media align-items-center m-r-40 m-v-5">
                         <div class="font-size-27">
-                            <i class="text-success  anticon anticon-appstore"></i>
+                            <i class="text-danger anticon anticon-close-circle"></i>
                         </div>
                         <div class="d-flex align-items-center m-l-10">
-                            <h2 class="m-b-0 m-r-5">21</h2>
-                            <span class="text-gray">Projects</span>
+                            <h2 class="m-b-0 m-r-5">{{ $inactiveMember }}</h2>
+                            <span class="text-gray">Tidak Aktif</span>
                         </div>
                     </div>
                     <div class="media align-items-center m-v-5">
@@ -42,7 +42,7 @@
                             <i class="text-danger anticon anticon-team"></i>
                         </div>
                         <div class="d-flex align-items-center m-l-10">
-                            <h2 class="m-b-0 m-r-5">39</h2>
+                            <h2 class="m-b-0 m-r-5">{{ $countMember }}</h2>
                             <span class="text-gray">Members</span>
                         </div>
                     </div>

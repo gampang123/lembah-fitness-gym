@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\RoleController;
@@ -57,8 +58,8 @@ Route::get('/member/edit', [MemberController::class, 'edit'])->name('member.edit
 Route::delete('/member/{id}', [MemberController::class, 'destroy'])->name('member.destroy');
 Route::get('/member/{member}/edit', [MemberController::class, 'edit'])->name('member.edit');
 Route::put('/member/{member}', [MemberController::class, 'update'])->name('member.update');
+Route::get('/member/card', [MemberController::class, 'card'])->name('member.card')->middleware('auth');
 
-Route::get('/member/kartu', [MemberController::class, 'card'])->name('member.card')->middleware('auth');
 
 
 
@@ -67,5 +68,9 @@ Route::get('/paket', [PackageController::class, 'index'])->name('paket.index');
 Route::get('/paket/create', [PackageController::class, 'create'])->name('paket.create');
 Route::get('/paket/edit', [PackageController::class, 'edit'])->name('paket.edit');
 Route::resource('packages', PackageController::class);
+
+
+// DASHBOARD
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';

@@ -20,8 +20,7 @@ class MemberController extends Controller
     {
         $user = Auth::user();
 
-        // Jika admin, tampilkan semua member. Jika bukan admin, hanya tampilkan member yang login.
-        if ($user->role_id == 1) { // Anggap role_id = 1 adalah admin
+        if ($user->role_id == 1) { 
             $members = Member::with('user')->get();
         } else {
             $members = Member::with('user')->where('user_id', $user->id)->get();
@@ -29,6 +28,7 @@ class MemberController extends Controller
 
         return view('member.member', compact('members'));
     }
+
 
     /**
      * Menampilkan form untuk menambahkan member baru.
@@ -61,12 +61,10 @@ class MemberController extends Controller
             'end_date' => 'required|date|after:start_date',
         ]);
 
-        // Cegah user biasa memilih user lain
         if ($user->role_id != 1 && $request->user_id != $user->id) {
             return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menambahkan member lain.');
         }
 
-        // Simpan data member
         $member = Member::create([
             'user_id' => $request->user_id,
             'barcode' => $request->barcode, 
@@ -75,7 +73,6 @@ class MemberController extends Controller
             'end_date' => $request->end_date,
         ]);
 
-        // Generate QR Code
         $barcodeGenerator = new DNS2D();
         $barcodeImage = $barcodeGenerator->getBarcodePNG($request->barcode, "QRCODE", 10, 10);
 
@@ -83,7 +80,6 @@ class MemberController extends Controller
             return redirect()->back()->with('error', 'Gagal membuat QR Code!');
         }
 
-        // Simpan barcode ke storage
         $barcodePath = 'barcodes/' . $request->barcode . '.png';
         $decodedImage = base64_decode($barcodeImage);
 
@@ -93,12 +89,10 @@ class MemberController extends Controller
 
         Storage::disk('public')->put($barcodePath, $decodedImage);
 
-        // Pastikan file tersimpan
         if (!Storage::disk('public')->exists($barcodePath)) {
             return redirect()->back()->with('error', 'Gagal menyimpan QR Code ke storage!');
         }
 
-        // Update barcode_path
         $member->barcode_path = $barcodePath;
         $member->save();
 
@@ -112,12 +106,10 @@ class MemberController extends Controller
     {
         $user = Auth::user();
 
-        // Cegah user biasa mengedit data member lain
         if ($user->role_id != 1 && $member->user_id != $user->id) {
             return redirect()->route('member.index')->with('error', 'Anda tidak memiliki izin untuk mengedit member ini.');
         }
 
-        // Jika admin, tampilkan semua user. Jika bukan admin, hanya tampilkan user yang login.
         if ($user->role_id == 1) {
             $users = User::all();
         } else {
@@ -134,19 +126,16 @@ class MemberController extends Controller
     {
         $user = Auth::user();
 
-        // Validasi input
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
         ]);
 
-        // Cegah user biasa mengedit data member lain
         if ($user->role_id != 1 && $member->user_id != $user->id) {
             return redirect()->route('member.index')->with('error', 'Anda tidak memiliki izin untuk memperbarui member ini.');
         }
 
-        // Update data member
         $member->update([
             'user_id' => $request->user_id,
             'start_date' => $request->start_date,
@@ -164,17 +153,14 @@ class MemberController extends Controller
         $user = Auth::user();
         $member = Member::findOrFail($id);
 
-        // Cegah user biasa menghapus data member lain
         if ($user->role_id != 1 && $member->user_id != $user->id) {
             return redirect()->route('member.index')->with('error', 'Anda tidak memiliki izin untuk menghapus member ini.');
         }
 
-        // Hapus barcode jika ada
         if ($member->barcode_path && Storage::disk('public')->exists($member->barcode_path)) {
             Storage::disk('public')->delete($member->barcode_path);
         }
 
-        // Hapus member dari database
         $member->delete();
 
         return redirect()->route('member.index')->with('success', 'Member berhasil dihapus.');
@@ -187,8 +173,7 @@ class MemberController extends Controller
     {
         $user = Auth::user();
 
-        // Jika admin, tampilkan semua kartu member. Jika bukan admin, hanya tampilkan kartu miliknya sendiri.
-        if ($user->role_id == 1) { // Anggap role_id = 1 adalah admin
+        if ($user->role_id == 1) { 
             $members = Member::with('user')->get();
         } else {
             $members = Member::with('user')->where('user_id', $user->id)->get();
