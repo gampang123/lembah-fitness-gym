@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('barcode_path')->nullable(); // ✅ Menyimpan path barcode
             $table->date('start_date'); 
             $table->date('end_date');
-            $table->enum('status', ['active', 'expired']);
+            $table->enum('status', ['active', 'expired'])->default('expired');
             $table->timestamps();
         });
     }
