@@ -22,7 +22,6 @@
                     <form action="{{ route('member.update', $member->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <!-- Pilih User -->
                         <div class="mb-4">
                             <label for="user_id" class="block text-gray-700 font-semibold mb-2">Pilih User</label>
                             <select name="user_id" id="user_id" class="w-96 px-4 py-2 border rounded-lg ml-4">
@@ -38,7 +37,6 @@
                             @enderror
                         </div>
                     
-                        <!-- Barcode (Tidak Bisa Diubah) -->
                         <div class="mb-4">
                             <label for="barcode" class="block text-gray-700 font-semibold mb-2">Barcode</label>
                             <input type="text" id="barcode" name="barcode" class="w-96 px-4 py-2 border rounded-lg ml-4 bg-gray-200" 
@@ -46,7 +44,6 @@
                             <p class="text-gray-500 text-sm mt-1">Barcode tidak dapat diubah.</p>
                         </div>
                     
-                        <!-- Tanggal Mulai -->
                         <div class="mb-4">
                             <label for="start_date" class="block text-gray-700 font-semibold mb-2">Tanggal Mulai</label>
                             <input type="date" id="start_date" name="start_date" class="w-96 px-4 py-2 border rounded-lg ml-4"
@@ -56,7 +53,6 @@
                             @enderror
                         </div>
                     
-                        <!-- Tanggal Berakhir -->
                         <div class="mb-4">
                             <label for="end_date" class="block text-gray-700 font-semibold mb-2">Tanggal Berakhir</label>
                             <input type="date" id="end_date" name="end_date" class="w-96 px-4 py-2 border rounded-lg ml-4"
@@ -66,7 +62,6 @@
                             @enderror
                         </div>
                     
-                        <!-- Tombol Submit -->
                         <div class="flex justify-between items-center">
                             <a href="{{ route('member.index') }}" class="btn btn-secondary">Batal</a>
                             <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">

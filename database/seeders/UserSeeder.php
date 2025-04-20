@@ -30,9 +30,10 @@ class UserSeeder extends Seeder
             ]
         ], ['id'], ['name', 'guard_name', 'updated_at']);
 
-        User::create([
+        User::insert([
+           [
             'id' => 1,
-            'name' => 'Admin Gampang',
+            'name' => 'Admin',
             'username' => 'admin',
             'phone' => '081234567890',
             'email' => 'admin@mail.com',
@@ -42,9 +43,23 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),
+           ],
+           [
+            'id' => 2,
+            'name' => 'User',
+            'username' => 'user',
+            'phone' => '081234567891',
+            'email' => 'user@mail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'role_id' => 2,
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+           ]
         ]);
 
-        User::factory(200)->create([
+        User::factory(10)->create([
             'role_id' => 2 
         ])->each(function ($user) {
             Member::factory()->create([

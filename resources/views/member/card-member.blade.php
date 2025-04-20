@@ -27,7 +27,6 @@
 
                     <div id="paginationButtons" class="flex flex-wrap justify-center gap-1 mt-4 text-sm"></div>
 
-                    <!-- Ini disembunyikan, jadi JS bisa ambil data -->
                     <div id="allCards" class="hidden">
                         @foreach ($members as $member)
                             <div class="member-card" data-name="{{ strtolower($member->user->name) }}">
@@ -78,8 +77,6 @@
             pageCards.forEach(card => {
                 container.appendChild(card.cloneNode(true));
             });
-
-            // Show info
             const totalEntries = filteredCards.length;
             const startEntry = start + 1;
             const endEntry = Math.min(end, totalEntries);
@@ -108,10 +105,7 @@
                 return btn;
             };
 
-            // Prev
             paginationButtons.appendChild(createBtn("<<", currentPage - 1, currentPage === 1));
-
-            // Page numbers (max 5 visible)
             let maxPagesToShow = 5;
             let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
             let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
@@ -137,8 +131,6 @@
                 }
                 paginationButtons.appendChild(createBtn(totalPages, totalPages));
             }
-
-            // Next
             paginationButtons.appendChild(createBtn(">>", currentPage + 1, currentPage === totalPages));
         }
 

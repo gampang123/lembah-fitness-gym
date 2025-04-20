@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('barcode_path')->nullable();
             $table->date('start_date')->nullable(); 
             $table->date('end_date')->nullable();
-            $table->enum('status', ['active', 'expired']);
+            $table->enum('status', ['active', 'expired'])->default('expired');
             $table->timestamps();
         }); 
     }

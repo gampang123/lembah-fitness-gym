@@ -10,7 +10,7 @@ class RoleController extends Controller
 {
     public function showUserRole($id) 
     {
-        $user = User::with('role')->find($id); // Pastikan eager loading 'role'
+        $user = User::with('role')->find($id); 
 
         if (!$user || !$user->role) {
             return response()->json(['message' => 'User atau role tidak ditemukan'], 404);

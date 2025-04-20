@@ -55,12 +55,17 @@ class MemberController extends Controller
 
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after:start_date',
         ]);
 
         if ($user->role_id != 1 && $request->user_id != $user->id) {
             return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menambahkan member lain.');
+        }
+
+        $existingMember = Member::where('user_id', $request->user_id)->first();
+        if ($existingMember) {
+            return redirect()->route('member.index')->with('info', 'User ini sudah terdaftar sebagai member.');
         }
 
         $member = Member::create([
@@ -97,8 +102,9 @@ class MemberController extends Controller
         return redirect()->route('member.index')->with('success', 'Member berhasil ditambahkan dengan QR Code.');
     }
 
+
     /**
-     * Menampilkan form untuk mengedit member.
+     * edit member
      */
     public function edit(Member $member)
     {
@@ -118,7 +124,7 @@ class MemberController extends Controller
     }
 
     /**
-     * Mengupdate data member.
+     * Mengupdate  member.
      */
     public function update(Request $request, Member $member)
     {
@@ -165,7 +171,7 @@ class MemberController extends Controller
     }
 
     /**
-     * Menampilkan kartu member untuk user yang login.
+     * kartu member
      */
     public function card()
     {
