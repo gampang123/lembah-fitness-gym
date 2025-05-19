@@ -116,44 +116,43 @@ class TransactionController extends Controller
 
     public function destroy($id)
     {
-        $transaction = Transaction::with('proof')->findOrFail($id);
+        $user = Auth::user();
+        $transaction = Transaction::with('ProofOfPayment')->findOrFail($id);
+
+        // Hanya admin (role_id 1) atau creator transaksi yang boleh hapus
+        if ($user->role_id != 1 && $transaction->created_by != $user->id) {
+            return redirect()
+                ->route('transaction.index')
+                ->with('error', 'Anda tidak memiliki izin untuk menghapus transaksi ini.');
+        }
 
         DB::beginTransaction();
         try {
-            // 1. Hapus file fisik kalau ada
-            if ($transaction->proof) {
+            // Hapus file bukti pembayaran kalau ada
+            if ($transaction->proof && Storage::disk('public')->exists($transaction->proof->src_path)) {
                 Storage::disk('public')->delete($transaction->proof->src_path);
-
-                // 2. Hapus record ProofOfPayment
-                $transaction->proof->delete();
             }
 
-            // 3. Hapus transaksi
+            // Hapus record proof juga
+            if ($transaction->proof) {
+                // Jika tidak memakai SoftDeletes:
+                $transaction->proof->delete();
+                // Jika memakai SoftDeletes dan ingin hard-delete:
+                // $transaction->proof->forceDelete();
+            }
+
+            // Hapus transaksi
             $transaction->delete();
 
             DB::commit();
             return redirect()
                 ->route('transaction.index')
-                ->with('success', 'Transaksi dan bukti pembayaran berhasil dihapus');
+                ->with('success', 'Transaksi dan bukti pembayaran berhasil dihapus.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withErrors(['error' => 'Gagal menghapus: ' . $e->getMessage()]);
+            return back()->withErrors([
+                'error' => 'Gagal menghapus transaksi: ' . $e->getMessage()
+            ]);
         }
-    }
-
-    public function show($id)
-    {
-        $transaction = Transaction::with(['member.user', 'package', 'proofOfPayment'])->findOrFail($id);
-        return view('transaction.show', compact('transaction'));
-    }
-
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            if (Auth::user()->role_id != 1) {
-                return redirect()->route('transaction.index')->with('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
-            }
-            return $next($request);
-        })->only(['show', 'edit', 'update']);
     }
 }
