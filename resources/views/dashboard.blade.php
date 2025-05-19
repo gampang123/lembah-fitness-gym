@@ -43,7 +43,7 @@
                         </div>
                         <div class="d-flex align-items-center m-l-10">
                             <h2 class="m-b-0 m-r-5">{{ $countMember }}</h2>
-                            <span class="text-gray">Members</span>
+                            <span class="text-gray">Member</span>
                         </div>
                     </div>
                 </div>

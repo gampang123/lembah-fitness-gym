@@ -9,7 +9,7 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['member_id', 'proof_of_payment_id', 'package_id', 'payment_method', 'status'];
+    protected $fillable = ['created_by', 'member_id', 'proof_of_payment_id', 'package_id', 'payment_method', 'status'];
 
     public function member()
     {
@@ -24,5 +24,10 @@ class Transaction extends Model
     public function package()
     {
         return $this->belongsTo(Package::class);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

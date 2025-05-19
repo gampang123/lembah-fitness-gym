@@ -16,7 +16,7 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transaction = Transaction::with(['member.user', 'package', 'proofOfPayment'])->get();
+        $transaction = Transaction::with(['member.user', 'package', 'proofOfPayment'])->orderby('created_at', 'desc')->get();
         return view('transaction.index', compact('transaction'));
     }
 
@@ -54,10 +54,11 @@ class TransactionController extends Controller
                 'proof_of_payment_id' => $proof?->id,
                 'payment_method'      => $request->payment_method,
                 'status'              => 'pending',
+                'created_by'          => auth()->id(), 
             ]);
 
-            // Jika yang buat adalah admin, langsung approve:
-            if (auth()->user()->role === 'admin') {
+            // If the user is admin, approve the transaction immediately
+            if (auth()->user()->role_id === 1) {
                 $this->approveLogic($transaction);
                 $message = 'Transaksi berhasil dan langsung disetujui oleh admin';
             } else {
@@ -71,13 +72,6 @@ class TransactionController extends Controller
             DB::rollBack();
             return back()->withErrors(['error' => $e->getMessage()]);
         }
-    }
-
-    public function destroy($id)
-    {
-        $transaction = Transaction::findOrFail($id);
-        $transaction->delete();
-        return redirect()->route('transaction.index')->with('success', 'Transaksi dihapus');
     }
 
     protected function approveLogic(Transaction $transaction)
@@ -117,6 +111,13 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         $transaction->update(['status' => 'cancel']);
         return redirect()->back()->with('success', 'Transaksi dibatalkan');
+    }
+
+    public function destroy($id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        $transaction->delete();
+        return redirect()->route('transaction.index')->with('success', 'Transaksi dihapus');
     }
 
     public function show($id)
