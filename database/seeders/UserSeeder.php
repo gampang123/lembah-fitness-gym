@@ -64,6 +64,9 @@ class UserSeeder extends Seeder
         ])->each(function ($user) {
             Member::factory()->create([
                 'user_id' => $user->id,
+                'start_date' => null,
+                'end_date' => null,
+                'status' => 'expired',
             ]);
         });
     }

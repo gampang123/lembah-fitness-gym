@@ -10,7 +10,13 @@ class Package extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'price'];
+    protected $fillable = ['name', 'price', 'duration_in_days'];
+    protected $casts = [
+        'price' => 'integer',
+        'duration_in_days' => 'integer',
+    ];
+    protected $table = 'packages';
+    protected $primaryKey = 'id';
 
     public function transaction(): HasMany
     {

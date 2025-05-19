@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -45,30 +46,31 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+    // ROLE
+    Route::get('/user/{id}/role', [RoleController::class, 'showUserRole']);
+
+    // MEMBER
+    Route::get('/member', [MemberController::class, 'index'])->name('member.index');
+    Route::get('/member/create', [MemberController::class, 'create'])->name('member.create');
+    Route::post('/member/store', [MemberController::class, 'store'])->name('member.store');
+    Route::get('/member/edit', [MemberController::class, 'edit'])->name('member.edit');
+    Route::delete('/member/{id}', [MemberController::class, 'destroy'])->name('member.destroy');
+    Route::get('/member/{member}/edit', [MemberController::class, 'edit'])->name('member.edit');
+    Route::put('/member/{member}', [MemberController::class, 'update'])->name('member.update');
+    Route::get('/member/card', [MemberController::class, 'card'])->name('member.card')->middleware('auth');
+
+    // PAKET
+    Route::get('/paket', [PackageController::class, 'index'])->name('paket.index');
+    Route::get('/paket/create', [PackageController::class, 'create'])->name('paket.create');
+    Route::get('/paket/edit', [PackageController::class, 'edit'])->name('paket.edit');
+    Route::resource('packages', PackageController::class);
+    
+    //Transaction
+    Route::resource('transaction', TransactionController::class);
+    Route::post('transaction/{id}/approve', [TransactionController::class, 'approve'])->name('transaction.approve');
+    Route::post('transaction/{id}/cancel',  [TransactionController::class, 'cancel']) ->name('transaction.cancel');
 });
-
-// ROLE
-Route::get('/user/{id}/role', [RoleController::class, 'showUserRole']);
-
-// MEMBER
-Route::get('/member', [MemberController::class, 'index'])->name('member.index');
-Route::get('/member/create', [MemberController::class, 'create'])->name('member.create');
-Route::post('/member/store', [MemberController::class, 'store'])->name('member.store');
-Route::get('/member/edit', [MemberController::class, 'edit'])->name('member.edit');
-Route::delete('/member/{id}', [MemberController::class, 'destroy'])->name('member.destroy');
-Route::get('/member/{member}/edit', [MemberController::class, 'edit'])->name('member.edit');
-Route::put('/member/{member}', [MemberController::class, 'update'])->name('member.update');
-Route::get('/member/card', [MemberController::class, 'card'])->name('member.card')->middleware('auth');
-
-
-
-
-// PAKET
-Route::get('/paket', [PackageController::class, 'index'])->name('paket.index');
-Route::get('/paket/create', [PackageController::class, 'create'])->name('paket.create');
-Route::get('/paket/edit', [PackageController::class, 'edit'])->name('paket.edit');
-Route::resource('packages', PackageController::class);
-
 
 // DASHBOARD
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');

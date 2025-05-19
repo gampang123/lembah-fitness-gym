@@ -25,6 +25,7 @@ class PackageController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|integer|min:0',
+            'duration_in_days' => 'required|integer|min:1',
         ]);
 
         Package::create($request->all());
@@ -42,6 +43,7 @@ class PackageController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|integer|min:0',
+            'duration_in_days' => 'required|integer|min:1',
         ]);
 
         $package->update($request->all());

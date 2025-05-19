@@ -30,6 +30,11 @@
                             <label for="price" class="form-label">Harga</label>
                             <input type="number" name="price" class="form-control" required>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="duration_in_days" class="form-label">Jumlah Hari</label>
+                            <input type="number" name="duration_in_days" class="form-control" required>
+                        </div>
                 
                         <button type="submit" class="btn btn-success">Simpan</button>
                         <a href="{{ route('paket.index') }}" class="btn btn-secondary">Kembali</a>

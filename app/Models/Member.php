@@ -11,7 +11,7 @@ class Member extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'barcode', 'barcode_path', 'start_date', 'end_date'];
+    protected $fillable = ['user_id', 'barcode', 'barcode_path', 'start_date', 'end_date', 'status'];
 
     public function user()
     {

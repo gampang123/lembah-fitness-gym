@@ -10,8 +10,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $activeMember = Member::where('end_date', '>', now())->count();
-        $inactiveMember = Member::where('end_date', '<=', now())->count();
+        $activeMember = Member::where('status', 'active')->count();
+        $inactiveMember = Member::where('status', 'expired')->count();
         $countMember = Member::count();
 
         return view('dashboard', compact('activeMember', 'inactiveMember', 'countMember'));

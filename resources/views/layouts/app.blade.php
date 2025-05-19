@@ -226,6 +226,14 @@
                                 <span class="title">Paket</span>
                             </a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a href="{{ route ('transaction.index') }}">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-fund"></i>
+                                </span>
+                                <span class="title">Transaksi</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -32,7 +32,12 @@
                             <label for="price" class="form-label">Harga</label>
                             <input type="number" name="price" class="form-control" value="{{ $package->price }}" required>
                         </div>
-                
+
+                        <div class="mb-3">
+                            <label for="duration_in_days" class="form-label">Jumlah Hari</label>
+                            <input type="number" name="duration_in_days" class="form-control" value="{{ $package->duration_in_days }}" required>
+                        </div>
+                                      
                         <button type="submit" class="btn btn-primary">Update</button>
                         <a href="{{ route('packages.index') }}" class="btn btn-secondary">Batal</a>
                     </form>
