@@ -35,9 +35,9 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Member</th>
-                                <th>Nama Paket</th>
-                                <th>Harga</th>
-                                <th>Metode Pembayaran</th>
+                                <th>Tanggal</th>
+                                <th>Jumlah</th>
+                                <th>Metode</th>
                                 <th>Status</th>
                                 @if(auth()->user()->role_id == 1)
                                     <th>Aksi</th>
@@ -49,34 +49,53 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $trx->member->user->name }}</td>
-                                <td>{{ $trx->package->name }}</td>
+                                <td>{{ $trx->created_at }}</td>
                                 <td>Rp {{ number_format($trx->package->price, 0, ',', '.') }}</td>
                                 <td>{{ $trx->payment_method }}</td>
                                 <td>{{ $trx->status }}</td>
                                 @if(auth()->user()->role_id == 1)
                                 <td>
-                                    <a href="{{ route('transaction.show', $trx->id) }}" class="btn btn-info btn-sm">Detail</a>
+                                    <a href="{{ route('transaction.show', $trx->id) }}" class="btn btn-info btn-sm" title="Detail">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+
                                     <form action="{{ route('transaction.destroy', $trx->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus transaksi ini?')">Hapus</button>
+                                        <button
+                                            type="submit"
+                                            class="btn btn-danger btn-sm"
+                                            title="Hapus"
+                                            onclick="return confirm('Hapus transaksi ini?')"
+                                        >
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
                                     </form>
-                                    @if ($trx->status == 'pending')
-                                        {{-- tombol Approve --}}
+
+                                    @if($trx->status == 'pending')
+                                        {{-- Approve --}}
                                         <form action="{{ route('transaction.approve', $trx->id) }}" method="POST" class="d-inline">
                                             @csrf
-                                            <button type="submit" class="btn btn-success btn-sm"
-                                                onclick="return confirm('Setujui transaksi ini?')">
-                                                Setujui
+                                            <button
+                                                type="submit"
+                                                class="btn btn-success btn-sm"
+                                                title="Setujui"
+                                                onclick="return confirm('Setujui transaksi ini?')"
+                                            >
+                                                <i class="fas fa-check"></i>
                                             </button>
                                         </form>
 
-                                        {{-- tombol Cancel --}}
+                                        {{-- Cancel --}}
                                         <form action="{{ route('transaction.cancel', $trx->id) }}" method="POST" class="d-inline">
                                             @csrf
-                                            <button type="submit" class="btn btn-warning btn-sm"
-                                                onclick="return confirm('Batalkan transaksi ini?')">
-                                                Cancel
+                                            <button
+                                                type="submit"
+                                                class="btn btn-warning btn-sm"
+                                                title="Batalkan"
+                                                onclick="return confirm('Batalkan transaksi ini?')"
+                                            >
+                                                <i class="fas fa-times"></i>
                                             </button>
                                         </form>
                                     @endif

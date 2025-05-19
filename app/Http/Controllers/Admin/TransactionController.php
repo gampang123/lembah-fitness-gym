@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class TransactionController extends Controller
 {
@@ -115,9 +116,29 @@ class TransactionController extends Controller
 
     public function destroy($id)
     {
-        $transaction = Transaction::findOrFail($id);
-        $transaction->delete();
-        return redirect()->route('transaction.index')->with('success', 'Transaksi dihapus');
+        $transaction = Transaction::with('proof')->findOrFail($id);
+
+        DB::beginTransaction();
+        try {
+            // 1. Hapus file fisik kalau ada
+            if ($transaction->proof) {
+                Storage::disk('public')->delete($transaction->proof->src_path);
+
+                // 2. Hapus record ProofOfPayment
+                $transaction->proof->delete();
+            }
+
+            // 3. Hapus transaksi
+            $transaction->delete();
+
+            DB::commit();
+            return redirect()
+                ->route('transaction.index')
+                ->with('success', 'Transaksi dan bukti pembayaran berhasil dihapus');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Gagal menghapus: ' . $e->getMessage()]);
+        }
     }
 
     public function show($id)
