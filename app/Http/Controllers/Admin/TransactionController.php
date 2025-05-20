@@ -114,13 +114,35 @@ class TransactionController extends Controller
         return redirect()->back()->with('success', 'Transaksi dibatalkan');
     }
 
+    public function show($id)
+    {
+        $user = Auth::user();
+
+        // Eager‐load relasi yang dibutuhkan
+        $transaction = Transaction::with([
+            'member.user',
+            'package',
+            'proofOfPayment',
+            'creator',          // pastikan relasi creator() ada di model
+        ])->findOrFail($id);
+
+        // Hanya ijinkan jika user adalah admin ATAU creator transaksi
+        if ($user->role_id === 1 || $transaction->created_by === $user->id) {
+            return view('transaction.show', compact('transaction'));
+        }
+
+        return redirect()
+            ->route('transaction.index')
+            ->with('error', 'Anda tidak memiliki izin untuk melihat transaksi ini.');
+    }
+
     public function destroy($id)
     {
         $user = Auth::user();
-        $transaction = Transaction::with('ProofOfPayment')->findOrFail($id);
+        $transaction = Transaction::with('proofOfPayment')->findOrFail($id);
 
-        // Hanya admin (role_id 1) atau creator transaksi yang boleh hapus
-        if ($user->role_id != 1 && $transaction->created_by != $user->id) {
+        // Hanya admin atau creator yang boleh hapus
+        if ($user->role_id !== 1 && $transaction->created_by !== $user->id) {
             return redirect()
                 ->route('transaction.index')
                 ->with('error', 'Anda tidak memiliki izin untuk menghapus transaksi ini.');
@@ -128,17 +150,16 @@ class TransactionController extends Controller
 
         DB::beginTransaction();
         try {
-            // Hapus file bukti pembayaran kalau ada
-            if ($transaction->proof && Storage::disk('public')->exists($transaction->proof->src_path)) {
-                Storage::disk('public')->delete($transaction->proof->src_path);
+            // Hapus file bukti pembayaran jika ada
+            if ($transaction->proofOfPayment 
+                && Storage::disk('public')->exists($transaction->proofOfPayment->src_path)
+            ) {
+                Storage::disk('public')->delete($transaction->proofOfPayment->src_path);
             }
 
-            // Hapus record proof juga
-            if ($transaction->proof) {
-                // Jika tidak memakai SoftDeletes:
-                $transaction->proof->delete();
-                // Jika memakai SoftDeletes dan ingin hard-delete:
-                // $transaction->proof->forceDelete();
+            // Hapus record proof
+            if ($transaction->proofOfPayment) {
+                $transaction->proofOfPayment->delete();
             }
 
             // Hapus transaksi
@@ -151,7 +172,7 @@ class TransactionController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withErrors([
-                'error' => 'Gagal menghapus transaksi: ' . $e->getMessage()
+                'error' => 'Gagal menghapus transaksi: ' . $e->getMessage(),
             ]);
         }
     }

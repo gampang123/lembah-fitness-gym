@@ -201,17 +201,17 @@
                                 <span class="icon-holder">
                                     <i class="anticon anticon-team"></i>
                                 </span>
-                                <span class="title">Members</span>
+                                <span class="title">Member</span>
                                 <span class="arrow">
                                     <i class="arrow-icon"></i>
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ route('member.create') }}">Add Members</a>
+                                    <a href="{{ route('member.create') }}">Tambah Member</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('member.index') }}">Data Members</a>
+                                    <a href="{{ route('member.index') }}">Data Member</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('member.card') }}">Kartu Member</a>
@@ -219,12 +219,24 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a href="{{ route ('paket.index') }}">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-inbox"></i>
                                 </span>
                                 <span class="title">Paket</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
                             </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ route('paket.create') }}">Tambah Paket</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('paket.index') }}">Data Member</a>
+                                </li>
+                            </ul>
+                        </li>
                         </li>
                         <li class="nav-item dropdown">
                             <a href="{{ route ('transaction.index') }}">
@@ -428,7 +440,7 @@
     <!-- page js -->
     <script src="{{ asset('vendors/chartjs/Chart.min.js') }}"></script>
     <script src="{{ asset('vendors/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('js/pages/dashboard-project.js') }}"></script>
+    <script src="{{ asset('js/pages/dashboard-e-commerce.js') }}"></script>
 
     <!-- Core JS -->
     <script src="{{ asset('js/app.min.js') }}"></script>
