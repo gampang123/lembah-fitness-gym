@@ -59,20 +59,9 @@
                                 <select name="payment_method" class="form-control">
                                     <option value="">-- Pilih Metode --</option>
                                     <option value="cash">Cash</option>
-                                    <option value="bank_transfer">Transfer Bank</option>
+                                    <option value="online_payment">Online Payment(VA,Transfer,QRIS, E-Wallet, Dll)</option>
                                 </select>
                                 @error('payment_method')
-                                    <span class="text-danger text-sm">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label control-label">Bukti Bayar</label>
-                            <div class="col-sm-10">
-                                <input type="file" name="proof_file" class="form-control-file">
-                                <small class="form-text text-muted">Opsional. Maks 2MB. Format: jpg, jpeg, png, pdf.</small>
-                                @error('proof_file')
                                     <span class="text-danger text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -118,14 +107,14 @@ document.getElementById('submit-button').addEventListener('click', function () {
     .then(data => {
         if (!data) return;
 
-        if (paymentMethod === 'bank_transfer' && data.snap_token) {
+        if (paymentMethod === 'online_payment' && data.snap_token) {
             snap.pay(data.snap_token, {
                 onSuccess: function (result) {
                     alert("Pembayaran berhasil!");
                     window.location.href = "{{ route('transaction.index') }}";
                 },
                 onPending: function (result) {
-                    alert("Pembayaran tertunda. Silakan selesaikan via transfer.");
+                    alert("Pembayaran tertunda. Silakan selesaikan pembayaran Anda.");
                     window.location.href = "{{ route('transaction.index') }}";
                 },
                 onError: function (result) {
@@ -136,7 +125,7 @@ document.getElementById('submit-button').addEventListener('click', function () {
                 }
             });
         } else {
-            // Metode lain seperti cash
+            // Another payment method
             window.location.href = "{{ route('transaction.index') }}";
         }
     })

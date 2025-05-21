@@ -36,6 +36,7 @@
                                 <th>No</th>
                                 <th>Nama Paket</th>
                                 <th>Harga</th>
+                                <th>Durasi (Hari)</th>
                                 @if(auth()->user()->role_id == 1)
                                 <th>Aksi</th>
                                 @endif
@@ -49,6 +50,7 @@
                                 <td>
                                     Rp {{ number_format($package->price, 0, ',', '.') }}
                                 </td>
+                                <td>{{ $package->duration_in_days }} hari</td>
                                 <td>
                                     @if(auth()->user()->role_id == 1)
                                         <a href="{{ route('packages.edit', $package->id) }}" class="btn btn-warning btn-sm">Edit</a>

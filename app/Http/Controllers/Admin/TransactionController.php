@@ -19,7 +19,7 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transaction = Transaction::with(['member.user', 'package', 'proofOfPayment'])->orderby('created_at', 'desc')->get();
+        $transaction = Transaction::with(['member.user', 'package'])->orderby('created_at', 'desc')->get();
         return view('transaction.index', compact('transaction'));
     }
 
@@ -43,13 +43,13 @@ class TransactionController extends Controller
 
             $package = Package::findOrFail($request->package_id);
             $member = Member::with('user')->findOrFail($request->member_id);
-            $orderId = 'ORDER-' . strtoupper(Str::random(10));
+            $midtransOrderId = 'ORDER-' . strtoupper(Str::random(10));
 
             // Midtrans Snap Token
-            $snapToken = null;
-            if ($request->payment_method === 'bank_transfer') {
+            $midtransSnapToken = null;
+            if ($request->payment_method === 'online_payment') {
                 $midtrans = new \App\Services\MidtransService();
-                $snapToken = $midtrans->createTransaction($orderId, $package->price, [
+                $midtransSnapToken = $midtrans->createTransaction($midtransOrderId, $package->price, [
                     'first_name' => $member->user->name,
                     'email' => $member->user->email,
                 ]);
@@ -61,8 +61,8 @@ class TransactionController extends Controller
                 'package_id'          => $request->package_id,
                 'payment_method'      => $request->payment_method,
                 'status'              => $request->payment_method === 'cash' ? 'approved' : 'pending',
-                'order_id'            => $orderId, // Unique order ID
-                'snap_token'          => $snapToken,
+                'midtrans_order_id'   => $midtransOrderId, // Unique midtrans order ID
+                'midtrans_snap_token' => $midtransSnapToken,
             ]);
 
             if ($request->payment_method === 'cash') {
@@ -80,7 +80,7 @@ class TransactionController extends Controller
                     'success'      => true,
                     'message'      => $message,
                     'transaction'  => $transaction,
-                    'snap_token'   => $snapToken,
+                    'snap_token'   => $midtransSnapToken,
                 ]);
             }
 
@@ -115,15 +115,61 @@ class TransactionController extends Controller
             return response()->json(['message' => 'Invalid signature'], 403);
         }
 
-        $transaction = Transaction::where('order_id', $request->input('order_id'))->first();
+        $transaction = Transaction::where('midtrans_order_id', $request->input('order_id'))->first();
 
         if (!$transaction) {
             return response()->json(['message' => 'Transaction not found'], 404);
         }
 
-        if ($request->input('transaction_status') === 'settlement') {
-            $this->approveLogic($transaction);
+        $midtransStatus = $request->input('transaction_status');
+        $paymentType = $request->input('payment_type'); 
+        // $fraudStatus    = $request->input('fraud_status'); // Optional, mostly for credit card transactions
+
+        // Update status midtrans_status regardless
+        $transaction->midtrans_status = $midtransStatus;
+        if ($paymentType) {
+            $transaction->midtrans_payment_type = $paymentType;
         }
+
+        switch ($midtransStatus) {
+            // case 'capture':
+            //     // Usually for credit card
+            //     if ($fraudStatus === 'challenge') {
+            //         $transaction->status = 'pending';
+            //     } else {
+            //         $transaction->status = 'approved';
+            //         $this->approveLogic($transaction);
+            //     }
+            //     break;
+
+            case 'settlement':
+                $transaction->status = 'approved';
+                $this->approveLogic($transaction);
+                break;
+
+            case 'pending':
+                $transaction->status = 'pending';
+                break;
+
+            case 'deny':
+            case 'cancel':
+                $transaction->status = 'cancelled';
+                break;
+
+            case 'expire':
+                $transaction->status = 'expired';
+                break;
+
+            case 'failure':
+                $transaction->status = 'cancelled';
+                break;
+
+            default:
+                $transaction->status = 'pending';
+                break;
+        }
+
+        $transaction->save();
 
         return response()->json(['message' => 'Callback processed']);
     }
@@ -138,7 +184,7 @@ class TransactionController extends Controller
         $oldStatus = $member->status;
         $member->update(['status' => 'active']);
 
-        // Hitung tanggal
+        // Calculate new and end date
         $now        = Carbon::now();
         $currentEnd = $member->end_date ? Carbon::parse($member->end_date) : null;
         $baseStart  = ($currentEnd && $currentEnd->gt($now)) ? $currentEnd : $now;
@@ -163,7 +209,7 @@ class TransactionController extends Controller
     public function cancel($id)
     {
         $transaction = Transaction::findOrFail($id);
-        $transaction->update(['status' => 'cancel']);
+        $transaction->update(['status' => 'cancelled']);
         return redirect()->back()->with('success', 'Transaksi dibatalkan');
     }
 
@@ -175,7 +221,6 @@ class TransactionController extends Controller
         $transaction = Transaction::with([
             'member.user',
             'package',
-            'proofOfPayment',
             'creator',          // pastikan relasi creator() ada di model
         ])->findOrFail($id);
 

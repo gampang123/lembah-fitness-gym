@@ -17,9 +17,11 @@ return new class extends Migration
             $table->foreignId('member_id')->constrained('members')->onDelete('cascade');
             $table->foreignId('package_id')->nullable()->constrained('packages')->nullOnDelete();
             $table->enum('payment_method', ['cash', 'online_payment']);
-            $table->enum('status', ['approved', 'pending', 'cancel', 'failed']);
-            $table->string('order_id')->unique();
-            $table->string('snap_token')->nullable();
+            $table->enum('status', ['pending', 'approved', 'cancelled', 'expired']);
+            $table->string('midtrans_order_id')->unique()->nullable(); // Unique order ID for Midtrans
+            $table->string('midtrans_snap_token')->nullable(); // For storing Midtrans snap token
+            $table->string('midtrans_payment_type')->nullable(); // For storing Midtrans payment type
+            $table->string('midtrans_status')->nullable(); // For storing Midtrans status
             $table->timestamps();
         });
     }
