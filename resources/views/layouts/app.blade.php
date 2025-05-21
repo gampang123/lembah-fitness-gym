@@ -233,7 +233,7 @@
                                     <a href="{{ route('paket.create') }}">Tambah Paket</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('paket.index') }}">Data Member</a>
+                                    <a href="{{ route('paket.index') }}">Data Paket</a>
                                 </li>
                             </ul>
                         </li>
@@ -440,19 +440,19 @@
     <!-- page js -->
     <script src="{{ asset('vendors/chartjs/Chart.min.js') }}"></script>
     <script src="{{ asset('vendors/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('js/pages/dashboard-e-commerce.js') }}"></script>
+    <script src="{{ asset('js/pages/dashboard-e-commerce.js') }}"></script>    
 
     <!-- Core JS -->
     <script src="{{ asset('js/app.min.js') }}"></script>
 
     {{-- TABLE --}}
-<script src="{{ asset('vendors/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('vendors/datatables/dataTables.bootstrap.min.js') }}"></script>
-<script>
-    $(document).ready(function() {
-        $('#data-table').DataTable();
-    });
-</script>
+    <script src="{{ asset('vendors/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendors/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#data-table').DataTable();
+        });
+    </script>
 
 </body>
 

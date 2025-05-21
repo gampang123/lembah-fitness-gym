@@ -23,7 +23,7 @@ class Member extends Model
         return $this->hasMany(Transaction::class, 'member_id');
     }
 
-    // Method untuk mendapatkan barcode berdasarkan ID Member
+    // Method to generate barcode from the member ID
     public function getBarcodeAttribute()
     {
         $barcode = new DNS1D();

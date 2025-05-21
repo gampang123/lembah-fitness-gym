@@ -15,8 +15,6 @@ class Package extends Model
         'price' => 'integer',
         'duration_in_days' => 'integer',
     ];
-    protected $table = 'packages';
-    protected $primaryKey = 'id';
 
     public function transaction(): HasMany
     {

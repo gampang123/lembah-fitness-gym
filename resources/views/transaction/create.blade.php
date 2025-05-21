@@ -19,7 +19,8 @@
             <div class="card-body">
                 <h4>Form Transaksi</h4>
                 <div class="m-t-25">
-                    <form action="{{ route('transaction.store') }}" method="POST" enctype="multipart/form-data">
+                    <form id="transaction-form" enctype="multipart/form-data">
+
                         @csrf
 
                         <div class="form-group row">
@@ -80,7 +81,7 @@
                         <div class="form-group row">
                             <div class="col-sm-10 offset-sm-2">
                                 <a href="{{ route('transaction.index') }}" class="btn btn-secondary">Batal</a>
-                                <button type="submit" class="btn btn-primary">Simpan Transaksi</button>
+                                <button type="button" id="submit-button" class="btn btn-primary">Simpan Transaksi</button>
                             </div>
                         </div>
 
@@ -91,4 +92,59 @@
 
     </div>
 </div>
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+
+<script>
+document.getElementById('submit-button').addEventListener('click', function () {
+    const form = document.getElementById('transaction-form');
+    const formData = new FormData(form);
+    const paymentMethod = formData.get('payment_method');
+
+    fetch("{{ route('transaction.store') }}", {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: formData
+    })
+    .then(response => {
+        if (response.redirected) {
+            window.location.href = response.url;
+            return null;
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (!data) return;
+
+        if (paymentMethod === 'bank_transfer' && data.snap_token) {
+            snap.pay(data.snap_token, {
+                onSuccess: function (result) {
+                    alert("Pembayaran berhasil!");
+                    window.location.href = "{{ route('transaction.index') }}";
+                },
+                onPending: function (result) {
+                    alert("Pembayaran tertunda. Silakan selesaikan via transfer.");
+                    window.location.href = "{{ route('transaction.index') }}";
+                },
+                onError: function (result) {
+                    alert("Terjadi kesalahan pembayaran.");
+                },
+                onClose: function () {
+                    alert("Popup pembayaran ditutup.");
+                }
+            });
+        } else {
+            // Metode lain seperti cash
+            window.location.href = "{{ route('transaction.index') }}";
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        alert("Terjadi kesalahan saat mengirim data.");
+    });
+});
+</script>
+
 @endsection

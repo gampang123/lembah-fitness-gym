@@ -13,7 +13,7 @@ class Role extends Model
 
     protected $fillable = ['name'];
 
-    // Relasi ke User
+    // Relation to User
     public function users(): HasMany
     {
         return $this->hasMany(User::class, 'role_id');

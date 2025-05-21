@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Services\MidtransService;
+use Illuminate\Support\Str;
 
 class TransactionController extends Controller
 {
@@ -33,46 +35,97 @@ class TransactionController extends Controller
         $request->validate([
             'member_id'       => 'required|exists:members,id',
             'package_id'      => 'required|exists:packages,id',
-            'payment_method'  => 'required|in:cash,bank_transfer',
-            'proof_file'      => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'payment_method'  => 'required|in:cash,online_payment',
         ]);
 
         DB::beginTransaction();
         try {
-            $proof = null;
-            if ($request->hasFile('proof_file')) {
-                $file = $request->file('proof_file');
-                $path = $file->store('proof_of_payments', 'public');
-                $proof = ProofOfPayment::create([
-                    'src_name' => $file->getClientOriginalName(),
-                    'src_path' => $path,
+
+            $package = Package::findOrFail($request->package_id);
+            $member = Member::with('user')->findOrFail($request->member_id);
+            $orderId = 'ORDER-' . strtoupper(Str::random(10));
+
+            // Midtrans Snap Token
+            $snapToken = null;
+            if ($request->payment_method === 'bank_transfer') {
+                $midtrans = new \App\Services\MidtransService();
+                $snapToken = $midtrans->createTransaction($orderId, $package->price, [
+                    'first_name' => $member->user->name,
+                    'email' => $member->user->email,
                 ]);
             }
 
             $transaction = Transaction::create([
+                'created_by'          => Auth::id(),
                 'member_id'           => $request->member_id,
                 'package_id'          => $request->package_id,
-                'proof_of_payment_id' => $proof?->id,
                 'payment_method'      => $request->payment_method,
-                'status'              => 'pending',
-                'created_by'          => auth()->id(), 
+                'status'              => $request->payment_method === 'cash' ? 'approved' : 'pending',
+                'order_id'            => $orderId, // Unique order ID
+                'snap_token'          => $snapToken,
             ]);
 
-            // If the user is admin, approve the transaction immediately
-            if (auth()->user()->role_id === 1) {
+            if ($request->payment_method === 'cash') {
                 $this->approveLogic($transaction);
-                $message = 'Transaksi berhasil dan langsung disetujui oleh admin';
+                $message = 'Transaksi berhasil dan disetujui.';
             } else {
-                $message = 'Transaksi berhasil, menunggu approval';
+                $message = 'Transaksi berhasil. Silakan selesaikan pembayaran via Midtrans.';
             }
 
             DB::commit();
-            return redirect()->route('transaction.index')
-                            ->with('success', $message);
+
+            // ✅ Return JSON if AJAX
+            if ($request->ajax()) {
+                return response()->json([
+                    'success'      => true,
+                    'message'      => $message,
+                    'transaction'  => $transaction,
+                    'snap_token'   => $snapToken,
+                ]);
+            }
+
+            return redirect()->route('transaction.index')->with('success', $message);
+
         } catch (\Exception $e) {
             DB::rollBack();
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal membuat transaksi',
+                    'error'   => $e->getMessage(),
+                ], 500);
+            }
+
             return back()->withErrors(['error' => $e->getMessage()]);
         }
+    }
+
+    public function handleCallback(Request $request)
+    {
+        $serverKey = config('midtrans.server_key');
+        $signatureKey = hash('sha512',
+            $request->input('order_id') .
+            $request->input('status_code') .
+            $request->input('gross_amount') .
+            $serverKey
+        );
+
+        if ($signatureKey !== $request->input('signature_key')) {
+            return response()->json(['message' => 'Invalid signature'], 403);
+        }
+
+        $transaction = Transaction::where('order_id', $request->input('order_id'))->first();
+
+        if (!$transaction) {
+            return response()->json(['message' => 'Transaction not found'], 404);
+        }
+
+        if ($request->input('transaction_status') === 'settlement') {
+            $this->approveLogic($transaction);
+        }
+
+        return response()->json(['message' => 'Callback processed']);
     }
 
     protected function approveLogic(Transaction $transaction)

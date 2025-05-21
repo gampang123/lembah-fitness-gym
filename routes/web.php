@@ -70,6 +70,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('transaction', TransactionController::class);
     Route::post('transaction/{id}/approve', [TransactionController::class, 'approve'])->name('transaction.approve');
     Route::post('transaction/{id}/cancel',  [TransactionController::class, 'cancel']) ->name('transaction.cancel');
+    Route::post('/midtrans/callback', [TransactionController::class, 'handleCallback']);
 });
 
 // DASHBOARD
