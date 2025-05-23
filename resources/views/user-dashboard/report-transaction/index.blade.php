@@ -31,6 +31,9 @@
                     <strong>Paket 1 Bulan</strong>
                     <div class="date">1 November 2025</div>
                 </div>
+                <div class="info">
+                    <div class="date">1 November 2025</div>
+                </div>
             </div>
             <div class="card-right">
                 <strong>Rp250.000</strong>

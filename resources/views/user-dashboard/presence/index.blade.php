@@ -1,12 +1,12 @@
 @extends('user-dashboard.layouts.menu')
 
-@section('title', 'Dashboard Presensi')
+@section('title', 'Dashboard Package')
 
 @section('content')
     <section>
         <div class="row d-flex justify-content-between align-items-center">
             <div class="col-auto">
-                <a href="{{ route('member.dashboard') }}">
+                <a href="{{ route('package-member.index') }}">
                     <img style="width: 20px;" src="{{ asset('asset/arrow-left .svg') }}" alt="">
                 </a>
             </div>
@@ -78,9 +78,6 @@
                         <option value="3">Maret</option>
                     </select>
                 </div>
-            </div>
-            <div class="btn-wrapper">
-                <button class="finish">Selesai</button>
             </div>
         </div>
     </div>

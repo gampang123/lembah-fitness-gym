@@ -16,7 +16,7 @@
     <section>
         <h1>Pesanan Saya</h1>
     </section>
-    <section>
+    <section style="height: 100vh;">
         <div style="margin-top: 40px;" class="register-package row text-start">
             <div class="col"><b>Nama</b></div>
             <div class="col">: Fulan bin Fulan</div>
