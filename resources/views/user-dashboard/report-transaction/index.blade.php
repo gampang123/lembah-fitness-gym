@@ -1,6 +1,6 @@
 @extends('user-dashboard.layouts.menu')
 
-@section('title', 'Dashboard Presensi')
+@section('title', 'Dashboard Riwayat Transaksi')
 
 @section('content')
     <section>
@@ -18,38 +18,56 @@
         </div>
     </section>
     <section>
-        <h1>Riwayat Kehadiran</h1>
+        <h1>Riwayat Transaksi</h1>
     </section>
 
     <section style="margin-top: 30px;">
-        <div class="schedule-box">
-            <div class="schedule-date">
-                <span class="dot"></span>
-                <span class="date-text">1 November 2025</span>
+        <div class="payment-card">
+            <div class="card-left">
+                <div class="icon-circle">
+                    <span class="icon">$</span>
+                </div>
+                <div class="info">
+                    <strong>Paket 1 Bulan</strong>
+                    <div class="date">1 November 2025</div>
+                </div>
             </div>
-            <div class="schedule-time">11.30 – 13.00</div>
-        </div>
-        <div class="schedule-box">
-            <div class="schedule-date">
-                <span class="dot"></span>
-                <span class="date-text">1 November 2025</span>
+            <div class="card-right">
+                <strong>Rp250.000</strong>
+                <div class="status pending">Pending</div>
             </div>
-            <div class="schedule-time">11.30 – 13.00</div>
         </div>
-        <div class="schedule-box">
-            <div class="schedule-date">
-                <span class="dot"></span>
-                <span class="date-text">1 November 2025</span>
+        <div style="margin-top: 8px;" class="payment-card">
+            <div class="card-left">
+                <div class="icon-circle">
+                    <span class="icon">$</span>
+                </div>
+                <div class="info">
+                    <strong>Paket 1 Bulan</strong>
+                    <div class="date">1 November 2025</div>
+                </div>
             </div>
-            <div class="schedule-time">11.30 – 13.00</div>
-        </div>
-        <div class="schedule-box">
-            <div class="schedule-date">
-                <span class="dot"></span>
-                <span class="date-text">1 November 2025</span>
+            <div class="card-right">
+                <strong>Rp250.000</strong>
+                <div style="color: red;" class="status pending">Cancel</div>
             </div>
-            <div class="schedule-time">11.30 – 13.00</div>
         </div>
+        <div style="margin-top: 8px;" class="payment-card">
+            <div class="card-left">
+                <div class="icon-circle">
+                    <span class="icon">$</span>
+                </div>
+                <div class="info">
+                    <strong>Paket 1 Bulan</strong>
+                    <div class="date">1 November 2025</div>
+                </div>
+            </div>
+            <div class="card-right">
+                <strong>Rp250.000</strong>
+                <div style="color: green;" class="status pending">Success</div>
+            </div>
+        </div>
+
     </section>
 
 

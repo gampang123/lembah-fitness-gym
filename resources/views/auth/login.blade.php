@@ -1,47 +1,55 @@
-<x-guest-layout>
+<link rel="stylesheet" href="{{ asset('common/css/login.css') }}">
+
+<div class="login-container">
+    <h2>Welcome <span class="highlight">Back!</span></h2>
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" class="login-form">
         @csrf
 
         <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="input-group">
+            <label>
+                <span class="input-icon"><img style="width: 17px;" src="{{ asset('asset/profile.svg') }}"
+                        alt=""></span>
+                <input id="email" class="input-field" type="email" name="email" :value="old('email')"
+                    placeholder="Email Address" required autofocus autocomplete="username" />
+            </label>
+            <x-input-error :messages="$errors->get('email')" class="input-error" />
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="input-group">
+            <label>
+                <span class="input-icon">🔒</span>
+                <input id="password" class="input-field" type="password" name="password" placeholder="Password"
+                    required autocomplete="current-password" />
+            </label>
+            <x-input-error :messages="$errors->get('password')" class="input-error" />
         </div>
 
         <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
+        <div class="remember-me">
+            <input id="remember_me" type="checkbox" name="remember">
+            <label for="remember_me">Remember me</label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+        <!-- Submit -->
+        <button type="submit" class="login-button">LOG IN</button>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+        <!-- Forgot Password -->
+        @if (Route::has('password.request'))
+            <div class="forgot">
+                <a href="{{ route('password.request') }}">Forgot Password?</a>
+            </div>
+        @endif
+
+        <!-- Signup -->
+        <div class="signup">
+            Don’t have an account?
+            <a href="{{ route('register') }}">Sign up</a>
         </div>
     </form>
-</x-guest-layout>
+</div>

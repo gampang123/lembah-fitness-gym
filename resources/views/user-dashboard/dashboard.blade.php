@@ -19,13 +19,13 @@
         </div>
     </section>
     <section>
-        <div class="row">
-            <div class="col">
-                <a style="color: white" href="{{ route('package-member.index') }}">
-                    <div class="package-dahboard">
-                        <img style="width: 40px;" src="{{ asset('asset/package.svg') }}" alt="">
+        <div class="row text-center">
+            <div class="col d-flex flex-column align-items-center">
+                <a style="color: white; text-decoration: none;" href="{{ route('package-member.index') }}">
+                    <div class="package-dashboard">
+                        <img style="width: 40px;" src="{{ asset('asset/package.svg') }}" alt="Membership">
                     </div>
-                    <b> Paket</b>
+                    <b class="mt-2 d-block">Membership</b>
                 </a>
             </div>
             <div class="col"></div>

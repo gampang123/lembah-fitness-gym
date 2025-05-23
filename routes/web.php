@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Member\PackageMemberController;
 use App\Http\Controllers\Member\PresenceMemberController;
+use App\Http\Controllers\Member\ProfileMemberController;
+use App\Http\Controllers\Member\ReportTransactionMemberController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -56,6 +58,12 @@ Route::middleware(['auth', 'role:2'])->group(function () {
     });
     Route::prefix('member')->middleware(['auth'])->group(function () {
         Route::resource('presence-member', PresenceMemberController::class);
+    });
+    Route::prefix('member')->middleware(['auth'])->group(function () {
+        Route::resource('report-transaction-member', ReportTransactionMemberController::class);
+    });
+    Route::prefix('member')->middleware(['auth'])->group(function () {
+        Route::resource('profile-member', ProfileMemberController::class);
     });
 });
 

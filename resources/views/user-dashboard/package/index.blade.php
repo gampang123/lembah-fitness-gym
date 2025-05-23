@@ -6,10 +6,10 @@
     <section>
         <div class="row d-flex justify-content-between align-items-center">
             <div class="col-auto">
-                <img style="width: 20px;" src="{{ asset('asset/arrow-left .svg') }}" alt="">
-            </div>
-            <div class="col-auto">
-                <img src="{{ asset('common/dashboard/assets/images/svg/button-filter.svg') }}" alt="">
+                <a href="{{ route('member.dashboard') }}">
+                    <img style="width: 20px;" src="{{ asset('asset/arrow-left .svg') }}" alt="">
+
+                </a>
             </div>
         </div>
     </section>

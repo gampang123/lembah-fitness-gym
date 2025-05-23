@@ -19,17 +19,22 @@
 
 <body style="background-color: black">
     <div class="site_content">
+        {{-- LOADER MENU--------------------------- --}}
+
+        <div id="preloader">
+            <img src="{{ asset('asset/loader.gif') }}" alt="Loading..." />
+        </div>
         <section class="section-main-ver p-0">
 
             @yield('content')
 
         </section>
-        <!-- ======================Bottom Fix Menu ========================= -->
+        {{-- BOTTON MENU--------------------------- --}}
         <div class="bottom-menu-svg-main">
             <div style="background-color: black;" class="bottom-menu-svg">
                 <div style="background-color: #356bff;" class="gol3">
                     <div class="add-to-cart-icon">
-                        <a href="cart.html">
+                        <a href="javascript:void(0);" onclick="openModal('modalQr')">
                             <img style="width: 40px;;" class="home-icon" src="{{ asset('asset/qr-code.svg') }}"
                                 alt="footer-cart">
                         </a>
@@ -53,8 +58,8 @@
                         </filter>
                         <linearGradient id="paint0_linear_29_9412" x1="300" y1="-1" x2="300.656"
                             y2="149.001" gradientUnits="userSpaceOnUse">
-                            <stop offset="0" stop-color="#4d4d4d" stop-opacity="0.24" />
-                            <stop offset="1" stop-color="#4d4d4d" stop-opacity="0.16" />
+                            <stop offset="0" stop-color="#e1e1e1" stop-opacity="0.24" />
+                            <stop offset="1" stop-color="#e1e1e1" stop-opacity="0.16" />
                         </linearGradient>
                     </defs>
                 </svg>
@@ -82,7 +87,7 @@
                 </li>
                 <li class="list">
                     <div class="white-circle"></div>
-                    <a href="wishlist.html">
+                    <a href="{{ route('report-transaction-member.index') }}">
                         <i class="icon">
                             <img style="width: 38%" src="{{ asset('asset/transaksi.svg') }}" alt="WishList">
                         </i>
@@ -91,7 +96,7 @@
                 </li>
                 <li class="list">
                     <div class="white-circle"></div>
-                    <a href="account.html">
+                    <a href="{{ route('profile-member.index') }}">
                         <i class="icon">
                             <img style="width: 30%" src="{{ asset('asset/profile.svg') }}" alt="profile-footer">
                         </i>
@@ -101,6 +106,41 @@
             </ul>
         </div>
     </div>
+    <!-- Modal QR -->
+    <div id="modalQr" class="modal">
+        <div class="modal-content qr-content" style="background-color: white">
+            <span style="color: black" class="close-btn" onclick="closeModal('modalQr')">&times;</span>
+            <div class="qr-wrapper">
+                <img src="{{ asset('asset/qr-code.svg') }}" alt="QR Code" class="qr-image">
+            </div>
+        </div>
+    </div>
+    <script>
+        function openModal(id) {
+            document.getElementById(id).style.display = "flex";
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        // Klik luar modal untuk menutup
+        window.onclick = function(event) {
+            document.querySelectorAll('.modal').forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        };
+    </script>
+
+    <script>
+        window.addEventListener("load", function() {
+            const preloader = document.getElementById("preloader");
+            preloader.style.display = "none";
+        });
+    </script>
+
     @yield('scripts')
 
     <script src="{{ asset('common/dashboard/assets/javascript/jquery.js') }}"></script>

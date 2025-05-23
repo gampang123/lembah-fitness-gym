@@ -1,0 +1,142 @@
+/* Reset dasar */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #0f0c29;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Container fleksibel */
+.login-container {
+    background-color: #1c1b29;
+    padding: 30px 20px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    position: relative;
+}
+
+.back-icon {
+    font-size: 20px;
+    color: #ccc;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+h2 {
+    margin-bottom: 25px;
+    font-weight: 300;
+    text-align: center;
+}
+
+.highlight {
+    color: #3399ff;
+    font-weight: bold;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: flex;
+    align-items: center;
+    background-color: #2d2d3a;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.input-icon {
+    font-size: 18px;
+    color: white;
+}
+
+.input-field {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: white;
+    padding-left: 10px;
+    outline: none;
+    font-size: 14px;
+}
+
+.input-error {
+    font-size: 12px;
+    color: #ff6b6b;
+    margin-top: 5px;
+}
+
+.remember-me {
+    font-size: 12px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.login-button {
+    width: 100%;
+    background-color: #3399ff;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.forgot,
+.signup {
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.forgot a,
+.signup a {
+    color: #3399ff;
+    text-decoration: none;
+}
+
+/* Responsif tambahan untuk HP */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 25px 15px;
+        border-radius: 15px;
+    }
+
+    .input-group label {
+        padding: 8px;
+    }
+
+    .input-icon {
+        font-size: 16px;
+    }
+
+    .input-field {
+        font-size: 13px;
+    }
+
+    .login-button {
+        padding: 10px;
+        font-size: 13px;
+    }
+}
+
+.register-button {
+    composes: login-button;
+}

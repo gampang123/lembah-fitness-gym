@@ -47,8 +47,9 @@ section {
     margin-top: 10px;
     color: black;
     font-weight: bold;
-    background-color: #ffb200;
+    background-color: #00ff37;
     width: 150px;
+    font-size: 15px;
     text-align: center;
     padding: 8px;
     border-radius: 20px;
@@ -59,13 +60,18 @@ section {
 
 /* PACKAGE DASBOARD */
 
-.package-dahboard {
+.package-dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #f1f1f1;
-    text-align: center;
     border-radius: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 10px;
+    width: 58px;
+    height: 58px;
+    margin: 0 auto;
 }
+
 
 .row {
     text-align: center;
@@ -168,3 +174,221 @@ section {
     outline: none;
     background-color: #fff;
 }
+
+
+/* TRANSACTION REPORT */
+.payment-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 15px;
+    padding: 15px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    font-family: sans-serif;
+}
+
+.card-left {
+    display: flex;
+    align-items: center;
+}
+
+.icon-circle {
+    width: 45px;
+    height: 45px;
+    background-color: #0a1e5e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 22px;
+    margin-right: 12px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.date {
+    color: gray;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+.card-right {
+    text-align: right;
+    font-size: 14px;
+}
+
+.status {
+    margin-top: 3px;
+    font-size: 13px;
+}
+
+.status.pending {
+    color: #ff8243;
+}
+
+/* END REPORT TRANSACTION */
+
+
+/* LOADER */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#preloader img {
+    width: 300px;
+    /* Ukuran loader */
+}
+
+/* END LOADER */
+
+
+/* PROFILE SETTING */
+.profile-setting {
+    text-align: center;
+    color: white;
+}
+
+.profile-img-setting {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.email {
+    color: #ccc;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.settings-container {
+    color: white;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.setting-item {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    padding: 15px 0;
+    border-bottom: 1px solid #333;
+}
+
+.icon-setting {
+    width: 40px;
+    height: 40px;
+    background-color: #444;
+    border-radius: 50%;
+    padding: 8px;
+    margin-right: 15px;
+}
+
+.setting-text {
+    flex-grow: 1;
+}
+
+.setting-text p {
+    margin: 4px 0 0;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.arrow {
+    font-size: 22px;
+    color: #888;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #222;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    min-width: 300px;
+}
+
+.close-btn {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+}
+
+.btn-save {
+    background: #ff8243;
+    color: black;
+    border: none;
+    font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* END PROFILE SETTING */
+
+/* QR */
+
+.qr-content {
+    max-width: 300px;
+}
+
+.qr-image {
+    width: 200px;
+    margin-top: 15px;
+}
+
+.qr-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.qr-image {
+    width: 200px;
+    /* atau sesuai kebutuhan */
+}
+
+
+/* ENDQR */

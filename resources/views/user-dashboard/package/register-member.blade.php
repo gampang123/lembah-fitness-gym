@@ -1,6 +1,6 @@
 @extends('user-dashboard.layouts.menu')
 
-@section('title', 'Dashboard Package')
+@section('title', 'Dashboard Daftar Member')
 
 @section('content')
 
