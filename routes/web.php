@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Member\PackageMemberController;
+use App\Http\Controllers\Member\PresenceMemberController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -28,15 +30,36 @@ Route::get('/storage/{path}', function ($path) {
     return response()->file(storage_path('app/public/' . $path));
 })->where('path', '.*');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// routes/web.php
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard'); // admin
+    })->middleware('role:1');
+
+    Route::get('/member-dashboard', function () {
+        return view('user-dashboard.dashboard'); // member
+    })->middleware('role:2')->name('member.dashboard');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// USER DASHBOARD
+
+Route::middleware(['auth', 'role:2'])->group(function () {
+    Route::prefix('member')->middleware(['auth'])->group(function () {
+        Route::resource('package-member', PackageMemberController::class);
+    });
+    Route::prefix('member')->middleware(['auth'])->group(function () {
+        Route::resource('presence-member', PresenceMemberController::class);
+    });
+});
+
+// END USER DASHBOARD
 
 // ADMIN
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -65,15 +88,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/paket/create', [PackageController::class, 'create'])->name('paket.create');
     Route::get('/paket/edit', [PackageController::class, 'edit'])->name('paket.edit');
     Route::resource('packages', PackageController::class);
-    
+
     //Transaction
     Route::resource('transaction', TransactionController::class);
     Route::post('transaction/{id}/approve', [TransactionController::class, 'approve'])->name('transaction.approve');
-    Route::post('transaction/{id}/cancel',  [TransactionController::class, 'cancel']) ->name('transaction.cancel');
+    Route::post('transaction/{id}/cancel',  [TransactionController::class, 'cancel'])->name('transaction.cancel');
 });
 
-// DASHBOARD
+
+// DASHBOARD REVIEW
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::post('/midtrans/callback', [TransactionController::class, 'handleCallback']);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

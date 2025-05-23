@@ -1,0 +1,170 @@
+section {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    background-color: #1a1a1a;
+    padding: 10px;
+    margin-top: 40px;
+    border-radius: 15px;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.profile-text p {
+    margin: 0;
+    font-size: 14px;
+    color: white;
+}
+
+.profile-text h2 {
+    margin: 0;
+    font-size: 16px;
+    color: #a7ff56;
+    font-weight: bold;
+}
+
+
+/* DASHBOARD CONTENT */
+.content-dashboard {
+    background-color: #356bff;
+    color: white;
+    padding: 15px;
+    margin-top: 30px;
+    border-radius: 15px;
+}
+
+.status-member {
+    margin-top: 10px;
+    color: black;
+    font-weight: bold;
+    background-color: #ffb200;
+    width: 150px;
+    text-align: center;
+    padding: 8px;
+    border-radius: 20px;
+}
+
+/* END WELCOME DASHBOARD */
+
+
+/* PACKAGE DASBOARD */
+
+.package-dahboard {
+    background-color: #f1f1f1;
+    text-align: center;
+    border-radius: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.row {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.schedule-box {
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: sans-serif;
+    margin-top: 10px;
+}
+
+.schedule-date {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #000;
+    /* atau bisa #001F3F tergantung desain */
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: navy;
+    /* warna biru gelap */
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.schedule-time {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+}
+
+/* FILTER POP UP */
+#filter-popup {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 24px 20px 32px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.15);
+    transition: bottom 0.4s ease;
+    z-index: 1050;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#filter-popup.active {
+    bottom: 0;
+}
+
+#close-filter-popup {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
+
+.filter-form-section {
+    margin-top: 32px;
+}
+
+.filter-form-section div {
+    margin-bottom: 20px;
+}
+
+.filter-form-section label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+}
+
+.filter-form-section select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
+}
+
+.filter-form-section select:focus {
+    border-color: #007bff;
+    outline: none;
+    background-color: #fff;
+}

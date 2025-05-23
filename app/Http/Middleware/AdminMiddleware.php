@@ -17,6 +17,6 @@ class AdminMiddleware
         }
 
         // Redirect jika bukan admin
-        return redirect('/')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
+        return redirect('/login')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
     }
 }

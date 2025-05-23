@@ -17,7 +17,21 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/dashboard';
+
+    public static function redirectTo()
+    {
+        $user = auth()->user();
+
+        if ($user->role_id === 1) {
+            return '/dashboard';
+        } elseif ($user->role_id === 2) {
+            return '/member-dashboard';
+        }
+
+        return '/login';
+    }
+
+
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
