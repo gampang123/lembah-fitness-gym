@@ -178,6 +178,7 @@ section {
 
 /* TRANSACTION REPORT */
 .payment-card {
+    color: black;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -231,6 +232,100 @@ section {
 .status.pending {
     color: #ff8243;
 }
+
+/* Details transactio */
+/* Ribbon pita status pojok kanan atas */
+.ribbon {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.ribbon span {
+    position: absolute;
+    display: block;
+    width: 200px;
+    padding: 10px 0;
+    background: #e74c3c;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    transform: rotate(45deg);
+    top: 30px;
+    right: -50px;
+    font-size: 14px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.transaction-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Card utama */
+.transaction-card {
+    position: relative;
+    padding: 30px 20px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    /* opsional jika card punya latar */
+}
+
+/* Logo */
+.logo-wrapper img {
+    width: 60px;
+    margin-bottom: 20px;
+}
+
+/* Info pembayaran */
+.payment-info .label {
+    font-size: 14px;
+    color: white;
+}
+
+.payment-info .value {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.payment-info .amount {
+    font-size: 30px;
+    font-weight: bold;
+    color: #00ff37;
+    margin-bottom: 30px;
+}
+
+
+/* Tombol selesai */
+.btn-wrapper {
+    text-align: center;
+}
+
+.finish {
+    background-color: #3399ff;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.finish:hover {
+    background-color: #2277cc;
+}
+
 
 /* END REPORT TRANSACTION */
 

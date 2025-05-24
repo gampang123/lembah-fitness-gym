@@ -1,25 +1,34 @@
 @extends('user-dashboard.layouts.menu')
 
-@section('title', 'Dashboard Daftar Member')
+@section('title', 'Dashboard Detail Transaksi')
 
 @section('content')
-
     <section>
         <div class="row d-flex justify-content-between align-items-center">
             <div class="col-auto">
-                <a href="{{ route('package-member.list') }}">
+                <a href="{{ route('report-transaction-member.index') }}">
                     <img style="width: 20px;" src="{{ asset('asset/arrow-left .svg') }}" alt="">
                 </a>
             </div>
         </div>
     </section>
-    <section>
-        <h1>Pesanan Saya</h1>
-    </section>
-    <section style="height: 100vh;">
-        <form method="POST" action="/bayar">
-            @csrf <!-- jika kamu pakai Laravel -->
+    <section class="transaction-detail">
+        <div class="transaction-card">
+            <div class="ribbon"><span>UNPAID</span></div>
+            <!-- Logo -->
+            <div class="logo-wrapper">
+                <img src="{{ asset('asset/logo-circle.svg') }}" alt="Logo" />
+            </div>
 
+            <!-- Informasi Pembayaran -->
+            <div class="payment-info">
+                <p class="label">Pembayaran via</p>
+                <p class="value">Online Payment</p>
+                <p class="label">Jumlah Pembayaran</p>
+                <p class="amount">Rp250.000</p>
+            </div>
+
+            <!-- Detail Transaksi -->
             <div style="margin-top: 40px;" class="register-package row text-start">
                 <div class="col"><b>Nama</b></div>
                 <div class="col">: Fulan bin Fulan
@@ -44,17 +53,15 @@
                     <input type="hidden" name="total" value="250000">
                 </div>
             </div>
-            <div class="register-package row text-start align-items-center mb-3">
-                <div class="col"><b>Metode Pembayaran</b></div>
-                <div class="col">: Online Payment
-                    <input type="hidden" name="metode_pembayaran" value="Online Payment">
-                </div>
-            </div>
-            <div class="btn-wrapper">
-                <button type="submit" class="finish">Bayar</button>
-            </div>
-        </form>
-    </section>
 
+            <!-- Tombol -->
+            <div class="btn-wrapper">
+                <form method="POST" action="/selesai">
+                    @csrf
+                    <button type="submit" class="finish">Bayar / Selesai</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
 @endsection

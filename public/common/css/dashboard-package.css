@@ -62,3 +62,68 @@ h1 {
     font-weight: 500;
     border: none;
 }
+
+/* PERPANJANG MEMBERSHIP */
+.membership-package {
+    background-color: #356bff;
+    color: white;
+    padding: 15px;
+    margin-top: 30px;
+    border-radius: 15px;
+}
+
+.membership-extend {
+    margin-top: 30px;
+}
+
+.btn-membership {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: white;
+    padding: 5px 0;
+    border-top: 2px solid white;
+}
+
+/* END PERPANJANG MEMBERSHIP */
+
+/* LIST PACKAGE MEMBER */
+.card {
+    background: linear-gradient(to bottom, #111, #1c1c1c);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 10px;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 4);
+}
+
+.card-title {
+    color: #00ff37;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.card-price {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.per-month {
+    font-weight: normal;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.card-features {
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* EMD LIST PACKAGE MEMBER */

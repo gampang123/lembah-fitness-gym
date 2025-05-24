@@ -36,7 +36,7 @@ class ReportTransactionMemberController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('user-dashboard.report-transaction.details-transaction');
     }
 
     /**

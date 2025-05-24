@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="{{ asset('common/css/login.css') }}">
 
 <div class="login-container">
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <img style="width: 50px;" src="{{ asset('asset/logo-circle.svg') }}" alt="">
+    </div>
     <h2>Buat <span class="highlight">Akun</span></h2>
     <p style="text-align: center;">Selamat Bergabung Di</p>
     <h2>Lembah Fitness Warungboto</span></h2>

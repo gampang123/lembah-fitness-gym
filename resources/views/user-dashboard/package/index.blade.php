@@ -14,16 +14,29 @@
         </div>
     </section>
     <section>
-        <h1>Daftar Paket</h1>
+        <h1>Membership</h1>
     </section>
-    <section>
-        <div class="content-package">
+
+    {{-- NO JOINED MEMBERSHIP --}}
+    <section style="margin-top: 50px;">
+        <p style="font-size: 12px; margin-bottom: 8px; color: #00ff37; text-align: center;">Anda Tidak Memiliki Paket Apapun
+        </p>
+    </section>
+    {{-- END NO JOINED MEMBERSHIP --}}
+
+    <section class="membership-package">
+        <div>
+            <p style="font-size: 12px; margin-bottom: 8px; color: #00ff37;" class="text-kiri">Member saat ini</p>
             <h2 class="text-kiri"><b>Paket 1 Bulan</b></h2>
             <p class="text-kiri">Rp250.000</p>
-            <a href="{{ route('package-member.create') }}">
-                <div class="botton-Register">Daftar</div>
+        </div>
+        <div class="membership-extend">
+            <a href="{{ route('package-member.list') }}">
+                <div class="btn-membership">
+                    <p style="font-size: 15px;">Perpanjang Membership</p>
+                    <img style="width: 25px; padding-right: 8px;" src="{{ asset('asset/login.svg') }}" alt="">
+                </div>
             </a>
         </div>
     </section>
-
 @endsection

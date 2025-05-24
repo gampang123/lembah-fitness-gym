@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="{{ asset('common/css/login.css') }}">
 
 <div class="login-container">
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <img style="width: 50px;" src="{{ asset('asset/logo-circle.svg') }}" alt="">
+    </div>
     <h2>Welcome <span class="highlight">Back!</span></h2>
 
     <!-- Session Status -->

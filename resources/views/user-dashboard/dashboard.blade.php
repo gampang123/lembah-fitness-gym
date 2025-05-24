@@ -25,10 +25,9 @@
                     <div class="package-dashboard">
                         <img style="width: 40px;" src="{{ asset('asset/package.svg') }}" alt="Membership">
                     </div>
-                    <b class="mt-2 d-block">Membership</b>
+                    <b class="mt-2 d-block">Langganan</b>
                 </a>
             </div>
-            <div class="col"></div>
             <div class="col"></div>
             <div class="col"></div>
         </div>

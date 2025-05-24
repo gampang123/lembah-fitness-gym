@@ -22,54 +22,57 @@
     </section>
 
     <section style="margin-top: 30px;">
-        <div class="payment-card">
-            <div class="card-left">
-                <div class="icon-circle">
-                    <span class="icon">$</span>
+        <a href="{{ url('test-detail-transaksi') }}">
+            <div class="payment-card">
+                <div class="card-left">
+                    <div class="icon-circle">
+                        <span class="icon">$</span>
+                    </div>
+                    <div class="info">
+                        <strong>Paket 1 Bulan</strong>
+                        <div class="date">1 November 2025</div>
+                    </div>
                 </div>
-                <div class="info">
-                    <strong>Paket 1 Bulan</strong>
-                    <div class="date">1 November 2025</div>
-                </div>
-                <div class="info">
-                    <div class="date">1 November 2025</div>
-                </div>
-            </div>
-            <div class="card-right">
-                <strong>Rp250.000</strong>
-                <div class="status pending">Pending</div>
-            </div>
-        </div>
-        <div style="margin-top: 8px;" class="payment-card">
-            <div class="card-left">
-                <div class="icon-circle">
-                    <span class="icon">$</span>
-                </div>
-                <div class="info">
-                    <strong>Paket 1 Bulan</strong>
-                    <div class="date">1 November 2025</div>
+                <div class="card-right">
+                    <strong>Rp250.000</strong>
+                    <div class="status pending">Pending</div>
                 </div>
             </div>
-            <div class="card-right">
-                <strong>Rp250.000</strong>
-                <div style="color: red;" class="status pending">Cancel</div>
-            </div>
-        </div>
-        <div style="margin-top: 8px;" class="payment-card">
-            <div class="card-left">
-                <div class="icon-circle">
-                    <span class="icon">$</span>
+        </a>
+        <a href="">
+            <div style="margin-top: 8px;" class="payment-card">
+                <div class="card-left">
+                    <div class="icon-circle">
+                        <span class="icon">$</span>
+                    </div>
+                    <div class="info">
+                        <strong>Paket 1 Bulan</strong>
+                        <div class="date">1 November 2025</div>
+                    </div>
                 </div>
-                <div class="info">
-                    <strong>Paket 1 Bulan</strong>
-                    <div class="date">1 November 2025</div>
+                <div class="card-right">
+                    <strong>Rp250.000</strong>
+                    <div style="color: red;" class="status pending">Cancel</div>
                 </div>
             </div>
-            <div class="card-right">
-                <strong>Rp250.000</strong>
-                <div style="color: green;" class="status pending">Success</div>
+        </a>
+        <a href="">
+            <div style="margin-top: 8px;" class="payment-card">
+                <div class="card-left">
+                    <div class="icon-circle">
+                        <span class="icon">$</span>
+                    </div>
+                    <div class="info">
+                        <strong>Paket 1 Bulan</strong>
+                        <div class="date">1 November 2025</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <strong>Rp250.000</strong>
+                    <div style="color: green;" class="status pending">Success</div>
+                </div>
             </div>
-        </div>
+        </a>
 
     </section>
 
@@ -101,7 +104,7 @@
                 </div>
             </div>
             <div class="btn-wrapper">
-                <button class="finish">Selesai</button>
+                <button class="finish">Cari</button>
             </div>
         </div>
     </div>

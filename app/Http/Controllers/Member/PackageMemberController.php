@@ -24,6 +24,14 @@ class PackageMemberController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function list()
+    {
+        return view('user-dashboard.package.list-package-member');
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
