@@ -24,6 +24,15 @@
             </div>
 
             <div class="setting-item">
+                <img src="{{ asset('asset/mail.svg') }}" alt="mail icon" class="icon-setting">
+                <div class="setting-text">
+                    <strong>Email</strong>
+                    <p>hello@reallygreatsite.com</p>
+                </div>
+                <span class="arrow">›</span>
+            </div>
+
+            <div class="setting-item">
                 <img src="{{ asset('asset/key.svg') }}" alt="key icon" class="icon-setting">
                 <div class="setting-text">
                     <strong>Password</strong>
@@ -74,6 +83,16 @@
                     <label for="modal-input-1" id="label1">Nama</label>
                     <input type="text" id="modal-input-1" name="input1" required>
                 </div>
+                <button type="submit" class="btn-save">Save</button>
+            </form>
+        </div>
+    </div>
+    <!-- Email Modal -->
+    <div id="modalEmail" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modalEmail')">&times;</span>
+            <h3 id="modal-title">Edit</h3>
+            <form id="modal-form">
                 <div class="form-group" id="group-email">
                     <label for="modal-input-2" id="label2">Email</label>
                     <input type="email" id="modal-input-2" name="input2">
@@ -136,6 +155,9 @@
                 switch (label) {
                     case "Nama":
                         openModal("modalNama");
+                        break;
+                    case "Email":
+                        openModal("modalEmail");
                         break;
                     case "Password":
                         openModal("modalPassword");

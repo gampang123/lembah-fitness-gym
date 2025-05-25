@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Member\CardMemberController;
 use App\Http\Controllers\Member\PackageMemberController;
 use App\Http\Controllers\Member\PresenceMemberController;
 use App\Http\Controllers\Member\ProfileMemberController;
@@ -71,6 +72,10 @@ Route::middleware(['auth', 'role:2'])->group(function () {
         Route::resource('profile-member', ProfileMemberController::class);
     });
     Route::get('/list-package-member', [PackageMemberController::class, 'list'])->name('package-member.list');
+
+    Route::prefix('member')->middleware(['auth'])->group(function () {
+        Route::resource('card-member', CardMemberController::class);
+    });
 });
 
 // END USER DASHBOARD

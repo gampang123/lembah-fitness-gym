@@ -67,15 +67,16 @@ section {
     background-color: #f1f1f1;
     border-radius: 15px;
     padding: 10px;
-    width: 58px;
+    width: 120px;
     height: 58px;
     margin: 0 auto;
 }
 
 
 .row {
-    text-align: center;
+    --bs-gutter-x: 0;
     margin-top: 20px;
+    text-align: center;
 }
 
 .schedule-box {
@@ -486,3 +487,14 @@ section {
 
 
 /* ENDQR */
+
+
+/* CHART */
+canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* END CHART */

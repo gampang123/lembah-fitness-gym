@@ -111,7 +111,7 @@
         <div class="modal-content qr-content" style="background-color: white">
             <span style="color: black" class="close-btn" onclick="closeModal('modalQr')">&times;</span>
             <div class="qr-wrapper">
-                <img src="{{ asset('asset/qr-code.svg') }}" alt="QR Code" class="qr-image">
+                <img src="{{ asset('asset/qrr.svg') }}" alt="QR Code" class="qr-image">
             </div>
         </div>
     </div>
@@ -147,6 +147,9 @@
     <script src="{{ asset('common/dashboard/assets/javascript/slick.min.js') }}"></script>
     <script src="{{ asset('common/dashboard/assets/javascript/bootstrap.min.js') }}"></script>
     <script src="{{ asset('common/dashboard/assets/javascript/script.js') }}"></script>
+
+    {{-- CHART --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 
 </html>
