@@ -6,11 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Member;
 use App\Models\Package;
 use App\Models\Transaction;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use App\Services\MidtransService;
 use Illuminate\Support\Str;
 
@@ -18,7 +16,7 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transaction = Transaction::with(['member.user', 'package'])->orderby('created_at', 'desc')->get();
+        $transaction = Transaction::with(['member.user', 'package'])->orderBy('created_at', 'desc')->get();
         return view('transaction.index', compact('transaction'));
     }
 
@@ -39,19 +37,22 @@ class TransactionController extends Controller
 
         DB::beginTransaction();
         try {
-
             $package = Package::findOrFail($request->package_id);
             $member = Member::with('user')->findOrFail($request->member_id);
             $midtransOrderId = 'ORDER-' . strtoupper(Str::random(10));
 
             // Midtrans Snap Token
             $midtransSnapToken = null;
+            $status = 'pending';
+
             if ($request->payment_method === 'online_payment') {
-                $midtrans = new \App\Services\MidtransService();
+                $midtrans = new MidtransService();
                 $midtransSnapToken = $midtrans->createTransaction($midtransOrderId, $package->price, [
                     'first_name' => $member->user->name,
                     'email' => $member->user->email,
                 ]);
+            } else {
+                $status = 'paid';
             }
 
             $transaction = Transaction::create([
@@ -59,44 +60,34 @@ class TransactionController extends Controller
                 'member_id'           => $request->member_id,
                 'package_id'          => $request->package_id,
                 'payment_method'      => $request->payment_method,
-                'status'              => $request->payment_method === 'cash' ? 'approved' : 'pending',
-                'midtrans_order_id'   => $midtransOrderId, // Unique midtrans order ID
+                'status'              => $status,
+                'midtrans_order_id'   => $midtransOrderId,
                 'midtrans_snap_token' => $midtransSnapToken,
             ]);
 
-            if ($request->payment_method === 'cash') {
-                $this->approveLogic($transaction);
-                $message = 'Transaksi berhasil dan disetujui.';
-            } else {
-                $message = 'Transaksi berhasil. Silakan selesaikan pembayaran via Midtrans.';
-            }
-
             DB::commit();
 
-            // ✅ Return JSON if AJAX
-            if ($request->ajax()) {
-                return response()->json([
-                    'success'      => true,
-                    'message'      => $message,
-                    'transaction'  => $transaction,
-                    'snap_token'   => $midtransSnapToken,
-                ]);
-            }
+            $message = $status === 'paid'
+                ? 'Transaksi berhasil (cash).'
+                : 'Transaksi berhasil. Silakan selesaikan pembayaran via Midtrans.';
 
-            return redirect()->route('transaction.index')->with('success', $message);
-
+            return $request->ajax()
+                ? response()->json([
+                    'success' => true,
+                    'message' => $message,
+                    'transaction' => $transaction,
+                    'snap_token' => $midtransSnapToken,
+                ])
+                : redirect()->route('transaction.index')->with('success', $message);
         } catch (\Exception $e) {
             DB::rollBack();
-
-            if ($request->ajax()) {
-                return response()->json([
+            return $request->ajax()
+                ? response()->json([
                     'success' => false,
                     'message' => 'Gagal membuat transaksi',
-                    'error'   => $e->getMessage(),
-                ], 500);
-            }
-
-            return back()->withErrors(['error' => $e->getMessage()]);
+                    'error' => $e->getMessage(),
+                ], 500)
+                : back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
@@ -121,48 +112,26 @@ class TransactionController extends Controller
         }
 
         $midtransStatus = $request->input('transaction_status');
-        $paymentType = $request->input('payment_type'); 
-        // $fraudStatus    = $request->input('fraud_status'); // Optional, mostly for credit card transactions
+        $paymentType = $request->input('payment_type');
 
-        // Update status midtrans_status regardless
         $transaction->midtrans_status = $midtransStatus;
-        if ($paymentType) {
-            $transaction->midtrans_payment_type = $paymentType;
-        }
+        $transaction->midtrans_payment_type = $paymentType ?? null;
 
         switch ($midtransStatus) {
-            // case 'capture':
-            //     // Usually for credit card
-            //     if ($fraudStatus === 'challenge') {
-            //         $transaction->status = 'pending';
-            //     } else {
-            //         $transaction->status = 'approved';
-            //         $this->approveLogic($transaction);
-            //     }
-            //     break;
-
             case 'settlement':
-                $transaction->status = 'approved';
-                $this->approveLogic($transaction);
+                $transaction->status = 'paid';
                 break;
-
             case 'pending':
                 $transaction->status = 'pending';
                 break;
-
             case 'deny':
             case 'cancel':
-                $transaction->status = 'cancelled';
-                break;
-
-            case 'expire':
-                $transaction->status = 'expired';
-                break;
-
             case 'failure':
                 $transaction->status = 'cancelled';
                 break;
-
+            case 'expire':
+                $transaction->status = 'expired';
+                break;
             default:
                 $transaction->status = 'pending';
                 break;
@@ -173,104 +142,39 @@ class TransactionController extends Controller
         return response()->json(['message' => 'Callback processed']);
     }
 
-    protected function approveLogic(Transaction $transaction)
-    {
-        $member  = $transaction->member;
-        $package = $transaction->package;
-
-        // Update status
-        $transaction->update(['status' => 'approved']);
-        $oldStatus = $member->status;
-        $member->update(['status' => 'active']);
-
-        // Calculate new and end date
-        $now        = Carbon::now();
-        $currentEnd = $member->end_date ? Carbon::parse($member->end_date) : null;
-        $baseStart  = ($currentEnd && $currentEnd->gt($now)) ? $currentEnd : $now;
-        $newEnd     = $baseStart->copy()->addDays($package->duration_in_days);
-
-        $data = ['end_date' => $newEnd];
-        if (!$member->start_date || $oldStatus === 'expired') {
-            $data['start_date'] = $baseStart;
-        }
-
-        $member->update($data);
-    }
-
-    // endpoint approve() tetap bisa dipanggil terpisah untuk user:
-    public function approve($id)
-    {
-        $transaction = Transaction::findOrFail($id);
-        $this->approveLogic($transaction);
-        return redirect()->back()->with('success', 'Transaksi disetujui');
-    }
-
-    public function cancel($id)
-    {
-        $transaction = Transaction::findOrFail($id);
-        $transaction->update(['status' => 'cancelled']);
-        return redirect()->back()->with('success', 'Transaksi dibatalkan');
-    }
-
     public function show($id)
     {
         $user = Auth::user();
-
-        // Eager‐load relasi yang dibutuhkan
         $transaction = Transaction::with([
             'member.user',
             'package',
-            'creator',          // pastikan relasi creator() ada di model
+            'creator',
         ])->findOrFail($id);
 
-        // Hanya ijinkan jika user adalah admin ATAU creator transaksi
         if ($user->role_id === 1 || $transaction->created_by === $user->id) {
             return view('transaction.show', compact('transaction'));
         }
 
-        return redirect()
-            ->route('transaction.index')
+        return redirect()->route('transaction.index')
             ->with('error', 'Anda tidak memiliki izin untuk melihat transaksi ini.');
     }
 
     public function destroy($id)
     {
         $user = Auth::user();
-        $transaction = Transaction::with('proofOfPayment')->findOrFail($id);
+        $transaction = Transaction::findOrFail($id);
 
-        // Hanya admin atau creator yang boleh hapus
         if ($user->role_id !== 1 && $transaction->created_by !== $user->id) {
-            return redirect()
-                ->route('transaction.index')
+            return redirect()->route('transaction.index')
                 ->with('error', 'Anda tidak memiliki izin untuk menghapus transaksi ini.');
         }
 
-        DB::beginTransaction();
         try {
-            // Hapus file bukti pembayaran jika ada
-            if ($transaction->proofOfPayment 
-                && Storage::disk('public')->exists($transaction->proofOfPayment->src_path)
-            ) {
-                Storage::disk('public')->delete($transaction->proofOfPayment->src_path);
-            }
-
-            // Hapus record proof
-            if ($transaction->proofOfPayment) {
-                $transaction->proofOfPayment->delete();
-            }
-
-            // Hapus transaksi
             $transaction->delete();
-
-            DB::commit();
-            return redirect()
-                ->route('transaction.index')
-                ->with('success', 'Transaksi dan bukti pembayaran berhasil dihapus.');
+            return redirect()->route('transaction.index')
+                ->with('success', 'Transaksi berhasil dihapus.');
         } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->withErrors([
-                'error' => 'Gagal menghapus transaksi: ' . $e->getMessage(),
-            ]);
+            return back()->withErrors(['error' => 'Gagal menghapus transaksi: ' . $e->getMessage()]);
         }
     }
 }

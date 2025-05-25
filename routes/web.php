@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\PackageController;
+use App\Http\Controllers\Admin\PresenceController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
@@ -112,6 +113,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('transaction', TransactionController::class);
     Route::post('transaction/{id}/approve', [TransactionController::class, 'approve'])->name('transaction.approve');
     Route::post('transaction/{id}/cancel',  [TransactionController::class, 'cancel'])->name('transaction.cancel');
+
+    //Presence
+    Route::get('presence',  [PresenceController::class, 'index'])->name('presence.index');
+    Route::post('presence/manual-store',  [PresenceController::class, 'manualStore'])->name('presence.manual.store');
+    Route::post('presence/scan-store',  [PresenceController::class, 'scanStore'])->name('presence.scan.store');
+    Route::post('close-session/{id}',  [PresenceController::class, 'closeSession'])->name('presence.close');
 });
 
 

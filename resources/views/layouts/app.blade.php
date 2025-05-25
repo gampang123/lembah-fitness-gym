@@ -246,6 +246,14 @@
                                 <span class="title">Transaksi</span>
                             </a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a href="{{ route ('presence.index') }}">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-camera"></i>
+                                </span>
+                                <span class="title">Presensi</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -433,6 +441,8 @@
         </div>
     </div>
 
+    <!-- Sweet Alert -->  
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <!-- Core Vendors JS -->
     <script src="{{ asset('js/vendors.min.js') }}"></script>
