@@ -27,7 +27,8 @@
 
 </head>
 
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="70"
+    tabindex="0">
     <header class="fixed-top transparent" id="mainHeader">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark px-0">
@@ -55,10 +56,10 @@
                             <a class="nav-link text-white" href="#about">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Fasilitas</a>
+                            <a class="nav-link text-white" href="#fasilitas">Fasilitas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Member</a>
+                            <a class="nav-link text-white" href="#member">Member</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="#">Kontak</a>
@@ -126,7 +127,7 @@
         </div>
     </section>
 
-    <section class="py-5 bg-light" id="keunggulan">
+    <section class="py-5 bg-light" id="fasilitas">
         <div class="container text-center">
             <h2 class="mb-5 fw-bold">Keunggulan Lembah Fitness Gym</h2>
             <div class="row g-4">
@@ -177,6 +178,186 @@
         </div>
     </section>
 
+    <section id="member" class="pricing">
+        <div class="pricing_1">
+            <div class="responsive-container-block big-container">
+                <div class="responsive-container-block container">
+                    <p class="text-blk head">
+                        Bergabung Bersama Kami
+                    </p>
+                    <div class="responsive-container-block card-container">
+                        <div class="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
+                            <div class="card card-selected">
+                                <p class="text-blk">
+                                    Paket 1 Bulan
+                                </p>
+                                <h1 class="monthly-price">
+                                    Rp250.000
+                                </h1>
+                                <div class="card-description">
+                                    <span class="monthly-plan">
+                                        <p class="text-blk card-points">
+                                            Akses Gym Selama 1 Bulan
+                                        </p>
+                                        {{-- <p class="text-blk card-points">
+                                            Ultricies diam arcu.
+                                        </p>
+                                        <p class="text-blk card-points">
+                                            Pellentesque elementum.
+                                        </p>
+                                        <p class="text-blk card-points">
+                                            Leo adipiscing adipiscing.
+                                        </p>
+                                        <p class="text-blk card-points">
+                                            Mattis diam amet.
+                                        </p> --}}
+                                    </span>
+                                </div>
+                                <span class="buy-button">
+                                    <button class="btns text-black" type="button">
+                                        Buy
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
+                            <div class="card">
+                                <p class="text-blk">
+                                    Paket 3 Bulan
+                                </p>
+                                <h1 class="monthly-price">
+                                    Rp600.000
+                                </h1>
+                                <div class="card-description">
+                                    <span class="monthly-plan">
+                                        <p class="text-blk card-points">
+                                            Akses Gym Selama 3 Bulan
+                                        </p>
+                                        {{-- <p class="text-blk card-points">
+                                            Lorem nibh odio montes.
+                                        </p>
+                                        <p class="text-blk card-points">
+                                            Lacus volutpat nunc leo at.
+                                        </p>
+                                        <p class="text-blk card-points">
+                                            Arcu in augue nunc risus.
+                                        </p>
+                                        <p class="text-blk card-points">
+                                            Ornare vestibulum.
+                                        </p> --}}
+                                    </span>
+
+                                </div>
+                                <span class="buy-button">
+                                    <button class="btns" type="button">
+                                        Buy
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
+                            <div class="card">
+                                <p class="text-blk">
+                                    Paket Personal Training
+                                </p>
+                                <h1 class="monthly-price">
+                                    Rp820.000
+                                </h1>
+                                <div class="card-description">
+                                    <span class="monthly-plan">
+                                        <p class="text-blk card-points">
+                                            Akses Gym Selama 1 Bulan
+                                        </p>
+                                        <p class="text-blk card-points">
+                                            Di latih oleh trainer profesional
+                                        </p>
+                                        {{-- <p class="text-blk card-points">
+                                            Pellentesque elementum.
+                                        </p>
+                                        <p class="text-blk card-points">
+                                            Leo adipiscing adipiscing.
+                                        </p>
+                                        <p class="text-blk card-points">
+                                            Mattis diam amet.
+                                        </p> --}}
+                                    </span>
+                                </div>
+                                <span class="buy-button">
+                                    <button class="btns" type="button">
+                                        Buy
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontak" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5"><b>Kontak Kami</b></h2>
+            <div class="row">
+                <!-- Form -->
+                <div class="col-md-6 mb-4">
+                    <form id="contactForm">
+                        <div class="mb-3">
+                            <label for="nama" class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="nama" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telepon" class="form-label">No. Telepon</label>
+                            <input type="tel" class="form-control" id="telepon" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pesan" class="form-label">Pesan</label>
+                            <textarea class="form-control" id="pesan" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Kirim via WhatsApp</button>
+                    </form>
+                </div>
+
+                <!-- Google Maps -->
+                <div class="col-md-6">
+                    <div class="ratio ratio-4x3">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.7839295902545!2d110.38780447500528!3d-7.812682592207873!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a571a08a55f05%3A0xa5831b1aa3e9386b!2sLembah%20Fitness%20Warungboto!5e0!3m2!1sid!2sid!4v1748138419406!5m2!1sid!2sid"
+                            width="600" height="450" style="border:0; border-radius:15px;" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-white py-4" style="background-color: #212529;">
+        <div class="container text-center">
+            <p class="mb-2">&copy; {{ date('Y') }} Lembah Fitness Gym.</p>
+        </div>
+    </footer>
+
+
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            var nama = document.getElementById("nama").value;
+            var telepon = document.getElementById("telepon").value;
+            var pesan = document.getElementById("pesan").value;
+
+            var nomorTujuan = "6281946656058";
+
+            var text = `Halo, saya ingin menghubungi:\n\nNama: ${nama}\nNo. Telp: ${telepon}\nPesan: ${pesan}`;
+
+            var url = `https://wa.me/${nomorTujuan}?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        });
+    </script>
+
 
 
 
@@ -214,6 +395,8 @@
         AOS.init();
     </script>
 
+    {{-- PRICNG  --}}
+    <script src="{{ asset('common/js/pricing.js') }}"></script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
