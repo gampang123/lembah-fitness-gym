@@ -42,15 +42,11 @@
     <section>
         <div style="background-color: purple" class="row content-dashboard">
             <div class="col">
-                <b>Mulai</b> <br>
-                12.00
-            </div>
-            <div class="col">
-                <b>Berakhir</b> <br>
-                15.00
+                <b>Sesi Aktif Saat Ini</b> <br>
+                12 jam 30 menit 10 detik
             </div>
 
-            {{-- <p style="color: white;">Tidak ada Sesi</p> --}}
+            <p style="color: #00ff37;">Tidak ada Sesi</p>
         </div>
     </section>
 
