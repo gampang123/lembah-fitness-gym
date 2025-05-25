@@ -62,7 +62,7 @@
                             <a class="nav-link text-white" href="#member">Member</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Kontak</a>
+                            <a class="nav-link text-white" href="#kontak">Kontak</a>
                         </li>
                     </ul>
                     <div class="d-flex justify-content-center justify-content-lg-end mt-3 mt-lg-0">
