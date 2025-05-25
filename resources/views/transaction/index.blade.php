@@ -58,19 +58,26 @@
                                     <td>{{ $trx->payment_method }}</td>
                                     <td>{{ $trx->status }}</td>
                                     @if(auth()->user()->role_id == 1)
-                                        <td>
-                                            <a href="{{ route('transaction.show', $trx->id) }}" class="btn btn-info btn-sm" title="Detail">
-                                                <i class="fas fa-info-circle"></i>
-                                            </a>
-                                            <form action="{{ route('transaction.destroy', $trx->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus transaksi ini?')">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    @endif
+                                    <td>
+                                        @if($trx->status === 'pending' && $trx->payment_method === 'online_payment')
+                                            <button class="btn btn-warning btn-sm continue-payment-btn" data-snap-token="{{ $trx->midtrans_snap_token }}" title="Lanjutkan Pembayaran">
+                                                <i class="fas fa-credit-card"></i>
+                                            </button>
+                                        @endif
+
+                                        <a href="{{ route('transaction.show', $trx->id) }}" class="btn btn-info btn-sm" title="Detail">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+
+                                        <form action="{{ route('transaction.destroy', $trx->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus transaksi ini?')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -81,4 +88,34 @@
         </div>
     </div>
 </div>
+
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+<script>
+document.querySelectorAll('.continue-payment-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const snapToken = this.getAttribute('data-snap-token');
+        if (!snapToken) {
+            alert('Token pembayaran tidak tersedia.');
+            return;
+        }
+
+        snap.pay(snapToken, {
+            onSuccess: function(result) {
+                alert('Pembayaran berhasil!');
+                window.location.reload();
+            },
+            onPending: function(result) {
+                alert('Pembayaran tertunda. Silakan selesaikan pembayaran Anda.');
+                window.location.reload();
+            },
+            onError: function(result) {
+                alert('Terjadi kesalahan pembayaran.');
+            },
+            onClose: function() {
+                alert('Popup pembayaran ditutup.');
+            }
+        });
+    });
+});
+</script>
 @endsection

@@ -259,6 +259,8 @@
             </div>
             <!-- Side Nav END -->
 
+            @include('sweetalert::alert')
+
             @yield('content')
 
             <!-- Footer START -->

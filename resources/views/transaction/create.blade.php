@@ -110,18 +110,41 @@ document.getElementById('submit-button').addEventListener('click', function () {
         if (paymentMethod === 'online_payment' && data.snap_token) {
             snap.pay(data.snap_token, {
                 onSuccess: function (result) {
-                    alert("Pembayaran berhasil!");
-                    window.location.href = "{{ route('transaction.index') }}";
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pembayaran berhasil!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.href = "{{ route('transaction.index') }}";
+                    });
                 },
                 onPending: function (result) {
-                    alert("Pembayaran tertunda. Silakan selesaikan pembayaran Anda.");
-                    window.location.href = "{{ route('transaction.index') }}";
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Pembayaran tertunda',
+                        text: 'Silakan selesaikan pembayaran untuk mengaktifkan membership.',
+                        showConfirmButton: true,
+                    }).then(() => {
+                        window.location.href = "{{ route('transaction.index') }}";
+                    });
                 },
                 onError: function (result) {
-                    alert("Terjadi kesalahan pembayaran.");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi kesalahan pembayaran',
+                        text: 'Silakan coba lagi.',
+                    });
                 },
                 onClose: function () {
-                    alert("Popup pembayaran ditutup.");
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Pembayaran tertunda',
+                        text: 'Popup pembayaran ditutup. Silakan selesaikan pembayaran untuk mengaktifkan membership.',
+                        showConfirmButton: true,
+                    }).then(() => {
+                        window.location.href = "{{ route('transaction.index') }}";
+                    });
                 }
             });
         } else {

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Services\MidtransService;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TransactionController extends Controller
 {
@@ -39,13 +40,14 @@ class TransactionController extends Controller
         try {
             $package = Package::findOrFail($request->package_id);
             $member = Member::with('user')->findOrFail($request->member_id);
-            $midtransOrderId = 'ORDER-' . strtoupper(Str::random(10));
+            $midtransOrderId = null;
 
             // Midtrans Snap Token
             $midtransSnapToken = null;
             $status = 'pending';
 
             if ($request->payment_method === 'online_payment') {
+                $midtransOrderId = 'ORDER-' . strtoupper(Str::random(10));
                 $midtrans = new MidtransService();
                 $midtransSnapToken = $midtrans->createTransaction($midtransOrderId, $package->price, [
                     'first_name' => $member->user->name,
@@ -69,7 +71,15 @@ class TransactionController extends Controller
 
             $message = $status === 'paid'
                 ? 'Transaksi berhasil (cash).'
-                : 'Transaksi berhasil. Silakan selesaikan pembayaran via Midtrans.';
+                : 'Silakan selesaikan pembayaran via Midtrans.';
+
+                if ($status === 'paid') {
+                    Alert::success('Berhasil', $message);
+                } elseif ($status === 'pending') {
+                    Alert::warning('Perhatian', $message);
+                } else {
+                    Alert::warning('Perhatian', 'Status transaksi: ' . ucfirst($status));
+                }
 
             return $request->ajax()
                 ? response()->json([
@@ -78,16 +88,17 @@ class TransactionController extends Controller
                     'transaction' => $transaction,
                     'snap_token' => $midtransSnapToken,
                 ])
-                : redirect()->route('transaction.index')->with('success', $message);
+                : redirect()->route('transaction.index');
         } catch (\Exception $e) {
             DB::rollBack();
+            Alert::error('Gagal', 'Gagal membuat transaksi: ' . $e->getMessage());
             return $request->ajax()
                 ? response()->json([
                     'success' => false,
                     'message' => 'Gagal membuat transaksi',
                     'error' => $e->getMessage(),
                 ], 500)
-                : back()->withErrors(['error' => $e->getMessage()]);
+                : back();
         }
     }
 
@@ -155,8 +166,8 @@ class TransactionController extends Controller
             return view('transaction.show', compact('transaction'));
         }
 
-        return redirect()->route('transaction.index')
-            ->with('error', 'Anda tidak memiliki izin untuk melihat transaksi ini.');
+        Alert::warning('Peringatan', 'Anda tidak memiliki izin untuk melihat transaksi ini.');
+        return redirect()->route('transaction.index');
     }
 
     public function destroy($id)
@@ -165,16 +176,18 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
 
         if ($user->role_id !== 1 && $transaction->created_by !== $user->id) {
-            return redirect()->route('transaction.index')
-                ->with('error', 'Anda tidak memiliki izin untuk menghapus transaksi ini.');
+            Alert::warning('Peringatan', 'Anda tidak memiliki izin untuk menghapus transaksi ini.');
+            return redirect()->route('transaction.index');
         }
 
         try {
             $transaction->delete();
-            return redirect()->route('transaction.index')
-                ->with('success', 'Transaksi berhasil dihapus.');
+            Alert::success('Berhasil', 'Transaksi berhasil dihapus.');
+            return redirect()->route('transaction.index');
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'Gagal menghapus transaksi: ' . $e->getMessage()]);
+            Alert::error('Gagal', 'Gagal menghapus transaksi: ' . $e->getMessage());
+
+            return back();
         }
     }
 }
