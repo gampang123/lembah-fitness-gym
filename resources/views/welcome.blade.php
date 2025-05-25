@@ -66,8 +66,23 @@
                         </li>
                     </ul>
                     <div class="d-flex justify-content-center justify-content-lg-end mt-3 mt-lg-0">
-                        <a href="{{ route('login') }}" class="btn btn-danger">Login</a>
+                        @guest
+                            <a href="{{ route('login') }}" class="btn btn-danger">Login</a>
+                        @else
+                            @php
+                                switch (auth()->user()->role_id) {
+                                    case 1:
+                                        $accountRoute = route('dashboard');
+                                        break;
+                                    case 2:
+                                        $accountRoute = route('member.dashboard');
+                                        break;
+                                }
+                            @endphp
+                            <a href="{{ $accountRoute }}" class="btn btn-success">My Account</a>
+                        @endguest
                     </div>
+
                 </div>
             </nav>
         </div>
@@ -132,7 +147,7 @@
             <h2 class="mb-5 fw-bold">Keunggulan Lembah Fitness Gym</h2>
             <div class="row g-4">
                 <!-- Card 1 -->
-                <div class="col-md-3" data-aos="fade-up">
+                <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up">
                     <div class="card h-100 shadow-sm border-0">
                         <div class="card-body text-center">
                             <i class="bi bi-house-gear fs-1 text-primary mb-3"></i>
@@ -143,7 +158,7 @@
                     </div>
                 </div>
                 <!-- Card 2 -->
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
                     <div class="card h-100 shadow-sm border-0">
                         <div class="card-body text-center">
                             <i class="bi bi-tools fs-1 text-success mb-3"></i>
@@ -154,7 +169,7 @@
                     </div>
                 </div>
                 <!-- Card 3 -->
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
                     <div class="card h-100 shadow-sm border-0">
                         <div class="card-body text-center">
                             <i class="bi bi-mortarboard fs-1 text-warning mb-3"></i>
@@ -165,7 +180,7 @@
                     </div>
                 </div>
                 <!-- Card 4 -->
-                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-12 col-sm-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
                     <div class="card h-100 shadow-sm border-0">
                         <div class="card-body text-center">
                             <i class="bi bi-cash-stack fs-1 text-danger mb-3"></i>
@@ -177,6 +192,7 @@
             </div>
         </div>
     </section>
+
 
     <section id="member" class="pricing">
         <div class="pricing_1">

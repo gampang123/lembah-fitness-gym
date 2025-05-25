@@ -5,7 +5,7 @@
 @section('content')
     <section style="margin-top: 40px;">
         <div class="profile-setting">
-            <img src="{{ asset('asset/user.svg') }}" alt="Member" class="profile-img-setting">
+            <img src="{{ asset('asset/user-profile.svg') }}" alt="Member" class="profile-img-setting">
             <h2>Anna Suarez</h2>
             <p class="email">hello@reallygreatsite.com</p>
         </div>
