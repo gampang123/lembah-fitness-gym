@@ -12,6 +12,7 @@ use App\Http\Controllers\Member\PackageMemberController;
 use App\Http\Controllers\Member\PresenceMemberController;
 use App\Http\Controllers\Member\ProfileMemberController;
 use App\Http\Controllers\Member\ReportTransactionMemberController;
+use App\Http\Controllers\MidtransCallbackController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -56,27 +57,19 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'role:2'])->group(function () {
     Route::prefix('member')->middleware(['auth'])->group(function () {
-        Route::resource('package-member', PackageMemberController::class);
-    });
-    Route::prefix('member')->middleware(['auth'])->group(function () {
+        Route::resource('membership', PackageMemberController::class);
         Route::resource('presence-member', PresenceMemberController::class);
-    });
-    Route::prefix('member')->middleware(['auth'])->group(function () {
         Route::resource('report-transaction-member', ReportTransactionMemberController::class);
+        Route::resource('profile-member', ProfileMemberController::class);
+        Route::resource('card-member', CardMemberController::class);
     });
+
     // test view details transaction
     Route::get('test-detail-transaksi', function () {
         return view('user-dashboard.report-transaction.details-transaction');
     });
 
-    Route::prefix('member')->middleware(['auth'])->group(function () {
-        Route::resource('profile-member', ProfileMemberController::class);
-    });
-    Route::get('/list-package-member', [PackageMemberController::class, 'list'])->name('package-member.list');
-
-    Route::prefix('member')->middleware(['auth'])->group(function () {
-        Route::resource('card-member', CardMemberController::class);
-    });
+    Route::get('/list-package-member', [PackageMemberController::class, 'list'])->name('membership.list');
 });
 
 // END USER DASHBOARD
@@ -124,6 +117,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 // DASHBOARD REVIEW
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::post('/midtrans/callback', [TransactionController::class, 'handleCallback']);
+Route::post('/midtrans/callback', [MidtransCallbackController::class, 'handleCallback']);
 
 require __DIR__ . '/auth.php';

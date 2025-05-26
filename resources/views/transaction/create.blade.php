@@ -20,7 +20,6 @@
                 <h4>Form Transaksi</h4>
                 <div class="m-t-25">
                     <form id="transaction-form" enctype="multipart/form-data">
-
                         @csrf
 
                         <div class="form-group row">

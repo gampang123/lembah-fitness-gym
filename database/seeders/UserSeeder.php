@@ -44,22 +44,10 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
            ],
-           [
-            'id' => 2,
-            'name' => 'User',
-            'username' => 'user',
-            'phone' => '081234567891',
-            'email' => 'user@mail.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('password'),
-            'role_id' => 2,
-            'remember_token' => Str::random(10),
-            'created_at' => now(),
-            'updated_at' => now(),
-           ]
         ]);
 
         User::factory(10)->create([
+            'password' => Hash::make('password'),
             'role_id' => 2 
         ])->each(function ($user) {
             Member::factory()->create([

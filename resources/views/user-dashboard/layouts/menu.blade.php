@@ -26,6 +26,8 @@
         </div>
         <section class="section-main-ver p-0">
 
+            @include('sweetalert::alert')
+
             @yield('content')
 
         </section>
@@ -142,6 +144,9 @@
     </script>
 
     @yield('scripts')
+
+    <!-- Sweet Alert -->  
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="{{ asset('common/dashboard/assets/javascript/jquery.js') }}"></script>
     <script src="{{ asset('common/dashboard/assets/javascript/slick.min.js') }}"></script>

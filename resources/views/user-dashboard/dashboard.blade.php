@@ -8,7 +8,7 @@
             <img src="{{ asset('asset/user.svg') }}" alt="Profile Photo" class="profile-img">
             <div class="profile-text">
                 <p>Hello!</p>
-                <h2>MORGAN MAXWELL</h2>
+                <h2>{{ Auth::user()->name }}</h2>
             </div>
         </div>
     </section>
@@ -21,7 +21,7 @@
     <section>
         <div class="row text-center">
             <div class="col align-items-center">
-                <a style="color: white; text-decoration: none;" href="{{ route('package-member.index') }}">
+                <a style="color: white; text-decoration: none;" href="{{ route('membership.index') }}">
                     <div class="package-dashboard">
                         <img style="width: 50px;" src="{{ asset('asset/package.svg') }}" alt="Membership">
                     </div>
