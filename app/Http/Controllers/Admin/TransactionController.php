@@ -73,13 +73,13 @@ class TransactionController extends Controller
                 ? 'Transaksi berhasil (cash).'
                 : 'Silahkan selesaikan pembayaran via Midtrans untuk mengaktifkan membership.';
 
-                if ($status === 'paid') {
-                    Alert::success('Berhasil', $message);
-                } elseif ($status === 'pending') {
-                    Alert::warning('Perhatian', $message);
-                } else {
-                    Alert::warning('Perhatian', 'Status transaksi: ' . ucfirst($status));
-                }
+            if ($status === 'paid') {
+                Alert::success('Berhasil', $message);
+            } elseif ($status === 'pending') {
+                Alert::warning('Perhatian', $message);
+            } else {
+                Alert::warning('Perhatian', 'Status transaksi: ' . ucfirst($status));
+            }
 
             return $request->ajax()
                 ? response()->json([

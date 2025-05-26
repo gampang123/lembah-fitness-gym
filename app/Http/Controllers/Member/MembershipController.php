@@ -14,7 +14,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 
 
-class PackageMemberController extends Controller
+class MembershipController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -69,7 +69,8 @@ class PackageMemberController extends Controller
     {
         $packages = Package::all();
 
-        return view('user-dashboard.membership.list-package-member', compact('packages'));
+        return view('user-dashboard.membership.list-package', compact('packages'));
+        
     }
 
     /**
