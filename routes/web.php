@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Member\CardMemberController;
-use App\Http\Controllers\Member\PackageMemberController;
+use App\Http\Controllers\Member\MembershipController;
 use App\Http\Controllers\Member\PresenceMemberController;
 use App\Http\Controllers\Member\ProfileMemberController;
 use App\Http\Controllers\Member\ReportTransactionMemberController;
@@ -55,22 +55,19 @@ Route::middleware('auth')->group(function () {
 // USER DASHBOARD
 
 Route::middleware(['auth', 'role:2'])->group(function () {
-    Route::prefix('member')->middleware(['auth'])->group(function () {
-        Route::resource('package-member', PackageMemberController::class);
-    });
-    Route::prefix('member')->middleware(['auth'])->group(function () {
+    Route::prefix('member')->group(function () {
+        Route::prefix('membership')->group(function () {
+            Route::get('/', [MembershipController::class, 'index'])->name('membership.index');
+            Route::get('/create', [MembershipController::class, 'create'])->name('membership.create');
+            Route::post('store', [MembershipController::class, 'store'])->name('membership.store');
+            Route::get('list', [MembershipController::class, 'list'])->name('membership.list');
+            Route::get('show', [MembershipController::class, 'show'])->name('membership.show');
+        });
+        
         Route::resource('presence-member', PresenceMemberController::class);
-    });
-    Route::prefix('member')->middleware(['auth'])->group(function () {
         Route::resource('report-transaction-member', ReportTransactionMemberController::class);
-    });
-
-    Route::prefix('member')->middleware(['auth'])->group(function () {
-        Route::resource('profile-member', ProfileMemberController::class);
-    });
-
-    Route::prefix('member')->middleware(['auth'])->group(function () {
         Route::resource('card-member', CardMemberController::class);
+        Route::resource('profile-member', ProfileMemberController::class);
     });
 });
 
@@ -106,8 +103,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     //Transaction
     Route::resource('transaction', TransactionController::class);
-    Route::post('transaction/{id}/approve', [TransactionController::class, 'approve'])->name('transaction.approve');
-    Route::post('transaction/{id}/cancel',  [TransactionController::class, 'cancel'])->name('transaction.cancel');
 
     //Presence
     Route::get('presence',  [PresenceController::class, 'index'])->name('presence.index');
