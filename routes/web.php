@@ -68,7 +68,6 @@ Route::middleware(['auth', 'role:2'])->group(function () {
     Route::prefix('member')->middleware(['auth'])->group(function () {
         Route::resource('profile-member', ProfileMemberController::class);
     });
-    Route::get('/list-package-member', [PackageMemberController::class, 'list'])->name('package-member.list');
 
     Route::prefix('member')->middleware(['auth'])->group(function () {
         Route::resource('card-member', CardMemberController::class);
