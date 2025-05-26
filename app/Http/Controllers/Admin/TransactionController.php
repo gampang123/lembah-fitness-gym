@@ -73,13 +73,13 @@ class TransactionController extends Controller
                 ? 'Transaksi berhasil (cash).'
                 : 'Silakan selesaikan pembayaran via Midtrans.';
 
-                if ($status === 'paid') {
-                    Alert::success('Berhasil', $message);
-                } elseif ($status === 'pending') {
-                    Alert::warning('Perhatian', $message);
-                } else {
-                    Alert::warning('Perhatian', 'Status transaksi: ' . ucfirst($status));
-                }
+            if ($status === 'paid') {
+                Alert::success('Berhasil', $message);
+            } elseif ($status === 'pending') {
+                Alert::warning('Perhatian', $message);
+            } else {
+                Alert::warning('Perhatian', 'Status transaksi: ' . ucfirst($status));
+            }
 
             return $request->ajax()
                 ? response()->json([
@@ -105,11 +105,12 @@ class TransactionController extends Controller
     public function handleCallback(Request $request)
     {
         $serverKey = config('midtrans.server_key');
-        $signatureKey = hash('sha512',
+        $signatureKey = hash(
+            'sha512',
             $request->input('order_id') .
-            $request->input('status_code') .
-            $request->input('gross_amount') .
-            $serverKey
+                $request->input('status_code') .
+                $request->input('gross_amount') .
+                $serverKey
         );
 
         if ($signatureKey !== $request->input('signature_key')) {

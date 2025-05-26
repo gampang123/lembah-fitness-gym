@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReportTransactionMemberController extends Controller
 {
@@ -12,7 +14,16 @@ class ReportTransactionMemberController extends Controller
      */
     public function index()
     {
-        return view('user-dashboard.report-transaction.index');
+        $user = Auth::user();
+
+        $transaction = Transaction::with(['member.user', 'package'])
+            ->whereHas('member', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('user-dashboard.report-transaction.index', compact('transaction'));
     }
 
     /**
@@ -36,7 +47,15 @@ class ReportTransactionMemberController extends Controller
      */
     public function show(string $id)
     {
-        return view('user-dashboard.report-transaction.details-transaction');
+        $user = Auth::user();
+
+        $transaction = Transaction::with(['member.user', 'package'])
+            ->whereHas('member', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->findOrFail($id);
+
+        return view('user-dashboard.report-transaction.details-transaction', compact('transaction'));
     }
 
     /**

@@ -64,10 +64,6 @@ Route::middleware(['auth', 'role:2'])->group(function () {
     Route::prefix('member')->middleware(['auth'])->group(function () {
         Route::resource('report-transaction-member', ReportTransactionMemberController::class);
     });
-    // test view details transaction
-    Route::get('test-detail-transaksi', function () {
-        return view('user-dashboard.report-transaction.details-transaction');
-    });
 
     Route::prefix('member')->middleware(['auth'])->group(function () {
         Route::resource('profile-member', ProfileMemberController::class);

@@ -6,8 +6,8 @@
     <section style="margin-top: 40px;">
         <div class="profile-setting">
             <img src="{{ asset('asset/user-profile.svg') }}" alt="Member" class="profile-img-setting">
-            <h2>Anna Suarez</h2>
-            <p class="email">hello@reallygreatsite.com</p>
+            <h2>{{ Auth::user()->name }}</h2>
+            <p class="email">{{ auth()->user()->email }}</p>
         </div>
     </section>
     <section style="margin-top: 20px;">
@@ -18,7 +18,7 @@
                 <img src="{{ asset('asset/profile.svg') }}" alt="user icon" class="icon-setting">
                 <div class="setting-text">
                     <strong>Nama</strong>
-                    <p>Fulan bin Fulan</p>
+                    <p>{{ Auth::user()->name }}</p>
                 </div>
                 <span class="arrow">›</span>
             </div>
@@ -27,7 +27,7 @@
                 <img src="{{ asset('asset/mail.svg') }}" alt="mail icon" class="icon-setting">
                 <div class="setting-text">
                     <strong>Email</strong>
-                    <p>hello@reallygreatsite.com</p>
+                    <p>{{ auth()->user()->email }}</p>
                 </div>
                 <span class="arrow">›</span>
             </div>
@@ -36,7 +36,7 @@
                 <img src="{{ asset('asset/key.svg') }}" alt="key icon" class="icon-setting">
                 <div class="setting-text">
                     <strong>Password</strong>
-                    <p>**********</p>
+                    <p>********</p>
                 </div>
                 <span class="arrow">›</span>
             </div>
@@ -45,7 +45,7 @@
                 <img src="{{ asset('asset/phone.svg') }}" alt="phone icon" class="icon-setting">
                 <div class="setting-text">
                     <strong>Nomor HP</strong>
-                    <p>89898989898989</p>
+                    <p>{{ auth()->user()->phone }}</p>
                 </div>
                 <span class="arrow">›</span>
             </div>
@@ -54,7 +54,7 @@
                 <img src="{{ asset('asset/calender.svg') }}" alt="calendar icon" class="icon-setting">
                 <div class="setting-text">
                     <strong>Bergabung</strong>
-                    <p>01 November 1999</p>
+                    <p>{{ auth()->user()->created_at }}</p>
                 </div>
                 <span class="arrow">›</span>
             </div>

@@ -22,58 +22,32 @@
     </section>
 
     <section style="margin-top: 30px;">
-        <a href="{{ url('test-detail-transaksi') }}">
-            <div class="payment-card">
-                <div class="card-left">
-                    <div class="icon-circle">
-                        <span class="icon">$</span>
+        @forelse($transaction as $item)
+            <a href="{{ route('report-transaction-member.show', $item->id) }}">
+                <div class="payment-card" style="margin-top: 8px;">
+                    <div class="card-left">
+                        <div class="icon-circle">
+                            <span class="icon">$</span>
+                        </div>
+                        <div class="info">
+                            <strong>{{ $item->package->name ?? '-' }}</strong>
+                            <div class="date">{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('d F Y') }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="info">
-                        <strong>Paket 1 Bulan</strong>
-                        <div class="date">1 November 2025</div>
-                    </div>
-                </div>
-                <div class="card-right">
-                    <strong>Rp250.000</strong>
-                    <div class="status pending">Pending</div>
-                </div>
-            </div>
-        </a>
-        <a href="">
-            <div style="margin-top: 8px;" class="payment-card">
-                <div class="card-left">
-                    <div class="icon-circle">
-                        <span class="icon">$</span>
-                    </div>
-                    <div class="info">
-                        <strong>Paket 1 Bulan</strong>
-                        <div class="date">1 November 2025</div>
+                    <div class="card-right">
+                        <strong>Rp{{ number_format($item->total_payment ?? ($item->package->price ?? 0), 0, ',', '.') }}</strong>
+                        <div class="status"
+                            style="color: 
+                        {{ $item->status == 'paid' ? 'green' : ($item->status == 'cancelled' ? 'red' : 'orange') }}">
+                            {{ ucfirst($item->status) }}
+                        </div>
                     </div>
                 </div>
-                <div class="card-right">
-                    <strong>Rp250.000</strong>
-                    <div style="color: red;" class="status pending">Cancel</div>
-                </div>
-            </div>
-        </a>
-        <a href="">
-            <div style="margin-top: 8px;" class="payment-card">
-                <div class="card-left">
-                    <div class="icon-circle">
-                        <span class="icon">$</span>
-                    </div>
-                    <div class="info">
-                        <strong>Paket 1 Bulan</strong>
-                        <div class="date">1 November 2025</div>
-                    </div>
-                </div>
-                <div class="card-right">
-                    <strong>Rp250.000</strong>
-                    <div style="color: green;" class="status pending">Success</div>
-                </div>
-            </div>
-        </a>
-
+            </a>
+        @empty
+            <p style="color: #00ff37" class="text-center">Belum ada transaksi.</p>
+        @endforelse
     </section>
 
 
@@ -109,25 +83,25 @@
         </div>
     </div>
 
-@section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterBtn = document.getElementById('btnFilter');
-            const closeBtn = document.getElementById('close-filter-popup');
-            const popup = document.getElementById('filter-popup');
+    @section('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const filterBtn = document.getElementById('btnFilter');
+                const closeBtn = document.getElementById('close-filter-popup');
+                const popup = document.getElementById('filter-popup');
 
-            filterBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                popup.classList.add('active');
-            });
+                filterBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    popup.classList.add('active');
+                });
 
-            closeBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                popup.classList.remove('active');
+                closeBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    popup.classList.remove('active');
+                });
             });
-        });
-    </script>
-@endsection
+        </script>
+    @endsection
 
 
 
