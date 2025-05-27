@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Services\MembershipActivationService;
 use Illuminate\Http\Request;
 
 class MidtransCallbackController extends Controller
@@ -10,10 +11,13 @@ class MidtransCallbackController extends Controller
     public function handleCallback(Request $request)
     {
         $serverKey = config('midtrans.server_key');
+
+        $formattedGrossAmount = number_format($request->input('gross_amount'), 2, '.', '');
+
         $signatureKey = hash('sha512',
             $request->input('order_id') .
             $request->input('status_code') .
-            $request->input('gross_amount') .
+            $formattedGrossAmount .
             $serverKey
         );
 
@@ -31,7 +35,9 @@ class MidtransCallbackController extends Controller
         $paymentType = $request->input('payment_type');
 
         $transaction->midtrans_status = $midtransStatus;
-        $transaction->midtrans_payment_type = $paymentType ?? null;
+        if ($paymentType) {
+            $transaction->midtrans_payment_type = $paymentType;
+        }
 
         switch ($midtransStatus) {
             case 'settlement':
@@ -54,6 +60,10 @@ class MidtransCallbackController extends Controller
         }
 
         $transaction->save();
+
+        if ($transaction->status === 'paid') {
+            (new MembershipActivationService())->approve($transaction);
+        }
 
         return response()->json(['message' => 'Callback processed']);
     }

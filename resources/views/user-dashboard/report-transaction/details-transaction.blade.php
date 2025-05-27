@@ -73,13 +73,43 @@
 
             <!-- Tombol -->
             <div class="btn-wrapper mt-4">
-                <form method="POST" action="/selesai">
-                    @csrf
-                    <button type="submit" class="finish">
-                        {{ $transaction->status == 'unpaid' ? 'Bayar Sekarang' : 'Selesai' }}
+                @if($transaction->status === 'pending' && $transaction->payment_method === 'online_payment')
+                    <button class="finish continue-payment-btn" data-snap-token="{{ $transaction->midtrans_snap_token }}" title="Lanjutkan Pembayaran">
+                        Lanjutkan Pembayaran
                     </button>
-                </form>
+                @endif
             </div>
         </div>
     </section>
+
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+
+<script>
+document.querySelectorAll('.continue-payment-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const snapToken = this.getAttribute('data-snap-token');
+        if (!snapToken) {
+            alert('Token pembayaran tidak tersedia.');
+            return;
+        }
+
+        snap.pay(snapToken, {
+            onSuccess: function(result) {
+                alert('Pembayaran berhasil!');
+                window.location.reload();
+            },
+            onPending: function(result) {
+                alert('Pembayaran tertunda. Silakan selesaikan pembayaran Anda.');
+                window.location.reload();
+            },
+            onError: function(result) {
+                alert('Terjadi kesalahan pembayaran.');
+            },
+            onClose: function() {
+                alert('Popup pembayaran ditutup.');
+            }
+        });
+    });
+});
+</script>
 @endsection

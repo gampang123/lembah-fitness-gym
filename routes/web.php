@@ -12,6 +12,7 @@ use App\Http\Controllers\Member\MembershipController;
 use App\Http\Controllers\Member\PresenceMemberController;
 use App\Http\Controllers\Member\ProfileMemberController;
 use App\Http\Controllers\Member\ReportTransactionMemberController;
+use App\Http\Controllers\MidtransCallbackController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -114,6 +115,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 // DASHBOARD REVIEW
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::post('/midtrans/callback', [TransactionController::class, 'handleCallback']);
+// Route::post('midtrans/callback', [TransactionController::class, 'handleCallback']);
 
 require __DIR__ . '/auth.php';

@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Member;
 use App\Models\Package;
 use App\Models\Transaction;
+use App\Services\MembershipActivationService;
+use App\Services\MembershipService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Services\MidtransService;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -67,6 +70,10 @@ class TransactionController extends Controller
                 'midtrans_snap_token' => $midtransSnapToken,
             ]);
 
+            if ($status === 'paid') {
+                (new MembershipActivationService())->approve($transaction);
+            }
+
             DB::commit();
 
             $message = $status === 'paid'
@@ -101,6 +108,22 @@ class TransactionController extends Controller
                 : back();
         }
     }
+
+    public function testSignature(Request $request)
+    {
+        $serverKey = config('midtrans.server_key');
+        $signatureKey = hash('sha512',
+            $request->input('order_id') .
+            $request->input('status_code') .
+            $request->input('gross_amount') .
+            $serverKey
+        );
+
+        return response()->json([
+            'calculated_signature_key' => $signatureKey
+        ]);
+    }
+
 
     public function show($id)
     {

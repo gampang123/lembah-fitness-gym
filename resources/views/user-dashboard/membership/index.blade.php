@@ -18,7 +18,7 @@
 </section>
 
 <section class="membership-package" style="margin-top: 50px;">
-    @if ($activeMemberships->isEmpty())
+    @if (!$activeMembership)
         <div>
             <p style="font-size: 12px; margin-bottom: 8px; color: rgb(255, 0, 0);" class="text-kiri">
                 Anda Tidak Memiliki Paket Apapun
@@ -30,15 +30,12 @@
             </p>
         </div>
     @else
-        @php
-            $currentMembership = $activeMemberships->first();
-        @endphp
         <div>
-            <p style="font-size: 12px; margin-bottom: 8px; color: #00ff37;" class="text-kiri">Member saat ini</p>
-            <h2 class="text-kiri"><b>{{ $currentMembership->package->name }}</b></h2>
-            <p class="text-kiri">Rp{{ number_format($currentMembership->package->price, 0, ',', '.') }}</p>
+            <p style="font-size: 12px; margin-bottom: 8px; color: #00ff37;" class="text-kiri">Member Aktif</p>
+            <h2 class="text-kiri"><b>{{ $activeMembership->package->name }}</b></h2>
+            <p class="text-kiri">Rp{{ number_format($activeMembership->package->price, 0, ',', '.') }}</p>
             <p class="text-kiri" style="font-size: 12px; color: #fff;">
-                Berlaku sampai: {{ \Carbon\Carbon::parse($currentMembership->expired_at)->format('d M Y') }}
+                Berlaku sampai: {{ \Carbon\Carbon::parse($activeMembership->member->end_date)->format('d M Y') }}
             </p>
         </div>
     @endif

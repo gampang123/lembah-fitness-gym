@@ -23,21 +23,23 @@ class MembershipController extends Controller
     {
         $user = Auth::user();
 
-        // Pastikan user memiliki member
+       // Jika user tidak memiliki relasi member
         if (!$user->member) {
-            // Jika tidak ada member, bisa lempar ke halaman lain atau kirim kosong
-            $activeMemberships = collect(); // collection kosong
-        } else {
-            $activeMemberships = Transaction::with(['package', 'member'])
+            Alert::info('Info', 'Hubungi admin untuk mengaktifkan membership Anda.');
+            return redirect()->route('member.dashboard');
+        }
+
+        // Jika user adalah member, ambil transaksi membership aktif
+        $activeMembership = Transaction::with(['package', 'member'])
             ->where('member_id', $user->member->id)
             ->where('status', 'paid')
             ->whereHas('member', function ($query) {
                 $query->whereNotNull('end_date');
             })
-            ->get();
-        }
+            ->latest()
+            ->first();
 
-        return view('user-dashboard.membership.index', compact('activeMemberships'));
+        return view('user-dashboard.membership.index', compact('activeMembership'));
     }
 
     /**

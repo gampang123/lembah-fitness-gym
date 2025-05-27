@@ -27,8 +27,6 @@ class RouteServiceProvider extends ServiceProvider
         } elseif ($user->role_id === 2) {
             return '/member-dashboard';
         }
-
-        return '/login';
     }
 
 

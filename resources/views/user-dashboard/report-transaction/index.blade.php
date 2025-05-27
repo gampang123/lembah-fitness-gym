@@ -38,8 +38,7 @@
                     <div class="card-right">
                         <strong>Rp{{ number_format($item->total_payment ?? ($item->package->price ?? 0), 0, ',', '.') }}</strong>
                         <div class="status"
-                            style="color: 
-                        {{ $item->status == 'paid' ? 'green' : ($item->status == 'cancelled' ? 'red' : 'orange') }}">
+                            style="color: {{ $item->status == 'paid' ? 'green' : ($item->status == 'cancelled' ? 'red' : 'orange') }}">
                             {{ ucfirst($item->status) }}
                         </div>
                     </div>
