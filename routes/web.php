@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Member\CardMemberController;
+use App\Http\Controllers\Member\DashboardMemberController;
 use App\Http\Controllers\Member\MembershipController;
 use App\Http\Controllers\Member\PresenceMemberController;
 use App\Http\Controllers\Member\ProfileMemberController;
@@ -41,9 +42,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard'); // admin
     })->middleware('role:1');
 
-    Route::get('/member-dashboard', function () {
-        return view('user-dashboard.dashboard'); // member
-    })->middleware('role:2')->name('member.dashboard');
+    Route::get('/member-dashboard', [DashboardMemberController::class, 'index'])
+        ->middleware('role:2')
+        ->name('member.dashboard');
 });
 
 
@@ -64,7 +65,7 @@ Route::middleware(['auth', 'role:2'])->group(function () {
             Route::get('list', [MembershipController::class, 'list'])->name('membership.list');
             Route::get('show', [MembershipController::class, 'show'])->name('membership.show');
         });
-        
+
         Route::resource('presence-member', PresenceMemberController::class);
         Route::resource('report-transaction-member', ReportTransactionMemberController::class);
         Route::resource('card-member', CardMemberController::class);

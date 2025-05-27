@@ -98,7 +98,7 @@
         </video>
         <div
             class="container d-flex flex-column justify-content-center align-items-center text-center text-white min-vh-100">
-            <h1 class="display-4 fw-bold text-shadow">Jangan Menyerah, Keringatmu Adalah Kunci!</h1>
+            <h1 class="display-4 fw-bold text-shadow">TRAIN TO BE STRONGER</h1>
             <p class="lead text-shadow">Bangun kekuatanmu hari ini, dan jadilah versi terbaik dirimu di gym!</p>
             <a href="#fasilitas" class="btn btn-danger btn-lg mt-3">Lihat Fasilitas</a>
         </div>

@@ -1,0 +1,85 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #0f0c29;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Container utama */
+.login-container {
+    max-width: 480px;
+    margin: 60px auto;
+    padding: 2rem;
+    background: #280c5e;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.07);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Pesan biasa */
+.text-gray-600 {
+    color: #ffffff;
+    font-size: 15px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* Pesan sukses */
+.text-green-600 {
+    color: #16a34a;
+    text-align: center;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+/* Margin utilitas */
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+/* Layout tombol */
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Tombol umum */
+button {
+    background-color: #0051ff;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.2);
+}
+
+/* Responsif */
+@media (max-width: 500px) {
+    .flex {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    button {
+        width: 100%;
+        text-align: center;
+    }
+}

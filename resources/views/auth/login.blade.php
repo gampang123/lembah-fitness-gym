@@ -1,4 +1,7 @@
 <link rel="stylesheet" href="{{ asset('common/css/login.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://unpkg.com/feather-icons"></script>
+
 
 <div class="login-container">
     <div style="display: flex; justify-content: center; align-items: center;">
@@ -24,12 +27,20 @@
         </div>
 
         <!-- Password -->
-        <div class="input-group">
+        <div class="input-group password-group" style="position: relative;">
             <label>
-                <span class="input-icon">🔒</span>
+                <span class="input-icon">
+                    <i data-feather="lock"></i>
+                </span>
                 <input id="password" class="input-field" type="password" name="password" placeholder="Password"
                     required autocomplete="current-password" />
             </label>
+
+            <!-- Toggle Password Icon -->
+            <i id="togglePasswordIcon" data-feather="eye"
+                style="position: absolute; top: 12px; right: 12px; cursor: pointer; color:rgb(87, 87, 87);"
+                onclick="togglePassword()"></i>
+
             <x-input-error :messages="$errors->get('password')" class="input-error" />
         </div>
 
@@ -56,3 +67,20 @@
         </div>
     </form>
 </div>
+
+
+<script>
+    function togglePassword() {
+        const passwordField = document.getElementById("password");
+        const toggleIcon = document.getElementById("togglePasswordIcon");
+
+        const isHidden = passwordField.type === "password";
+        passwordField.type = isHidden ? "text" : "password";
+
+        toggleIcon.setAttribute("data-feather", isHidden ? "eye-off" : "eye");
+        feather.replace();
+    }
+</script>
+<script>
+    feather.replace();
+</script>
