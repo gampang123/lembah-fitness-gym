@@ -15,7 +15,15 @@
     <section>
         <div class="content-dashboard">
             <h2><b>Selamat Datang <br>di Lembah Fitness</b></h2>
-            <div class="status-member">Member Aktif</div>
+            @if ($membershipCheck->status == 'active')
+                <div class="status-member" style="background-color: #28a745; color: white;">
+                    Aktif
+                </div>
+            @elseif ($membershipCheck->status == 'expired')
+                <div class="status-member" style="background-color: #dc3545; color: white;">
+                    Tidak Aktif
+                </div>
+            @endif
         </div>
     </section>
     <section>
@@ -43,10 +51,17 @@
         <div style="background-color: purple" class="row content-dashboard">
             <div class="col">
                 <b>Sesi Aktif Saat Ini</b> <br>
-                12 jam 30 menit 10 detik
-            </div>
+                @if ($todayPresence)
+                    <span id="session-time"></span>
 
-            <p style="color: #00ff37;">Tidak ada Sesi</p>
+                    {{-- Kirim waktu scan_in_at ke JS --}}
+                    <script>
+                        const scanInAt = new Date("{{ \Carbon\Carbon::parse($todayPresence->scan_in_at)->format('Y-m-d H:i:s') }}");
+                    </script>
+                @else
+                    <p style="color: #00ff37;">Tidak ada Sesi</p>
+                @endif
+            </div>
         </div>
     </section>
 
@@ -61,8 +76,8 @@
         window.onload = function() {
             const ctx = document.getElementById('attendanceChart').getContext('2d');
 
-            const hadir = 20;
-            const tidakHadir = 10;
+            const hadir = {{ $hadirCount }};
+            const tidakHadir = {{ $tidakHadirCount }};
 
             const data = {
                 labels: ['Hadir', 'Tidak Hadir'],
@@ -114,5 +129,28 @@
             new Chart(ctx, config);
         };
     </script>
+
+    @if ($todayPresence)
+    <script>
+        function updateSessionTime() {
+            const now = new Date();
+            const diffMs = now - scanInAt; // selisih dalam milidetik
+            const diff = new Date(diffMs);
+
+            const hours = Math.floor(diffMs / (1000 * 60 * 60));
+            const minutes = diff.getUTCMinutes();
+            const seconds = diff.getUTCSeconds();
+
+            document.getElementById("session-time").textContent =
+                `${hours} jam ${minutes} menit ${seconds} detik`;
+        }
+
+        // Update setiap detik
+        setInterval(updateSessionTime, 1000);
+
+        // Jalankan pertama kali langsung
+        updateSessionTime();
+    </script>
+    @endif
 
 @endsection

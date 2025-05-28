@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
+use App\Models\Member;
+use App\Models\Presence;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PresenceMemberController extends Controller
 {
@@ -12,7 +15,31 @@ class PresenceMemberController extends Controller
      */
     public function index()
     {
-        return view('user-dashboard.presence.index');
+        $user = Auth::user();
+
+        // Ambil member terkait user yang sedang login
+        $member = Member::with('user')
+            ->where('user_id', $user->id)
+            ->where('status', 'active')
+            ->first();
+
+        // Jika tidak ada member, kembalikan view kosong atau error
+        if (!$member) {
+            return view('user-dashboard.presence.index', [
+                'presences' => collect(),
+                'members' => collect()
+            ]);
+        }
+
+        // Ambil presences berdasarkan member_id dari user login
+        $presences = Presence::with(['member.user'])
+            ->where('member_id', $member->id)
+            ->get();
+
+        return view('user-dashboard.presence.index', [
+            'presences' => $presences,
+            'members' => collect([$member]) // hanya member yang sedang login
+        ]);
     }
 
     /**
