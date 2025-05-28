@@ -162,7 +162,6 @@
     </div>
 
     <!-- Modal HP -->
-    <!-- Modal HP -->
     <div id="modalPhone" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('modalPhone')">&times;</span>
@@ -216,7 +215,6 @@
             });
         });
 
-        // Klik luar modal tutup
         window.onclick = function(event) {
             document.querySelectorAll(".modal").forEach(modal => {
                 if (event.target == modal) modal.style.display = "none";
