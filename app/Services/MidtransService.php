@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Midtrans\Config;
+use Midtrans\CoreApi;
 use Midtrans\Snap;
 
 class MidtransService
@@ -26,5 +27,21 @@ class MidtransService
         ];
 
         return Snap::getSnapToken($params);
+    }
+
+    public function createRedirectTransaction($orderId, $grossAmount, $customerDetails)
+    {
+        $params = [
+            'payment_type' => 'bank_transfer', // atau ganti ke echannel / qris / credit_card
+            'transaction_details' => [
+                'order_id'     => $orderId,
+                'gross_amount' => $grossAmount,
+            ],
+            'customer_details' => $customerDetails,
+        ];
+
+        $result = CoreApi::charge($params);
+
+        return $result; // akan mengandung redirect_url jika applicable
     }
 }

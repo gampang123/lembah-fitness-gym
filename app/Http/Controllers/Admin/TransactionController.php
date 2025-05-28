@@ -46,16 +46,27 @@ class TransactionController extends Controller
             $midtransOrderId = null;
 
             // Midtrans Snap Token
-            $midtransSnapToken = null;
+            // $midtransSnapToken = null;
             $status = 'pending';
+            $midtransRedirectUrl = null;
 
             if ($request->payment_method === 'online_payment') {
                 $midtransOrderId = 'ORDER-' . strtoupper(Str::random(10));
                 $midtrans = new MidtransService();
-                $midtransSnapToken = $midtrans->createTransaction($midtransOrderId, $package->price, [
+
+                // $midtransSnapToken = $midtrans->createTransaction($midtransOrderId, $package->price, [
+                //     'first_name' => $member->user->name,
+                //     'email' => $member->user->email,
+                // ]);
+                $response = $midtrans->createRedirectTransaction($midtransOrderId, $package->price, [
                     'first_name' => $member->user->name,
                     'email' => $member->user->email,
                 ]);
+
+                $midtransRedirectUrl = $response->redirect_url ?? null;
+                if (!$midtransRedirectUrl) {
+                    throw new \Exception('Gagal mendapatkan redirect_url dari Midtrans.');
+                }
             } else {
                 $status = 'paid';
             }
@@ -67,7 +78,8 @@ class TransactionController extends Controller
                 'payment_method'      => $request->payment_method,
                 'status'              => $status,
                 'midtrans_order_id'   => $midtransOrderId,
-                'midtrans_snap_token' => $midtransSnapToken,
+                // 'midtrans_snap_token' => $midtransSnapToken,
+                'midtrans_redirect_url' => $midtransRedirectUrl,
             ]);
 
             if ($status === 'paid') {
@@ -93,7 +105,8 @@ class TransactionController extends Controller
                     'success' => true,
                     'message' => $message,
                     'transaction' => $transaction,
-                    'snap_token' => $midtransSnapToken,
+                    // 'snap_token' => $midtransSnapToken,
+                    'redirect_url' => $midtransRedirectUrl,
                 ])
                 : redirect()->route('transaction.index');
         } catch (\Exception $e) {
