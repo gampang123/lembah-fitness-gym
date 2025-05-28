@@ -32,16 +32,21 @@ class MidtransService
     public function createRedirectTransaction($orderId, $grossAmount, $customerDetails)
     {
         $params = [
-            'payment_type' => 'bank_transfer', // atau ganti ke echannel / qris / credit_card
             'transaction_details' => [
                 'order_id'     => $orderId,
                 'gross_amount' => $grossAmount,
             ],
             'customer_details' => $customerDetails,
+
+            'enabled_payments' => ['bank_transfer', 'gopay'], // contoh
+            'vtweb' => []
         ];
 
-        $result = CoreApi::charge($params);
-
-        return $result; // akan mengandung redirect_url jika applicable
+        try {
+        $vtwebUrl = \Midtrans\Snap::createTransaction($params)->redirect_url;
+            return (object)['redirect_url' => $vtwebUrl];
+        } catch (\Exception $e) {
+            throw new \Exception('Midtrans API error: ' . $e->getMessage());
+        }
     }
 }
