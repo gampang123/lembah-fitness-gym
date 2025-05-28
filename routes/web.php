@@ -69,7 +69,14 @@ Route::middleware(['auth', 'role:2'])->group(function () {
         Route::resource('presence-member', PresenceMemberController::class);
         Route::resource('report-transaction-member', ReportTransactionMemberController::class);
         Route::resource('card-member', CardMemberController::class);
-        Route::resource('profile-member', ProfileMemberController::class);
+
+        Route::prefix('member')->group(function () {
+            Route::get('/profile', [ProfileMemberController::class, 'index'])->name('profile-member.index');
+            Route::patch('/profile/update', [ProfileMemberController::class, 'updateProfile'])->name('profile-member.update');
+            Route::patch('/profile/email', [ProfileMemberController::class, 'updateEmail'])->name('profile-member.updateEmail');
+            Route::put('/profile/password', [ProfileMemberController::class, 'updatePassword'])->name('profile-member.updatePassword');
+            Route::patch('/profile/phone', [ProfileMemberController::class, 'updatePhone'])->name('profile-member.updatePhone');
+        });
     });
 });
 

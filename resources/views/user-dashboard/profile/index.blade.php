@@ -77,66 +77,114 @@
     <div id="modalNama" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('modalNama')">&times;</span>
-            <h3 id="modal-title">Edit</h3>
-            <form id="modal-form">
+            <h3 id="modal-title">Edit Nama</h3>
+
+            <form id="modal-form" method="POST" action="{{ route('profile-member.update') }}">
+                @csrf
+                @method('PATCH')
+
                 <div class="form-group">
-                    <label for="modal-input-1" id="label1">Nama</label>
-                    <input type="text" id="modal-input-1" name="input1" required>
+                    <label for="name">Nama</label>
+                    <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" required>
+                    @error('name')
+                        <div class="input-error">{{ $message }}</div>
+                    @enderror
                 </div>
-                <button type="submit" class="btn-save">Save</button>
+
+                <button type="submit" class="btn-save">Simpan</button>
             </form>
         </div>
     </div>
+
     <!-- Email Modal -->
     <div id="modalEmail" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('modalEmail')">&times;</span>
-            <h3 id="modal-title">Edit</h3>
-            <form id="modal-form">
-                <div class="form-group" id="group-email">
-                    <label for="modal-input-2" id="label2">Email</label>
-                    <input type="email" id="modal-input-2" name="input2">
+            <h3 id="modal-title">Edit Email</h3>
+
+            <form method="POST" action="{{ route('profile-member.updateEmail') }}">
+                @csrf
+                @method('PATCH')
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required>
+                    @error('email')
+                        <div class="input-error">{{ $message }}</div>
+                    @enderror
                 </div>
-                <button type="submit" class="btn-save">Save</button>
+
+                <button type="submit" class="btn-save">Simpan</button>
             </form>
         </div>
     </div>
+
     <!-- Modal Password -->
     <div id="modalPassword" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('modalPassword')">&times;</span>
             <h3>Ubah Password</h3>
-            <form>
+
+            <form method="POST" action="{{ route('profile-member.updatePassword') }}">
+                @csrf
+                @method('PUT')
+
                 <div class="form-group">
-                    <label>Password Lama</label>
-                    <input type="password" placeholder="Password lama">
+                    <label for="current_password">Password Lama</label>
+                    <input id="current_password" name="current_password" type="password" placeholder="Password lama"
+                        required autocomplete="current-password">
+                    @error('current_password')
+                        <div class="input-error">{{ $message }}</div>
+                    @enderror
                 </div>
+
                 <div class="form-group">
-                    <label>Password Baru</label>
-                    <input type="password" placeholder="Password baru">
+                    <label for="password">Password Baru</label>
+                    <input id="password" name="password" type="password" placeholder="Password baru" required
+                        autocomplete="new-password">
+                    @error('password')
+                        <div class="input-error">{{ $message }}</div>
+                    @enderror
                 </div>
+
                 <div class="form-group">
-                    <label>Konfirmasi Password</label>
-                    <input type="password" placeholder="Konfirmasi password">
+                    <label for="password_confirmation">Konfirmasi Password</label>
+                    <input id="password_confirmation" name="password_confirmation" type="password"
+                        placeholder="Konfirmasi password" required autocomplete="new-password">
+                    @error('password_confirmation')
+                        <div class="input-error">{{ $message }}</div>
+                    @enderror
                 </div>
+
                 <button type="submit" class="btn-save">Simpan</button>
             </form>
         </div>
     </div>
+
+    <!-- Modal HP -->
     <!-- Modal HP -->
     <div id="modalPhone" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('modalPhone')">&times;</span>
             <h3>Edit Nomor HP</h3>
-            <form>
+            <form method="POST" action="{{ route('profile-member.updatePhone') }}">
+                @csrf
+                @method('PATCH')
+
                 <div class="form-group">
-                    <label>Nomor HP</label>
-                    <input type="text" placeholder="Masukkan nomor HP">
+                    <label for="phone">Nomor HP</label>
+                    <input type="text" id="phone" name="phone" value="{{ old('phone', $user->phone) }}"
+                        required>
+                    @error('phone')
+                        <div class="input-error">{{ $message }}</div>
+                    @enderror
                 </div>
+
                 <button type="submit" class="btn-save">Simpan</button>
             </form>
         </div>
     </div>
+
 
     <script>
         function closeModal(id) {
@@ -147,7 +195,6 @@
             document.getElementById(id).style.display = "flex";
         }
 
-        // Klik masing-masing item
         document.querySelectorAll(".setting-item").forEach((item) => {
             item.addEventListener("click", () => {
                 const label = item.querySelector("strong").textContent;
