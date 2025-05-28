@@ -20,7 +20,7 @@ class MemberController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->role_id == 1) { 
+        if ($user->role_id == 1) {
             $members = Member::with('user')->get();
         } else {
             $members = Member::with('user')->where('user_id', $user->id)->get();
@@ -70,7 +70,7 @@ class MemberController extends Controller
 
         $member = Member::create([
             'user_id' => $request->user_id,
-            'barcode' => $request->barcode, 
+            'barcode' => $request->barcode,
             'barcode_path' => null,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
@@ -177,14 +177,15 @@ class MemberController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->role_id == 1) { 
+        if ($user->role_id == 1) {
             $members = Member::with('user')->get();
+            return view('member.card-member', compact('members'));
         } else {
-            $members = Member::with('user')->where('user_id', $user->id)->get();
+            $member = Member::with('user')->where('user_id', $user->id)->first();
+            return view('member.card-member', compact('member'));
         }
-
-        return view('member.card-member', compact('members'));
     }
+
 
     public function __construct()
     {
@@ -195,6 +196,4 @@ class MemberController extends Controller
             return $next($request);
         })->only(['edit', 'update', 'destroy']);
     }
-
-
 }

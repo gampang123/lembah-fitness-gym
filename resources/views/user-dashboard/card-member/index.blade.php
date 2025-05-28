@@ -24,14 +24,13 @@
                     <img src="{{ asset('asset/logo.png') }}">
                 </div>
                 <div class="photo">
-                    <img src="{{ asset('asset/qrr.svg') }}">
+                    <img src="{{ asset('storage/' . $member->barcode_path) }}">
                 </div>
-                <h2>Fulan Bin Fulan</h2>
                 <div class="qr-code">
 
                 </div>
                 <h3>Member</h3>
-                <h3>LF19GCS121</h3>
+                <h3>{{ $member->barcode }}</h3>
                 <hr>
                 <p><strong>Lembah Fitness Warungboto</strong><br>
                     DisWarungboto, Kec. Umbulharjo, Kota Yogyakarta, Daerah Istimewa, Kota Yogyakarta, Daerah Istimewa
