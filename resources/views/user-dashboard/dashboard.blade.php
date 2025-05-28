@@ -51,7 +51,7 @@
         <div style="background-color: purple" class="row content-dashboard">
             <div class="col">
                 <b>Sesi Aktif Saat Ini</b> <br>
-                @if ($todayPresence)
+                @if ($todayPresence && $todayPresence->scan_out_at == null)
                     <span id="session-time"></span>
 
                     {{-- Kirim waktu scan_in_at ke JS --}}
@@ -71,6 +71,33 @@
             <canvas id="attendanceChart" width="300" height="300"></canvas>
         </div>
     </section>
+    <!-- Modal QR -->
+    <div id="modalQr" class="modal">
+        <div class="modal-content qr-content" style="background-color: white">
+            <span style="color: black" class="close-btn" onclick="closeModal('modalQr')">&times;</span>
+            <div class="qr-wrapper">
+                <img src="{{ asset('storage/' . $member->barcode_path) }}" alt="QR Code" class="qr-image">
+            </div>
+        </div>
+    </div>
+    <script>
+        function openModal(id) {
+            document.getElementById(id).style.display = "flex";
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        // Klik luar modal untuk menutup
+        window.onclick = function(event) {
+            document.querySelectorAll('.modal').forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        };
+    </script>
 
     <script>
         window.onload = function() {
@@ -130,11 +157,11 @@
         };
     </script>
 
-    @if ($todayPresence)
+    @if ($todayPresence && $todayPresence->scan_out_at == null)
     <script>
         function updateSessionTime() {
             const now = new Date();
-            const diffMs = now - scanInAt; // selisih dalam milidetik
+            const diffMs = now - scanInAt;
             const diff = new Date(diffMs);
 
             const hours = Math.floor(diffMs / (1000 * 60 * 60));
@@ -145,10 +172,7 @@
                 `${hours} jam ${minutes} menit ${seconds} detik`;
         }
 
-        // Update setiap detik
         setInterval(updateSessionTime, 1000);
-
-        // Jalankan pertama kali langsung
         updateSessionTime();
     </script>
     @endif
