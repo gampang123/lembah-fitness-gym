@@ -76,7 +76,7 @@
         <div class="modal-content qr-content" style="background-color: white">
             <span style="color: black" class="close-btn" onclick="closeModal('modalQr')">&times;</span>
             <div class="qr-wrapper">
-                <img src="{{ asset('storage/' . $member->barcode_path) }}" alt="QR Code" class="qr-image">
+                <img src="{{ asset('storage/' . $membershipCheck->barcode_path) }}" alt="QR Code" class="qr-image">
             </div>
         </div>
     </div>
