@@ -35,7 +35,7 @@
                     </span>
                 </div>
                 <div class="schedule-time">
-                    {{ $presence->scan_in_at }} – {{ $presence->scan_out_at ?? 'Now' }}
+                    {{ \Carbon\Carbon::parse($presence->scan_in_at)->format('H:i:s') }} – {{ $presence->scan_out_at ? \Carbon\Carbon::parse($presence->scan_out_at)->format('H:i:s') : 'Now' }}
                 </div>
             </div>
         @empty
