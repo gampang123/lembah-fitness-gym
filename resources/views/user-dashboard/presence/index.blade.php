@@ -3,6 +3,7 @@
 @section('title', 'Dashboard Presensi')
 
 @section('content')
+    <!-- Konten Atas -->
     <section>
         <div class="row d-flex justify-content-between align-items-center">
             <div class="col-auto">
@@ -17,42 +18,34 @@
             </div>
         </div>
     </section>
+
+    <!-- Judul -->
     <section>
         <h1>Riwayat Kehadiran</h1>
     </section>
 
+    <!-- Daftar Presensi -->
     <section style="margin-top: 30px;">
-        <div class="schedule-box">
-            <div class="schedule-date">
-                <span class="dot"></span>
-                <span class="date-text">1 November 2025</span>
+        @forelse ($presences as $presence)
+            <div class="schedule-box">
+                <div class="schedule-date">
+                    <span class="dot"></span>
+                    <span class="date-text">
+                        {{ \Carbon\Carbon::parse($presence->created_at)->translatedFormat('d F Y') }}
+                    </span>
+                </div>
+                <div class="schedule-time">
+                    {{ \Carbon\Carbon::parse($presence->scan_in_at)->format('H:i:s') }} – {{ $presence->scan_out_at ? \Carbon\Carbon::parse($presence->scan_out_at)->format('H:i:s') : 'Now' }}
+                </div>
             </div>
-            <div class="schedule-time">11.30 – 13.00</div>
-        </div>
-        <div class="schedule-box">
-            <div class="schedule-date">
-                <span class="dot"></span>
-                <span class="date-text">1 November 2025</span>
+        @empty
+            <div class="text-center text-white" style="margin-top: 50px;">
+                <p style="margin-top: 15px;">Belum ada data presensi.</p>
             </div>
-            <div class="schedule-time">11.30 – 13.00</div>
-        </div>
-        <div class="schedule-box">
-            <div class="schedule-date">
-                <span class="dot"></span>
-                <span class="date-text">1 November 2025</span>
-            </div>
-            <div class="schedule-time">11.30 – 13.00</div>
-        </div>
-        <div class="schedule-box">
-            <div class="schedule-date">
-                <span class="dot"></span>
-                <span class="date-text">1 November 2025</span>
-            </div>
-            <div class="schedule-time">11.30 – 13.00</div>
-        </div>
+        @endforelse
     </section>
 
-
+    <!-- Popup Filter -->
     <div id="filter-popup" class="popup-filter-window">
         <a href="#" id="close-filter-popup">
             <img src="{{ asset('common/dashboard/assets/images/svg/x.svg') }}" alt="x">
@@ -81,6 +74,7 @@
             </div>
         </div>
     </div>
+@endsection
 
 @section('scripts')
     <script>
@@ -100,8 +94,4 @@
             });
         });
     </script>
-@endsection
-
-
-
 @endsection

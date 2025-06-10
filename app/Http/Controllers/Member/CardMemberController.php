@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
+use App\Models\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CardMemberController extends Controller
 {
@@ -12,7 +14,10 @@ class CardMemberController extends Controller
      */
     public function index()
     {
-        return view('user-dashboard.card-member.index');
+        $user = Auth::user();
+        $member = Member::with('user')->where('user_id', $user->id)->first();
+
+        return view('user-dashboard.card-member.index', compact('member'));
     }
 
     /**

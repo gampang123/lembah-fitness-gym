@@ -108,33 +108,7 @@
             </ul>
         </div>
     </div>
-    <!-- Modal QR -->
-    <div id="modalQr" class="modal">
-        <div class="modal-content qr-content" style="background-color: white">
-            <span style="color: black" class="close-btn" onclick="closeModal('modalQr')">&times;</span>
-            <div class="qr-wrapper">
-                <img src="{{ asset('asset/qrr.svg') }}" alt="QR Code" class="qr-image">
-            </div>
-        </div>
-    </div>
-    <script>
-        function openModal(id) {
-            document.getElementById(id).style.display = "flex";
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).style.display = "none";
-        }
-
-        // Klik luar modal untuk menutup
-        window.onclick = function(event) {
-            document.querySelectorAll('.modal').forEach(modal => {
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                }
-            });
-        };
-    </script>
+    
 
     <script>
         window.addEventListener("load", function() {
