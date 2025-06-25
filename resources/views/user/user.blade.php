@@ -15,6 +15,7 @@
                     </nav>
                 </div>
             </div>
+            <x-alert />
             <div class="card">
                 <div class="card-body">
                     <div class="flex justify-between items-center">
@@ -36,7 +37,7 @@
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>Phone</th>
-                                    <th>Role</th>
+                                    <th>Jenis Kelamin</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -48,9 +49,9 @@
                                         <td class="user-name">{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->phone }}</td>
-                                        <td>{{ $user->role_id == 1 ? 'Admin' : 'User' }}</td>
+                                        <td>{{ $user->gender }}</td>
                                         <td>
-                                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning"><i
+                                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning "><i
                                                     class="anticon anticon-edit"></i></a>
 
                                             <form action="{{ route('user.destroy', $user->id) }}" method="POST"
