@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
 use App\Models\Member;
+use App\Models\Presence;
 use Illuminate\Support\Facades\Auth;
 use Milon\Barcode\DNS2D;
 use Illuminate\Support\Facades\Storage;
@@ -186,6 +187,25 @@ class MemberController extends Controller
         }
     }
 
+    /**
+     * Menampilkan data aktivitas member.
+     */
+    public function activity()
+    {
+        $activites = Presence::with(['member.user'])->where('status', 'completed')->orderByDesc('scan_out_at')->get();
+        return view('activity.index', compact('activites'));
+    }
+
+    /**
+     * Menampilkan detail untuk aktivitas 1 member.
+     */
+    public function activityDetail($id)
+    {
+        $member = Member::with('user')->findOrFail($id);
+        $activity = $member->presences()->where('status', 'completed')->orderByDesc('scan_out_at')->get();
+
+        return view('activity.detail', compact('member', 'activity'));
+    }
 
     public function __construct()
     {

@@ -104,6 +104,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/member/{member}', [MemberController::class, 'update'])->name('member.update');
     Route::get('/member/card', [MemberController::class, 'card'])->name('member.card')->middleware('auth');
 
+
+    // MEMBER ACTIVTIY
+    Route::get('/activity', [MemberController::class, 'activity'])->name('activity.index');
+    Route::get('/activity/{id}', [MemberController::class, 'activityDetail'])->name('activity.detail');
+
     // PAKET
     Route::get('/paket', [PackageController::class, 'index'])->name('paket.index');
     Route::get('/paket/create', [PackageController::class, 'create'])->name('paket.create');

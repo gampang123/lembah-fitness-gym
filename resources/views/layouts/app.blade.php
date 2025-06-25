@@ -51,11 +51,11 @@
                                 <i class="anticon"></i>
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="javascript:void(0);" data-toggle="modal" data-target="#search-drawer">
                                 <i class="anticon anticon-search"></i>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                     <ul class="nav-right">
                         <li class="dropdown dropdown-animated scale-left">
@@ -163,11 +163,11 @@
                                 </form>                                
                             </div>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="javascript:void(0);" data-toggle="modal" data-target="#quick-view">
                                 <i class="anticon anticon-appstore"></i>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>    
@@ -215,6 +215,10 @@
                                 </li>
                                 <li>
                                     <a href="{{ route('member.card') }}">Kartu Member</a>
+                                </li>
+                                <br>
+                                <li>
+                                    <a href="{{ route('activity.index') }}">Aktivitas Member</a>
                                 </li>
                             </ul>
                         </li>
@@ -279,7 +283,7 @@
             <!-- Page Container END -->
 
             <!-- Search Start-->
-            <div class="modal modal-left fade search" id="search-drawer">
+            <!-- <div class="modal modal-left fade search" id="search-drawer">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header justify-content-between align-items-center">
@@ -380,11 +384,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- Search End-->
 
             <!-- Quick View START -->
-            <div class="modal modal-right fade quick-view" id="quick-view">
+            <!-- <div class="modal modal-right fade quick-view" id="quick-view">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header justify-content-between align-items-center">
@@ -438,7 +442,7 @@
                         </div>
                     </div>
                 </div>            
-            </div>
+            </div> -->
             <!-- Quick View END -->
         </div>
     </div>

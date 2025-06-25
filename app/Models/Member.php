@@ -23,6 +23,12 @@ class Member extends Model
         return $this->hasMany(Transaction::class, 'member_id');
     }
 
+    public function presences()
+    {
+        return $this->hasMany(\App\Models\Presence::class);
+    }
+
+
     // Method to generate barcode from the member ID
     public function getBarcodeAttribute()
     {

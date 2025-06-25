@@ -176,7 +176,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5>Sales Statistics</h5>
+                                <h5>Data Aktivitas Member Tahun 2025</h5>
                                 <div class="dropdown dropdown-animated scale-left">
                                     <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
                                         <i class="anticon anticon-ellipsis"></i>
@@ -227,9 +227,9 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5>Revenue</h5>
+                                <h5>Pendapatan Lembah Fitness Tahun 2025</h5>
                                 <div>
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-default">View All</a>
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-primary">Lihat Semua Data Transaksi</a>
                                 </div>
                             </div>
                             <div class="m-t-30">
@@ -267,9 +267,9 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5>Top Products</h5>
+                                <h5>Paket Terlaris</h5>
                                 <div>
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-default">View All</a>
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-primary">Lihat Data Paket</a>
                                 </div>
                             </div>
                             <div class="m-t-30">
@@ -371,48 +371,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5>Customers</h5>
-                            <div class="m-v-45 text-center" style="height: 220px">
-                                <canvas class="chart" id="customer-chart"></canvas>
-                            </div>
-                            <div class="row p-t-25">
-                                <div class="col-md-8 m-h-auto">
-                                    <div class="d-flex justify-content-between align-items-center m-b-20">
-                                        <p class="m-b-0 d-flex align-items-center">
-                                            <span class="badge badge-warning badge-dot m-r-10"></span>
-                                            <span>Direct</span>
-                                        </p>
-                                        <h5 class="m-b-0">350</h5>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center m-b-20">
-                                        <p class="m-b-0 d-flex align-items-center">
-                                            <span class="badge badge-primary badge-dot m-r-10"></span>
-                                            <span>Referral</span>
-                                        </p>
-                                        <h5 class="m-b-0">450</h5>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center m-b-20">
-                                        <p class="m-b-0 d-flex align-items-center">
-                                            <span class="badge badge-danger badge-dot m-r-10"></span>
-                                            <span>Social Network</span>
-                                        </p>
-                                        <h5 class="m-b-0">100</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5>Recent Orders</h5>
+                                <h5>Transaksi Terbaru</h5>
                                 <div>
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-default">View All</a>
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-primary">Lihat Semua Data Transaksi</a>
                                 </div>
                             </div>
                             <div class="m-t-30">
@@ -568,6 +533,41 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Data Umur Member Lembah Fitness</h5>
+                            <div class="m-v-45 text-center" style="height: 220px">
+                                <canvas class="chart" id="customer-chart"></canvas>
+                            </div>
+                            <div class="row p-t-25">
+                                <div class="col-md-8 m-h-auto">
+                                    <div class="d-flex justify-content-between align-items-center m-b-20">
+                                        <p class="m-b-0 d-flex align-items-center">
+                                            <span class="badge badge-warning badge-dot m-r-10"></span>
+                                            <span>Direct</span>
+                                        </p>
+                                        <h5 class="m-b-0">350</h5>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center m-b-20">
+                                        <p class="m-b-0 d-flex align-items-center">
+                                            <span class="badge badge-primary badge-dot m-r-10"></span>
+                                            <span>Referral</span>
+                                        </p>
+                                        <h5 class="m-b-0">450</h5>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center m-b-20">
+                                        <p class="m-b-0 d-flex align-items-center">
+                                            <span class="badge badge-danger badge-dot m-r-10"></span>
+                                            <span>Social Network</span>
+                                        </p>
+                                        <h5 class="m-b-0">100</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>

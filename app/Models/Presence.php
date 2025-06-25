@@ -49,7 +49,7 @@ class Presence extends Model
      */
     public static function autoCloseSessions()
     {
-        $now = now()->setTime(22, 0); // 10 PM WIB
+        $now = now()->setTime(21, 0); // 10 PM WIB
         self::active()
             ->today()
             ->update([
