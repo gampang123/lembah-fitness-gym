@@ -50,6 +50,179 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-lg-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="m-b-0 text-muted">Sales</p>
+                                            <h2 class="m-b-0">$23,523</h2>
+                                        </div>
+                                        <span class="badge badge-pill badge-cyan font-size-12">
+                                            <i class="anticon anticon-arrow-up"></i>
+                                            <span class="font-weight-semibold m-l-5">6.71%</span>
+                                        </span>
+                                    </div>
+                                    <div class="m-t-40">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <span class="badge badge-primary badge-dot m-r-10"></span>
+                                                <span class="text-gray font-weight-semibold font-size-13">Monthly
+                                                    Goal</span>
+                                            </div>
+                                            <span class="text-dark font-weight-semibold font-size-13">70% </span>
+                                        </div>
+                                        <div class="progress progress-sm w-100 m-b-0 m-t-10">
+                                            <div class="progress-bar bg-primary" style="width: 70%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="m-b-0 text-muted">Margin</p>
+                                            <h2 class="m-b-0">$8,753</h2>
+                                        </div>
+                                        <span class="badge badge-pill badge-red font-size-12">
+                                            <i class="anticon anticon-arrow-down"></i>
+                                            <span class="font-weight-semibold m-l-5">3.26%</span>
+                                        </span>
+                                    </div>
+                                    <div class="m-t-40">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <span class="badge badge-success badge-dot m-r-10"></span>
+                                                <span class="text-gray font-weight-semibold font-size-13">Monthly
+                                                    Goal</span>
+                                            </div>
+                                            <span class="text-dark font-weight-semibold font-size-13">60% </span>
+                                        </div>
+                                        <div class="progress progress-sm w-100 m-b-0 m-t-10">
+                                            <div class="progress-bar bg-success" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="m-b-0 text-muted">Orders</p>
+                                            <h2 class="m-b-0">1,753</h2>
+                                        </div>
+                                        <span class="badge badge-pill badge-red font-size-12">
+                                            <i class="anticon anticon-arrow-down"></i>
+                                            <span class="font-weight-semibold m-l-5">2.71%</span>
+                                        </span>
+                                    </div>
+                                    <div class="m-t-40">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <span class="badge badge-warning badge-dot m-r-10"></span>
+                                                <span class="text-gray font-weight-semibold font-size-13">Monthly
+                                                    Goal</span>
+                                            </div>
+                                            <span class="text-dark font-weight-semibold font-size-13">45% </span>
+                                        </div>
+                                        <div class="progress progress-sm w-100 m-b-0 m-t-10">
+                                            <div class="progress-bar bg-warning" style="width: 45%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <p class="m-b-0 text-muted">Affiliate</p>
+                                            <h2 class="m-b-0">236</h2>
+                                        </div>
+                                        <span class="badge badge-pill badge-gold font-size-12">
+                                            <i class="anticon anticon-arrow-up"></i>
+                                            <span class="font-weight-semibold m-l-5">N/A</span>
+                                        </span>
+                                    </div>
+                                    <div class="m-t-40">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <span class="badge badge-secondary badge-dot m-r-10"></span>
+                                                <span class="text-gray font-weight-semibold font-size-13">Monthly
+                                                    Goal</span>
+                                            </div>
+                                            <span class="text-dark font-weight-semibold font-size-13">50% </span>
+                                        </div>
+                                        <div class="progress progress-sm w-100 m-b-0 m-t-10">
+                                            <div class="progress-bar bg-secondary" style="width: 50%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5>Sales Statistics</h5>
+                                <div class="dropdown dropdown-animated scale-left">
+                                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                                        <i class="anticon anticon-ellipsis"></i>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" type="button">
+                                            <i class="anticon anticon-printer"></i>
+                                            <span class="m-l-10">Print</span>
+                                        </button>
+                                        <button class="dropdown-item" type="button">
+                                            <i class="anticon anticon-download"></i>
+                                            <span class="m-l-10">Download</span>
+                                        </button>
+                                        <button class="dropdown-item" type="button">
+                                            <i class="anticon anticon-file-excel"></i>
+                                            <span class="m-l-10">Export</span>
+                                        </button>
+                                        <button class="dropdown-item" type="button">
+                                            <i class="anticon anticon-reload"></i>
+                                            <span class="m-l-10">Refresh</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="m-t-30">
+                                <div class="d-inline-block m-r-30">
+                                    <p class="m-b-0 d-flex align-items-center">
+                                        <span class="badge badge-primary badge-dot m-r-10"></span>
+                                        <span>Online</span>
+                                    </p>
+                                </div>
+                                <div class="d-inline-block">
+                                    <p class="m-b-0 d-flex align-items-center">
+                                        <span class="badge badge-blue badge-dot m-r-10"></span>
+                                        <span>Offline</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="m-t-50">
+                                <canvas class="chart" style="height: 205px" id="sales-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
@@ -94,9 +267,9 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5>Paket Terlaris</h5>
+                                <h5>Top Products</h5>
                                 <div>
-                                    <a href="{{ route('paket.index') }}" class="btn btn-sm btn-default">Data Semua Paket</a>
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-default">View All</a>
                                 </div>
                             </div>
                             <div class="m-t-30">
@@ -237,7 +410,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5>Transaksi Terbaru</h5>
+                                <h5>Recent Orders</h5>
                                 <div>
                                     <a href="javascript:void(0);" class="btn btn-sm btn-default">View All</a>
                                 </div>

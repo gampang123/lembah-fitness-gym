@@ -80,9 +80,9 @@
 
     </div>
 </div>
-<!-- <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script> -->
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
 
-<!-- <script>
+<script>
 document.getElementById('submit-button').addEventListener('click', function () {
     const form = document.getElementById('transaction-form');
     const formData = new FormData(form);
@@ -156,45 +156,6 @@ document.getElementById('submit-button').addEventListener('click', function () {
         alert("Terjadi kesalahan saat mengirim data.");
     });
 });
-</script> -->
-
-<script>
-    document.getElementById('submit-button').addEventListener('click', function () {
-    const form = document.getElementById('transaction-form');
-    const formData = new FormData(form);
-    const paymentMethod = formData.get('payment_method');
-
-    fetch("{{ route('transaction.store') }}", {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: formData
-    })
-    .then(response => {
-        if (response.redirected) {
-            window.location.href = response.url;
-            return null;
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (!data) return;
-
-        if (paymentMethod === 'online_payment' && data.redirect_url) {
-            window.location.href = data.redirect_url;
-        } else {
-            // Cash or other methods
-            window.location.href = "{{ route('transaction.index') }}";
-        }
-    })
-    .catch(error => {
-        console.error(error);
-        alert("Terjadi kesalahan saat mengirim data.");
-    });
-});
-
 </script>
 
 @endsection

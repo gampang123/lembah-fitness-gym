@@ -20,7 +20,6 @@ return new class extends Migration
             $table->enum('status', [ 'paid', 'pending', 'cancelled', 'expired']);
             $table->string('midtrans_order_id')->unique()->nullable(); // Unique order ID for Midtrans
             $table->string('midtrans_snap_token')->nullable(); // For storing Midtrans snap token
-            $table->string('midtrans_redirect_url')->nullable(); // For Midtrans Redirect URL
             $table->string('midtrans_payment_type')->nullable(); // For storing Midtrans payment type
             $table->string('midtrans_status')->nullable(); // For storing Midtrans status
             $table->timestamps();
