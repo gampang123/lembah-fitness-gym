@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table">
+                    <table id="data-table" class="table">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -56,5 +56,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

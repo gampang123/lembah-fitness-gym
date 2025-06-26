@@ -47,6 +47,9 @@ class UserSeeder extends Seeder
         ]);
 
         User::factory(10)->create([
+            'age' => mt_rand(15, 30),
+            'gender' => 'Laki-laki',
+            'address' => 'Umbulharjo',
             'password' => Hash::make('password'),
             'role_id' => 2 
         ])->each(function ($user) {
