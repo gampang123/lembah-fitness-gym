@@ -126,3 +126,19 @@ button {
 button:hover {
     background-color: #2563eb;
 }
+
+/* Untuk Chrome & Edge */
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active {
+    transition: background-color 50000s ease-in-out 0s;
+    -webkit-text-fill-color: #fff;
+}
+
+/* Untuk menghilangkan background di Firefox (jika perlu) */
+input:autofill,
+input:autofill:focus {
+    background-color: transparent !important;
+    box-shadow: 0 0 0px 1000px transparent inset;
+}
