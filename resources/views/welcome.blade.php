@@ -94,10 +94,10 @@
 
     <section id="home">
         <div class="slideshow">
-            <img src="/asset/lf1.png" class="slide active">
-            <img src="/asset/lf2.png" class="slide">
-            <img src="/asset/lf3.png" class="slide">
-            <img src="/asset/lf4.png" class="slide">
+            <img src="/asset/lf1.webp" class="slide active">
+            <img src="/asset/lf2.webp" class="slide">
+            <img src="/asset/lf3.webp" class="slide">
+            <img src="/asset/lf4.webp" class="slide">
         </div>
         <div class="content">
             <h4>Lembah Fitness Warungboto</h4>
