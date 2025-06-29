@@ -121,14 +121,14 @@
                 <!-- Teks -->
                 <div class="col-md-6" style="border-right: 2px solid red;">
                     <h2 class="fw-bold mb-3">Tentang Kami</h2>
-                    <p class="text-muted">
+                    <p class="text-muted text-justify">
                         Kami adalah pusat kebugaran modern yang menyediakan berbagai fasilitas dan program latihan untuk
                         semua kalangan.
                         Mulai dari pemula hingga atlet profesional, kami mendukung perjalanan fitness Anda dengan
                         pelatih profesional,
                         peralatan terbaik, dan suasana positif.
                     </p>
-                    <p class="text-muted">
+                    <p class="text-muted text-justify">
                         Komitmen kami adalah membantu Anda mencapai kesehatan optimal dan gaya hidup aktif.
                         Bergabunglah bersama kami dan mulai transformasi dirimu sekarang!
                     </p>

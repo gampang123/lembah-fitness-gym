@@ -14,11 +14,12 @@ class MidtransCallbackController extends Controller
 
         $formattedGrossAmount = number_format($request->input('gross_amount'), 2, '.', '');
 
-        $signatureKey = hash('sha512',
+        $signatureKey = hash(
+            'sha512',
             $request->input('order_id') .
-            $request->input('status_code') .
-            $formattedGrossAmount .
-            $serverKey
+                $request->input('status_code') .
+                $formattedGrossAmount .
+                $serverKey
         );
 
         if ($signatureKey !== $request->input('signature_key')) {
@@ -63,6 +64,12 @@ class MidtransCallbackController extends Controller
 
         if ($transaction->status === 'paid') {
             (new MembershipActivationService())->approve($transaction);
+
+            // send email  user
+            $user = $transaction->user;
+            if ($user) {
+                $user->notify(new \App\Notifications\InvoicePaid($transaction));
+            }
         }
 
         return response()->json(['message' => 'Callback processed']);
