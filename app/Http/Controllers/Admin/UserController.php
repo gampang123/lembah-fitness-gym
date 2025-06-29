@@ -83,7 +83,7 @@ class UserController extends Controller
             'role_id' => $request->role_id,
         ]);
 
-        dd($user);
+        // dd($user);
 
         return redirect()->route('user.index')->with('success', 'User berhasil diperbarui.');
     }

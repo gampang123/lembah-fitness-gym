@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Member;
 use App\Models\Package;
 use App\Models\Transaction;
+use App\Models\User;
+use App\Notifications\InvoicePaid;
 use App\Services\MembershipActivationService;
 use App\Services\MembershipService;
 use Illuminate\Http\Request;
@@ -72,6 +74,17 @@ class TransactionController extends Controller
 
             if ($status === 'paid') {
                 (new MembershipActivationService())->approve($transaction);
+
+                $user = $transaction->user;
+                $admin = User::where('role_id', 1)->first();
+
+                if ($user) {
+                    $user->notify(new InvoicePaid($transaction));
+                }
+
+                if ($admin) {
+                    $admin->notify(new InvoicePaid($transaction, 'admin'));
+                }
             }
 
             DB::commit();
@@ -112,11 +125,12 @@ class TransactionController extends Controller
     public function testSignature(Request $request)
     {
         $serverKey = config('midtrans.server_key');
-        $signatureKey = hash('sha512',
+        $signatureKey = hash(
+            'sha512',
             $request->input('order_id') .
-            $request->input('status_code') .
-            $request->input('gross_amount') .
-            $serverKey
+                $request->input('status_code') .
+                $request->input('gross_amount') .
+                $serverKey
         );
 
         return response()->json([

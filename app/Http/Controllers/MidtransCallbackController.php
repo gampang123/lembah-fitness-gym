@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\User;
+use App\Notifications\InvoicePaid;
 use App\Services\MembershipActivationService;
 use Illuminate\Http\Request;
 
@@ -67,8 +69,14 @@ class MidtransCallbackController extends Controller
 
             // send email  user
             $user = $transaction->user;
+            $admin = User::where('role_id', 1)->first();
+
             if ($user) {
-                $user->notify(new \App\Notifications\InvoicePaid($transaction));
+                $user->notify(new InvoicePaid($transaction));
+            }
+
+            if ($admin) {
+                $admin->notify(new InvoicePaid($transaction, 'admin'));
             }
         }
 

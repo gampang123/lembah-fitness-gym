@@ -98,7 +98,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/member', [MemberController::class, 'index'])->name('member.index');
     Route::get('/member/create', [MemberController::class, 'create'])->name('member.create');
     Route::post('/member/store', [MemberController::class, 'store'])->name('member.store');
-    Route::get('/member/edit', [MemberController::class, 'edit'])->name('member.edit');
+    // Route::get('/member/edit', [MemberController::class, 'edit'])->name('member.edit');
     Route::delete('/member/{id}', [MemberController::class, 'destroy'])->name('member.destroy');
     Route::get('/member/{member}/edit', [MemberController::class, 'edit'])->name('member.edit');
     Route::put('/member/{member}', [MemberController::class, 'update'])->name('member.update');
