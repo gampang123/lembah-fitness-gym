@@ -15,6 +15,7 @@ use App\Http\Controllers\Member\ProfileMemberController;
 use App\Http\Controllers\Member\ReportTransactionMemberController;
 use App\Http\Controllers\MidtransCallbackController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Package;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 /*
@@ -29,7 +30,8 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $packages = Package::select('id', 'name', 'price', 'duration_in_days')->get();
+    return view('welcome', compact('packages'));
 });
 
 Route::get('/storage/{path}', function ($path) {
