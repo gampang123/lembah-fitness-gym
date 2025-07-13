@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Member;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Milon\Barcode\DNS2D;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -34,7 +38,8 @@ class UserController extends Controller
             'role_id' => 'required|integer',
         ]);
 
-        User::create([
+        // Simpan user
+        $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'phone' => $request->phone,
@@ -46,7 +51,32 @@ class UserController extends Controller
             'role_id' => $request->role_id,
         ]);
 
-        return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan.');
+        // Create member QR Code
+        $barcode = 'MEMBER-' . $user->id . '-' . strtoupper(Str::random(5));
+
+        $member = Member::create([
+            'user_id' => $user->id,
+            'barcode' => $barcode,
+            'barcode_path' => null,
+            'start_date' => null,
+            'end_date' => null,
+        ]);
+
+        $barcodeGenerator = new DNS2D();
+        $barcodeImage = $barcodeGenerator->getBarcodePNG($barcode, "QRCODE", 10, 10);
+
+        if (!$barcodeImage) {
+            return redirect()->route('user.index')->with('error', 'Gagal membuat QR Code.');
+        }
+
+        $barcodePath = 'barcodes/' . $barcode . '.png';
+        $decodedImage = base64_decode($barcodeImage);
+        Storage::disk('public')->put($barcodePath, $decodedImage);
+
+        $member->barcode_path = $barcodePath;
+        $member->save();
+
+        return redirect()->route('user.index')->with('success', 'User & Member berhasil ditambahkan.');
     }
 
     public function edit($id)
