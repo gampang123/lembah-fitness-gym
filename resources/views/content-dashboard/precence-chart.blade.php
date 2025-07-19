@@ -31,9 +31,20 @@
     <script>
         let chart;
 
-        function initChart(labels, data) {
+        function initChart(labels, data, rangeType) {
             const ctx = document.getElementById('presenceChart').getContext('2d');
             if (chart) chart.destroy();
+
+            let stepSize = 1;
+            let max = 10;
+
+            if (rangeType === 'weekly') {
+                stepSize = 5;
+                max = 100;
+            } else if (rangeType === 'monthly') {
+                stepSize = 20;
+                max = 200;
+            }
 
             chart = new Chart(ctx, {
                 type: 'line',
@@ -55,19 +66,19 @@
                         x: {
                             title: {
                                 display: true,
-                                text: 'Jam Kehadiran'
+                                text: rangeType === 'daily' ? 'Jam Kehadiran' : 'Tanggal / Hari'
                             }
                         },
                         y: {
                             beginAtZero: true,
+                            min: 0,
+                            max: max,
                             ticks: {
-                                stepSize: 1,
+                                stepSize: stepSize,
                                 callback: function(value) {
                                     return Number.isInteger(value) ? value : null;
                                 }
                             },
-                            suggestedMin: 0,
-                            suggestedMax: Math.max(...data) < 10 ? 10 : undefined,
                             title: {
                                 display: true,
                                 text: 'Jumlah Orang Yang Datang'
@@ -78,11 +89,13 @@
             });
         }
 
+
         function fetchPresenceData(date) {
             fetch(`/presence-chart?date=${date}`)
                 .then(res => res.json())
                 .then(data => {
-                    initChart(data.labels, data.counts);
+                    initChart(data.labels, data.counts, rangeType);
+
                 });
         }
 
@@ -91,7 +104,7 @@
             fetch(`/presence-chart?date=${date}&range_type=${rangeType}`)
                 .then(res => res.json())
                 .then(data => {
-                    initChart(data.labels, data.counts);
+                    initChart(data.labels, data.counts, rangeType);
                 });
         }
 
