@@ -110,6 +110,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // MEMBER ACTIVTIY
     Route::get('/activity', [MemberController::class, 'activity'])->name('activity.index');
     Route::get('/activity/{id}', [MemberController::class, 'activityDetail'])->name('activity.detail');
+    Route::get('/presence-chart', [PresenceController::class, 'chart'])->name('presence.chart');
+
 
     // PAKET
     Route::get('/paket', [PackageController::class, 'index'])->name('paket.index');

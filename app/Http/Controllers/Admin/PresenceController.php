@@ -7,6 +7,7 @@ use App\Models\Presence;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PresenceController extends Controller
 {
@@ -131,5 +132,34 @@ class PresenceController extends Controller
         ]);
 
         return back()->with('success', 'Sesi berhasil ditutup.');
+    }
+
+    public function chart(Request $request)
+    {
+        $date = $request->input('date', now()->toDateString());
+
+        $start = Carbon::parse($date)->setTime(6, 0, 0);
+        $end = Carbon::parse($date)->setTime(21, 59, 59);
+
+        $data = Presence::whereBetween('scan_in_at', [$start, $end])
+            ->select(
+                DB::raw('HOUR(scan_in_at) as hour'),
+                DB::raw('COUNT(*) as total')
+            )
+            ->groupBy('hour')
+            ->pluck('total', 'hour');
+
+        // Buat jam 6–21
+        $labels = [];
+        $counts = [];
+        for ($i = 6; $i <= 21; $i++) {
+            $labels[] = $i . ":00";
+            $counts[] = $data[$i] ?? 0;
+        }
+
+        return response()->json([
+            'labels' => $labels,
+            'counts' => $counts,
+        ]);
     }
 }
