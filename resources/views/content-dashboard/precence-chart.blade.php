@@ -3,9 +3,18 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Presensi Kehadiran </h5>
                 <div class="dropdown dropdown-animated scale-left">
-                    <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                    {{-- <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
                         <i class="anticon anticon-ellipsis"></i>
-                    </a>
+                    </a> --}}
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="range-type" class="mb-0 mr-2">Filter:</label>
+                        <select id="range-type" class="form-control form-control-sm w-auto">
+                            <option value="daily" selected>Harian</option>
+                            <option value="weekly">Mingguan</option>
+                            <option value="monthly">Bulanan</option>
+                        </select>
+                    </div>
+
                 </div>
             </div>
             <div class="d-md-flex justify-content-space m-t-50">
@@ -78,21 +87,33 @@
         }
 
         // On page load
+        function fetchPresenceData(date, rangeType = 'daily') {
+            fetch(`/presence-chart?date=${date}&range_type=${rangeType}`)
+                .then(res => res.json())
+                .then(data => {
+                    initChart(data.labels, data.counts);
+                });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date();
             const formattedToday = today.toISOString().split('T')[0];
 
-            // Inisialisasi chart dengan data hari ini
-            fetchPresenceData(formattedToday);
+            fetchPresenceData(formattedToday, 'daily');
 
-            // Inisialisasi datepicker dan atur tanggal default ke hari ini
             $('#datepicker').datepicker({
                     format: 'yyyy-mm-dd',
                     todayHighlight: true
-                }).datepicker('setDate', today) // ini membuat hari ini aktif
+                }).datepicker('setDate', today)
                 .on('changeDate', function(e) {
                     const selectedDate = e.format('yyyy-mm-dd');
-                    fetchPresenceData(selectedDate);
+                    const rangeType = document.getElementById('range-type').value;
+                    fetchPresenceData(selectedDate, rangeType);
                 });
+
+            document.getElementById('range-type').addEventListener('change', function() {
+                const selectedDate = $('#datepicker').datepicker('getFormattedDate');
+                fetchPresenceData(selectedDate, this.value);
+            });
         });
     </script>

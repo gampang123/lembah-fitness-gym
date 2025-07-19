@@ -137,24 +137,63 @@ class PresenceController extends Controller
     public function chart(Request $request)
     {
         $date = $request->input('date', now()->toDateString());
+        $rangeType = $request->input('range_type', 'daily');
 
-        $start = Carbon::parse($date)->setTime(6, 0, 0);
-        $end = Carbon::parse($date)->setTime(21, 59, 59);
-
-        $data = Presence::whereBetween('scan_in_at', [$start, $end])
-            ->select(
-                DB::raw('HOUR(scan_in_at) as hour'),
-                DB::raw('COUNT(*) as total')
-            )
-            ->groupBy('hour')
-            ->pluck('total', 'hour');
-
-        // Buat jam 6–21
         $labels = [];
         $counts = [];
-        for ($i = 6; $i <= 21; $i++) {
-            $labels[] = $i . ":00";
-            $counts[] = $data[$i] ?? 0;
+
+        if ($rangeType === 'daily') {
+            $start = Carbon::parse($date)->setTime(6, 0, 0);
+            $end = Carbon::parse($date)->setTime(21, 59, 59);
+
+            $data = Presence::whereBetween('scan_in_at', [$start, $end])
+                ->select(
+                    DB::raw('HOUR(scan_in_at) as hour'),
+                    DB::raw('COUNT(*) as total')
+                )
+                ->groupBy('hour')
+                ->pluck('total', 'hour');
+
+            for ($i = 6; $i <= 21; $i++) {
+                $labels[] = $i . ":00";
+                $counts[] = $data[$i] ?? 0;
+            }
+        } elseif ($rangeType === 'weekly') {
+            $start = Carbon::parse($date)->startOfWeek();
+            $end = Carbon::parse($date)->endOfWeek();
+
+            $data = Presence::whereBetween('scan_in_at', [$start, $end])
+                ->select(
+                    DB::raw('DAYNAME(scan_in_at) as day'),
+                    DB::raw('COUNT(*) as total')
+                )
+                ->groupBy('day')
+                ->pluck('total', 'day');
+
+            $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            foreach ($days as $day) {
+                $labels[] = $day;
+                $counts[] = $data[$day] ?? 0;
+            }
+        } elseif ($rangeType === 'monthly') {
+            $start = Carbon::parse($date)->startOfMonth();
+            $end = Carbon::parse($date)->endOfMonth();
+
+            $data = Presence::whereBetween('scan_in_at', [$start, $end])
+                ->select(
+                    DB::raw('DATE(scan_in_at) as day'),
+                    DB::raw('COUNT(*) as total')
+                )
+                ->groupBy('day')
+                ->pluck('total', 'day');
+
+            $period = Carbon::parse($start);
+            while ($period <= $end) {
+                $dayStr = $period->toDateString();
+                $labels[] = $period->format('d M');
+                $counts[] = $data[$dayStr] ?? 0;
+                $period->addDays(2); // ambil tiap 2 hari
+            }
         }
 
         return response()->json([
