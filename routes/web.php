@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ExportController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\PresenceController;
@@ -127,6 +128,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('presence/manual-store',  [PresenceController::class, 'manualStore'])->name('presence.manual.store');
     Route::post('presence/scan-store',  [PresenceController::class, 'scanStore'])->name('presence.scan.store');
     Route::post('close-session/{id}',  [PresenceController::class, 'closeSession'])->name('presence.close');
+
+    //Export
+    Route::get('/export/{type}/{model}', [ExportController::class, 'export'])->name('generic.export');
 });
 
 

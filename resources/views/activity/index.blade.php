@@ -26,8 +26,9 @@
                 <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
                     <h4 class="mb-2">Data Aktivitas Member</h4>
                     <div class="d-flex flex-wrap gap-2">
-                        <button class="btn btn-success" >Export Excel</button>
-                        <button class="btn btn-danger" id="ExportPdf" onclick="ExportPdf()">Export PDF</button>
+                        {{-- Menggunakan rute generik dengan model 'Activity' --}}
+                        <a href="{{ route('generic.export', ['type' => 'excel', 'model' => 'Presence']) }}" class="btn btn-success">Export Excel</a>
+                        <a href="{{ route('generic.export', ['type' => 'pdf', 'model' => 'Presence']) }}" class="btn btn-danger">Export PDF</a>
                     </div>
                 </div>
 
@@ -37,6 +38,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Member</th>
+                                <th>Tanggal</th>
                                 <th>Scan In</th>
                                 <th>Scan Out</th>
                                 @if(auth()->user()->role_id == 1)
@@ -49,8 +51,9 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $activites->member->user->name }}</td>
-                                <td>{{ $activites->scan_in_at }}</td>
-                                <td>{{ $activites->scan_out_at }}</td>
+                                <td>{{ \Carbon\Carbon::parse($activites->scan_in_at)->format('Y-m-d') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($activites->scan_in_at)->format('H:i:s') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($activites->scan_out_at)->format('H:i:s') }}</td>
                                 @if(auth()->user()->role_id == 1)
                                 <td>
                                     <a href="{{ route('activity.detail', $activites->member->id) }}" class="btn btn-warning btn-sm">

@@ -37,6 +37,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Member</th>
+                                <th>Tanggal</th>
                                 <th>Scan In</th>
                                 <th>Scan Out</th>
                             </tr>
@@ -46,8 +47,9 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $activity->member->user->name }}</td>
-                                <td>{{ $activity->scan_in_at }}</td>
-                                <td>{{ $activity->scan_out_at }}</td>
+                                <td>{{ \Carbon\Carbon::parse($activites->scan_in_at)->format('Y-m-d') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($activites->scan_in_at)->format('H:i:s') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($activites->scan_out_at)->format('H:i:s') }}</td>
                             </tr>
                             @endforeach
                         </tbody>
