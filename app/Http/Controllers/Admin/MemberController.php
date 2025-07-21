@@ -56,51 +56,36 @@ class MemberController extends Controller
 
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after:start_date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
         ]);
-
+        
         if ($user->role_id != 1 && $request->user_id != $user->id) {
-            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menambahkan member lain.');
+            return redirect()->route('member.index')->with('error', 'Anda tidak memiliki izin untuk aktivasi member ini.');
         }
 
-        $existingMember = Member::where('user_id', $request->user_id)->first();
-        if ($existingMember) {
-            return redirect()->route('member.index')->with('info', 'User ini sudah terdaftar sebagai member.');
+        // Find the member record by user_id and update it
+        // Assuming 'user_id' is unique in the 'members' table for active members
+        $member = Member::where('user_id', $request->user_id)->first(); 
+
+        if ($member) {
+            $member->update([
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'status' => 'active',
+            ]);
+        } else {
+            // If no existing member record, you might want to create one instead
+            // This depends on your application's logic.
+            Member::create([
+                'user_id' => $request->user_id,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'status' => 'active',
+            ]);
         }
 
-        $member = Member::create([
-            'user_id' => $request->user_id,
-            'barcode' => $request->barcode,
-            'barcode_path' => null,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-        ]);
-
-        $barcodeGenerator = new DNS2D();
-        $barcodeImage = $barcodeGenerator->getBarcodePNG($request->barcode, "QRCODE", 10, 10);
-
-        if (!$barcodeImage) {
-            return redirect()->back()->with('error', 'Gagal membuat QR Code!');
-        }
-
-        $barcodePath = 'barcodes/' . $request->barcode . '.png';
-        $decodedImage = base64_decode($barcodeImage);
-
-        if (!$decodedImage) {
-            return redirect()->back()->with('error', 'Gagal mengonversi QR Code ke format gambar!');
-        }
-
-        Storage::disk('public')->put($barcodePath, $decodedImage);
-
-        if (!Storage::disk('public')->exists($barcodePath)) {
-            return redirect()->back()->with('error', 'Gagal menyimpan QR Code ke storage!');
-        }
-
-        $member->barcode_path = $barcodePath;
-        $member->save();
-
-        return redirect()->route('member.index')->with('success', 'Member berhasil ditambahkan dengan QR Code.');
+        return redirect()->route('member.index')->with('success', 'Aktivasi Member Berhasil.');
     }
 
 
@@ -145,6 +130,7 @@ class MemberController extends Controller
             'user_id' => $request->user_id,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
+            'status' => 'active',
         ]);
 
         return redirect()->route('member.index')->with('success', 'Member berhasil diperbarui.');

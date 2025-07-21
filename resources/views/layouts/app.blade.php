@@ -208,7 +208,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ route('member.create') }}">Tambah Member</a>
+                                    <a href="{{ route('member.create') }}">Aktivasi Member</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('member.index') }}">Data Member</a>

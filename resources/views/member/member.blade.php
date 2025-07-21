@@ -22,7 +22,7 @@
                         <p>Tabel ini berisi data member yang terdaftar</p>
                     </div>
                     <a href="{{ route('member.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                        Add Member
+                        Aktivasi Member
                     </a>
                 </div>
                 <div class="m-t-25">
