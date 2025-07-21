@@ -33,7 +33,7 @@ class InvoicePaid extends Notification implements ShouldQueue
             ->line('Jumlah: Rp ' . number_format($this->transaction->amount, 0, ',', '.'))
             ->line('Order ID: ' . $this->transaction->midtrans_order_id)
             ->line('Kami telah mengaktifkan layanan Anda.')
-            ->action('Lihat Transaksi', url('/transaksi/' . $this->transaction->id))
+            ->action('Lihat Transaksi', url('/transaction/' . $this->transaction->id))
             ->line('Terima kasih telah menggunakan layanan kami.');
     }
 }
