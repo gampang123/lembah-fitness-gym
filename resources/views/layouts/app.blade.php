@@ -63,7 +63,8 @@
                                 <i class="anticon anticon-bell notification-badge"></i>
                             </a>
                             <div class="dropdown-menu pop-notification">
-                                <div class="p-v-15 p-h-25 border-bottom d-flex justify-content-between align-items-center">
+                                <div
+                                    class="p-v-15 p-h-25 border-bottom d-flex justify-content-between align-items-center">
                                     <p class="text-dark font-weight-semibold m-b-0">
                                         <i class="anticon anticon-bell"></i>
                                         <span class="m-l-10">Notification</span>
@@ -125,7 +126,7 @@
                         <li class="dropdown dropdown-animated scale-left">
                             <div class="pointer" data-toggle="dropdown">
                                 <div class="avatar avatar-image  m-h-10 m-r-15">
-                                    <img src="{{ asset('images/avatars/avatar.png') }}"  alt="">
+                                    <img src="{{ asset('images/avatars/avatar.png') }}" alt="">
                                 </div>
                             </div>
                             <div class="p-b-15 p-t-20 dropdown-menu pop-profile">
@@ -135,7 +136,8 @@
                                             <img src="{{ asset('images/avatars/avatar.png') }}" alt="">
                                         </div>
                                         <div class="m-l-10">
-                                            <p class="m-b-0 text-dark font-weight-semibold">{{ auth()->user()->name }}</p>
+                                            <p class="m-b-0 text-dark font-weight-semibold">{{ auth()->user()->name }}
+                                            </p>
                                             <p class="m-b-0 opacity-07">{{ Auth::user()->role->name }}</p>
                                         </div>
                                     </div>
@@ -148,10 +150,11 @@
                                         </div>
                                         <i class="anticon font-size-10 anticon-right"></i>
                                     </div>
-                                </a>                                
+                                </a>
                                 <form method="POST" action="{{ route('logout') }}" class="d-block">
                                     @csrf
-                                    <button type="submit" class="dropdown-item d-block p-h-15 p-v-10" style="border: none; background: none; width: 100%; text-align: left;">
+                                    <button type="submit" class="dropdown-item d-block p-h-15 p-v-10"
+                                        style="border: none; background: none; width: 100%; text-align: left;">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <div>
                                                 <i class="anticon opacity-04 font-size-16 anticon-logout"></i>
@@ -160,7 +163,7 @@
                                             <i class="anticon font-size-10 anticon-right"></i>
                                         </div>
                                     </button>
-                                </form>                                
+                                </form>
                             </div>
                         </li>
                         <!-- <li>
@@ -170,7 +173,7 @@
                         </li> -->
                     </ul>
                 </div>
-            </div>    
+            </div>
             <!-- Header END -->
 
             <!-- Side Nav START -->
@@ -185,7 +188,7 @@
                                 <span class="title">Dashboard</span>
                             </a>
                         </li>
-                        @if(Auth::check() && Auth::user()->role_id == 1)
+                        @if (Auth::check() && Auth::user()->role_id == 1)
                             <li class="nav-item dropdown open">
                                 <a class="dropdown-toggle" href="{{ route('user.index') }}">
                                     <span class="icon-holder">
@@ -243,7 +246,7 @@
                         </li>
                         </li>
                         <li class="nav-item dropdown">
-                            <a href="{{ route ('transaction.index') }}">
+                            <a href="{{ route('transaction.index') }}">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-fund"></i>
                                 </span>
@@ -251,7 +254,7 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a href="{{ route ('presence.index') }}">
+                            <a href="{{ route('presence.index') }}">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-camera"></i>
                                 </span>
@@ -268,22 +271,22 @@
             @yield('content')
 
             <!-- Footer START -->
-                <footer class="footer">
-                    <div class="footer-content justify-content-between">
-                        <p class="m-b-0">Copyright © {{ date('Y') }}  {{ env('APP_NAME') }}</p>
-                        <span>
-                            <a href="" class="text-gray m-r-15">Term &amp; Conditions</a>
-                            <a href="" class="text-gray">Privacy &amp; Policy</a>
-                        </span>
-                    </div>
-                </footer>
-                <!-- Footer END -->
+            <footer class="footer">
+                <div class="footer-content justify-content-between">
+                    <p class="m-b-0">Copyright © {{ date('Y') }} {{ env('APP_NAME') }}</p>
+                    <span>
+                        <a href="" class="text-gray m-r-15">Term &amp; Conditions</a>
+                        <a href="" class="text-gray">Privacy &amp; Policy</a>
+                    </span>
+                </div>
+            </footer>
+            <!-- Footer END -->
 
-            </div>
-            <!-- Page Container END -->
+        </div>
+        <!-- Page Container END -->
 
-            <!-- Search Start-->
-            <!-- <div class="modal modal-left fade search" id="search-drawer">
+        <!-- Search Start-->
+        <!-- <div class="modal modal-left fade search" id="search-drawer">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header justify-content-between align-items-center">
@@ -365,9 +368,9 @@
                                         <p class="m-b-0 text-muted font-size-13">Data Analyst</p>
                                     </div>
                                 </div>
-                            </div>   
+                            </div>
                             <div class="m-t-30">
-                                <h5 class="m-b-20">News</h5> 
+                                <h5 class="m-b-20">News</h5>
                                 <div class="d-flex m-b-30">
                                     <div class="avatar avatar-image">
                                         <img src="{{ asset('images/others/img-1.jpg') }}" alt="">
@@ -380,15 +383,15 @@
                                         </p>
                                     </div>
                                 </div>
-                            </div>    
+                            </div>
                         </div>
                     </div>
                 </div>
             </div> -->
-            <!-- Search End-->
+        <!-- Search End-->
 
-            <!-- Quick View START -->
-            <!-- <div class="modal modal-right fade quick-view" id="quick-view">
+        <!-- Quick View START -->
+        <!-- <div class="modal modal-right fade quick-view" id="quick-view">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header justify-content-between align-items-center">
@@ -441,22 +444,22 @@
                             </div>
                         </div>
                     </div>
-                </div>            
+                </div>
             </div> -->
-            <!-- Quick View END -->
-        </div>
+        <!-- Quick View END -->
+    </div>
     </div>
 
-    <!-- Sweet Alert -->  
+    <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <!-- Core Vendors JS -->
     <script src="{{ asset('js/vendors.min.js') }}"></script>
 
     <!-- page js -->
-    <script src="{{ asset('vendors/chartjs/Chart.min.js') }}"></script>
+    {{-- <script src="{{ asset('vendors/chartjs/Chart.min.js') }}"></script> --}}
     <script src="{{ asset('vendors/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('js/pages/dashboard-e-commerce.js') }}"></script>    
+    <script src="{{ asset('js/pages/dashboard-e-commerce.js') }}"></script>
 
     <!-- Core JS -->
     <script src="{{ asset('js/app.min.js') }}"></script>

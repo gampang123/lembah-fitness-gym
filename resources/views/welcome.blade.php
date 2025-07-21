@@ -94,10 +94,10 @@
 
     <section id="home">
         <div class="slideshow">
-            <img src="/asset/lf1.png" class="slide active">
-            <img src="/asset/lf2.png" class="slide">
-            <img src="/asset/lf3.png" class="slide">
-            <img src="/asset/lf4.png" class="slide">
+            <img src="/asset/lf1.webp" class="slide active">
+            <img src="/asset/lf2.webp" class="slide">
+            <img src="/asset/lf3.webp" class="slide">
+            <img src="/asset/lf4.webp" class="slide">
         </div>
         <div class="content">
             <h4>Lembah Fitness Warungboto</h4>
@@ -199,76 +199,32 @@
                         Bergabung Bersama Kami
                     </p>
                     <div class="responsive-container-block card-container">
+                        @foreach ($packages as $package)
                         <div class="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
                             <div class="card card-selected">
                                 <p class="text-blk">
-                                    Paket 1 Bulan
+                                    {{ $package->name }}
                                 </p>
                                 <h1 class="monthly-price">
-                                    Rp250.000
+                                    Rp{{ number_format($package->price, 0, ',', '.') }}
                                 </h1>
                                 <div class="card-description">
                                     <span class="monthly-plan">
                                         <p class="text-blk card-points">
-                                            Akses Gym Selama 1 Bulan
+                                            Akses selama {{ $package->duration_in_days }} hari
                                         </p>
                                     </span>
                                 </div>
                                 <span class="buy-button">
-                                    <button class="btns text-black" type="button">
-                                        Buy
-                                    </button>
+                                    <a href="{{ route('membership.create', ['package_id' => $package->id]) }}">
+                                        <button class="btns text-black" type="button">
+                                            Daftar Sekarang
+                                        </button>
+                                    </a>
                                 </span>
                             </div>
                         </div>
-                        <div class="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
-                            <div class="card">
-                                <p class="text-blk">
-                                    Paket 3 Bulan
-                                </p>
-                                <h1 class="monthly-price">
-                                    Rp600.000
-                                </h1>
-                                <div class="card-description">
-                                    <span class="monthly-plan">
-                                        <p class="text-blk card-points">
-                                            Akses Gym Selama 3 Bulan
-                                        </p>
-                                    </span>
-
-                                </div>
-                                <span class="buy-button">
-                                    <button class="btns" type="button">
-                                        Buy
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="responsive-cell-block wk-desk-4 wk-ipadp-4 wk-tab-6 wk-mobile-12">
-                            <div class="card">
-                                <p class="text-blk">
-                                    Paket Personal Training
-                                </p>
-                                <h1 class="monthly-price">
-                                    Rp820.000
-                                </h1>
-                                <div class="card-description">
-                                    <span class="monthly-plan">
-                                        <p class="text-blk card-points">
-                                            Akses Gym Selama 1 Bulan
-                                        </p>
-                                        <p class="text-blk card-points">
-                                            Di latih oleh trainer profesional
-                                        </p>
-                                    </span>
-                                </div>
-                                <span class="buy-button">
-                                    <button class="btns" type="button">
-                                        Buy
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -305,7 +261,7 @@
                 </div>
 
                 <!-- Google Maps -->
-                <div class="col-md-6" data-aos="fade-left">
+                <div class="col-md-6">
                     <div class="shadow rounded-4 overflow-hidden h-100">
                         <div class="ratio ratio-4x3">
                             <iframe

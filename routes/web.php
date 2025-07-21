@@ -15,6 +15,7 @@ use App\Http\Controllers\Member\ProfileMemberController;
 use App\Http\Controllers\Member\ReportTransactionMemberController;
 use App\Http\Controllers\MidtransCallbackController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Package;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 /*
@@ -29,7 +30,8 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $packages = Package::select('id', 'name', 'price', 'duration_in_days')->get();
+    return view('welcome', compact('packages'));
 });
 
 Route::get('/storage/{path}', function ($path) {
@@ -98,7 +100,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/member', [MemberController::class, 'index'])->name('member.index');
     Route::get('/member/create', [MemberController::class, 'create'])->name('member.create');
     Route::post('/member/store', [MemberController::class, 'store'])->name('member.store');
-    Route::get('/member/edit', [MemberController::class, 'edit'])->name('member.edit');
+    // Route::get('/member/edit', [MemberController::class, 'edit'])->name('member.edit');
     Route::delete('/member/{id}', [MemberController::class, 'destroy'])->name('member.destroy');
     Route::get('/member/{member}/edit', [MemberController::class, 'edit'])->name('member.edit');
     Route::put('/member/{member}', [MemberController::class, 'update'])->name('member.update');
@@ -108,6 +110,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // MEMBER ACTIVTIY
     Route::get('/activity', [MemberController::class, 'activity'])->name('activity.index');
     Route::get('/activity/{id}', [MemberController::class, 'activityDetail'])->name('activity.detail');
+    Route::get('/presence-chart', [PresenceController::class, 'chart'])->name('presence.chart');
+
 
     // PAKET
     Route::get('/paket', [PackageController::class, 'index'])->name('paket.index');
