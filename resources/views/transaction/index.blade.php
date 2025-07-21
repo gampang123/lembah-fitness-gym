@@ -24,9 +24,13 @@
                         <h4>Daftar Transaksi</h4>
                         <p>Tabel ini berisi seluruh data transaksi</p>
                     </div>
-                    <a href="{{ route('transaction.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                        Tambah Transaksi
-                    </a>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="{{ route('transaction.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                            Tambah Transaksi
+                        </a>
+                        <button class="btn btn-success" >Export Excel</button>
+                        <button class="btn btn-danger" id="ExportPdf" onclick="ExportPdf()">Export PDF</button>
+                    </div>
                 </div>
 
                 @if (session('success'))

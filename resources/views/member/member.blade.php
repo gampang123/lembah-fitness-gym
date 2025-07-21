@@ -21,9 +21,14 @@
                         <h4>Data Member</h4>
                         <p>Tabel ini berisi data member yang terdaftar</p>
                     </div>
-                    <a href="{{ route('member.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                        Aktivasi Member
-                    </a>
+                    
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="{{ route('member.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                            Aktivasi Member
+                        </a>
+                        <button class="btn btn-success" >Export Excel</button>
+                        <button class="btn btn-danger" id="ExportPdf" onclick="ExportPdf()">Export PDF</button>
+                    </div>
                 </div>
                 <div class="m-t-25">
                     <table id="data-table" class="table">

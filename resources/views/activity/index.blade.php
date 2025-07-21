@@ -26,8 +26,8 @@
                 <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
                     <h4 class="mb-2">Data Aktivitas Member</h4>
                     <div class="d-flex flex-wrap gap-2">
-                        <button class="btn btn-success">Export Excel</button>
-                        <button class="btn btn-danger">Export PDF</button>
+                        <button class="btn btn-success" >Export Excel</button>
+                        <button class="btn btn-danger" id="ExportPdf" onclick="ExportPdf()">Export PDF</button>
                     </div>
                 </div>
 
