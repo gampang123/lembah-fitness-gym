@@ -28,8 +28,8 @@
                         <a href="{{ route('transaction.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                             Tambah Transaksi
                         </a>
-                        <button class="btn btn-success" >Export Excel</button>
-                        <button class="btn btn-danger" id="ExportPdf" onclick="ExportPdf()">Export PDF</button>
+                        <a href="{{ route('generic.export', ['type' => 'excel', 'model' => 'Transaction']) }}" class="btn btn-success">Export Excel</a>
+                        <a href="{{ route('generic.export', ['type' => 'pdf', 'model' => 'Transaction']) }}" class="btn btn-danger">Export PDF</a>
                     </div>
                 </div>
 

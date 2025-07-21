@@ -26,8 +26,8 @@
                 <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
                     <h4 class="mb-2">Data Aktivitas {{ $member->user->name }}</h4>
                     <div class="d-flex flex-wrap gap-2">
-                        <button class="btn btn-success">Export Excel</button>
-                        <button class="btn btn-danger">Export PDF</button>
+                        <a href="{{ route('generic.export', ['type' => 'excel', 'model' => 'Presence']) }}" class="btn btn-success">Export Excel</a>
+                        <a href="{{ route('generic.export', ['type' => 'pdf', 'model' => 'Presence']) }}" class="btn btn-danger">Export PDF</a>
                     </div>
                 </div>
 
@@ -47,9 +47,9 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $activity->member->user->name }}</td>
-                                <td>{{ \Carbon\Carbon::parse($activites->scan_in_at)->format('Y-m-d') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($activites->scan_in_at)->format('H:i:s') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($activites->scan_out_at)->format('H:i:s') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($activity->scan_in_at)->format('Y-m-d') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($activity->scan_in_at)->format('H:i:s') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($activity->scan_out_at)->format('H:i:s') }}</td>
                             </tr>
                             @endforeach
                         </tbody>

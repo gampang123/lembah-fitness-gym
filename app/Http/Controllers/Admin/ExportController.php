@@ -40,7 +40,7 @@ class ExportController extends Controller
             } elseif ($model === 'Transaction') {
                 // Asumsi model Transaction memiliki relasi ke user atau member
                 // Sesuaikan relasi sesuai dengan struktur database Anda
-                $data = $modelClass::with('user', 'item')->get(); // Contoh relasi
+                $data = $modelClass::with('member', 'package')->get(); // Added 'member' and 'package'
             } else {
                 $data = $modelClass::all(); // Ambil semua data untuk model lain
             }

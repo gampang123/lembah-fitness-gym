@@ -26,7 +26,6 @@
                 <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
                     <h4 class="mb-2">Data Aktivitas Member</h4>
                     <div class="d-flex flex-wrap gap-2">
-                        {{-- Menggunakan rute generik dengan model 'Activity' --}}
                         <a href="{{ route('generic.export', ['type' => 'excel', 'model' => 'Presence']) }}" class="btn btn-success">Export Excel</a>
                         <a href="{{ route('generic.export', ['type' => 'pdf', 'model' => 'Presence']) }}" class="btn btn-danger">Export PDF</a>
                     </div>

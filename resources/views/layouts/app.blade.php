@@ -22,17 +22,6 @@
     {{-- CDN --}}
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Export Feature -->
-    <!-- Excel -->
-    <script type="text/javascript" src="{{ asset('js/excel/xlsx.bundle.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/excel/xlsx.extendscript.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/excel/xlsx.download.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/excel/main.js') }}"></script>
-    <!-- PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/pdf/main.js') }}"></script>
-
 </head>
 
 <body>

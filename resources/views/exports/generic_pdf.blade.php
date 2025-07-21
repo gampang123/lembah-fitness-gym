@@ -25,11 +25,11 @@
                     <th>Jam Scan Out</th>
                 @elseif($modelName === 'Transaction')
                     <th>No</th>
-                    <th>Nama Pengguna</th>
-                    <th>Nama Item</th>
-                    <th>Jumlah</th>
-                    <th>Total Harga</th>
+                    <th>Nama Member</th>
+                    <th>Paket</th>
+                    <th>Harga</th>
                     <th>Tanggal Transaksi</th>
+                    <th>Metode Pembayaran</th>
                 @else
                     {{-- Default: get headers from the keys of the first data item --}}
                     @if($data->isNotEmpty())
@@ -58,11 +58,11 @@
                     <td>{{ $row->scan_out_at ? \Carbon\Carbon::parse($row->scan_out_at)->format('H:i:s') : '' }}</td>
                 @elseif($modelName === 'Transaction')
                     <td>{{ $rowIndex }}</td>
-                    <td>{{ $row->user->name ?? 'N/A' }}</td>
-                    <td>{{ $row->item->name ?? 'N/A' }}</td>
-                    <td>{{ $row->quantity }}</td>
-                    <td>{{ $row->total_price }}</td>
-                    <td>{{ $row->transaction_date }}</td>
+                    <td>{{ $row->member->user->name ?? 'N/A' }}</td>
+                    <td>{{ $row->package->name ?? 'N/A' }}</td>
+                    <td>Rp {{ number_format($row->package->price ?? 0, 0, ',', '.') }}</td>
+                    <td>{{ $row->created_at }}</td>
+                    <td>{{ $row->payment_method }}</td>
                 @else
                     {{-- Default: display all attribute values --}}
                     @foreach($row->toArray() as $value)
