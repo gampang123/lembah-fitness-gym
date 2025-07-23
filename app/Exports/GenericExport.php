@@ -64,6 +64,15 @@ class GenericExport implements FromCollection, WithHeadings, WithMapping
                 'Metode Pembayaran'
                 // Add other columns if they exist in the Transaction model
             ];
+        } elseif ($this->modelName === 'Member') {
+            return [
+                'No',
+                'Nama Member',
+                'Start Date',
+                'End Date',
+                'Status'
+                // Add other columns if they exist in the Transaction model
+            ];
         }
         // For other models, try to get headers from the keys of the first data item
         if ($this->data->isNotEmpty()) {
@@ -109,6 +118,15 @@ class GenericExport implements FromCollection, WithHeadings, WithMapping
                 isset($row->package->price) ? 'Rp ' . number_format($row->package->price, 0, ',', '.') : 'N/A',
                 $row->created_at,
                 $row->payment_method,
+                // Add other data according to headings
+            ];
+        } elseif ($this->modelName === 'Member') {
+            return [
+                $this->rowIndex,
+                $row->user->name ?? 'N/A', // Assuming user relationship
+                $row->start_date ?? 'N/A', // Assuming item relationship
+                $row->end_date ?? 'N/A', // Assuming item relationship
+                $row->status,
                 // Add other data according to headings
             ];
         }

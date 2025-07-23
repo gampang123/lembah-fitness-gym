@@ -30,6 +30,12 @@
                     <th>Harga</th>
                     <th>Tanggal Transaksi</th>
                     <th>Metode Pembayaran</th>
+                @elseif($modelName === 'Member')
+                    <th>No</th>
+                    <th>Nama Member</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
                 @else
                     {{-- Default: get headers from the keys of the first data item --}}
                     @if($data->isNotEmpty())
@@ -63,6 +69,12 @@
                     <td>Rp {{ number_format($row->package->price ?? 0, 0, ',', '.') }}</td>
                     <td>{{ $row->created_at }}</td>
                     <td>{{ $row->payment_method }}</td>
+                @elseif($modelName === 'Member')
+                    <td>{{ $rowIndex }}</td>
+                    <td>{{ $row->user->name ?? 'N/A' }}</td>
+                    <td>{{ $row->start_date }}</td>
+                    <td>{{ $row->end_date }}</td>
+                    <td>{{ $row->status }}</td>
                 @else
                     {{-- Default: display all attribute values --}}
                     @foreach($row->toArray() as $value)

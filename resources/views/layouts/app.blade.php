@@ -58,7 +58,7 @@
                         </li> -->
                     </ul>
                     <ul class="nav-right">
-                        <li class="dropdown dropdown-animated scale-left">
+                        <!-- <li class="dropdown dropdown-animated scale-left">
                             <a href="javascript:void(0);" data-toggle="dropdown">
                                 <i class="anticon anticon-bell notification-badge"></i>
                             </a>
@@ -122,7 +122,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="dropdown dropdown-animated scale-left">
                             <div class="pointer" data-toggle="dropdown">
                                 <div class="avatar avatar-image  m-h-10 m-r-15">

@@ -26,8 +26,8 @@
                         <a href="{{ route('member.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                             Aktivasi Member
                         </a>
-                        <button class="btn btn-success" >Export Excel</button>
-                        <button class="btn btn-danger" id="ExportPdf" onclick="ExportPdf()">Export PDF</button>
+                        <a href="{{ route('generic.export', ['type' => 'excel', 'model' => 'Member']) }}" class="btn btn-success">Export Excel</a>
+                        <a href="{{ route('generic.export', ['type' => 'pdf', 'model' => 'Member']) }}" class="btn btn-danger">Export PDF</a>
                     </div>
                 </div>
                 <div class="m-t-25">
@@ -36,7 +36,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
-                                <th>Barcode</th>
+                                <th>QR Code</th>
                                 <th>Mulai</th>
                                 <th>Akhir</th>
                                 <th>Status</th>
