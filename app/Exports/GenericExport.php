@@ -57,11 +57,11 @@ class GenericExport implements FromCollection, WithHeadings, WithMapping
         } elseif ($this->modelName === 'Transaction') {
             return [
                 'No',
-                'Nama Pengguna',
-                'Nama Item',
-                'Jumlah',
-                'Total Harga',
+                'Nama Member',
+                'Paket',
+                'Harga',
                 'Tanggal Transaksi',
+                'Metode Pembayaran'
                 // Add other columns if they exist in the Transaction model
             ];
         }
@@ -105,10 +105,10 @@ class GenericExport implements FromCollection, WithHeadings, WithMapping
             return [
                 $this->rowIndex,
                 $row->user->name ?? 'N/A', // Assuming user relationship
-                $row->item->name ?? 'N/A', // Assuming item relationship
-                $row->quantity,
-                $row->total_price,
-                $row->transaction_date,
+                $row->package->name ?? 'N/A', // Assuming item relationship
+                isset($row->package->price) ? 'Rp ' . number_format($row->package->price, 0, ',', '.') : 'N/A',
+                $row->created_at,
+                $row->payment_method,
                 // Add other data according to headings
             ];
         }
